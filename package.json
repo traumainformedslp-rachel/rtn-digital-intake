@@ -1,0 +1,37 @@
+{
+  "name": "rtn-student-intake",
+  "version": "1.0.0",
+  "description": "Interactive student self-report intake form for SLPs and reading specialists. Age-adapted versions for ages 6-13 and 14+.",
+  "author": "Rachel Terra Norton, MS, CCC-SLP <rachelslp.org>",
+  "license": "MIT",
+  "keywords": [
+    "dyslexia",
+    "literacy",
+    "speech-language-pathology",
+    "intake-form",
+    "student-self-report",
+    "neurodiversity",
+    "structured-literacy",
+    "reading",
+    "special-education",
+    "slp"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
+    "vite": "^5.0.0"
+  }
+}
