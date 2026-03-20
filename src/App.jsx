@@ -12,7 +12,7 @@ const LIKERT_4 = [
   { label: "No", sub: "Not me", color: "#C25670", bg: "#FCE4EC", face: "sad", value: 1 },
   { label: "A Little", sub: "Sometimes", color: "#D4995A", bg: "#FFF3E0", face: "neutral", value: 2 },
   { label: "Mostly", sub: "Usually", color: "#3BA0A8", bg: "#E0F5F5", face: "content", value: 3 },
-  { label: "Yes!", sub: "Totally", color: "#1B8A9E", bg: "#D4F1F7", face: "happyTeal", value: 4 },
+  { label: "Yes!", sub: "Totally", color: "#2FAB4F", bg: "#D6FADC", face: "happy", value: 4 },
 ];
 
 const STRENGTHS_YOUNG = [
