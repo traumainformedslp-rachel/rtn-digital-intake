@@ -9,10 +9,10 @@ const LIKERT_3 = [
 ];
 
 const LIKERT_4 = [
-  { label: "No", sub: "Not me", color: "#D1365E", bg: "#FFE0E6", face: "sad", value: 1 },
-  { label: "A Little", sub: "Sometimes", color: "#E8A817", bg: "#FFF7D6", face: "neutral", value: 2 },
-  { label: "Mostly", sub: "Usually", color: "#5AA867", bg: "#EEFBF0", face: "content", value: 3 },
-  { label: "Yes!", sub: "Totally", color: "#2FAB4F", bg: "#D6FADC", face: "happy", value: 4 },
+  { label: "No", sub: "Not me", color: "#C25670", bg: "#FCE4EC", face: "sad", value: 1 },
+  { label: "A Little", sub: "Sometimes", color: "#D4995A", bg: "#FFF3E0", face: "neutral", value: 2 },
+  { label: "Mostly", sub: "Usually", color: "#3BA0A8", bg: "#E0F5F5", face: "content", value: 3 },
+  { label: "Yes!", sub: "Totally", color: "#1B8A9E", bg: "#D4F1F7", face: "happyTeal", value: 4 },
 ];
 
 const STRENGTHS_YOUNG = [
@@ -148,14 +148,20 @@ const Face = ({ type, size = 48 }) => {
   const eyeY = -r * 0.05;
   const eyeDx = r * 0.28;
   const mouthY = r * 0.32;
-  const fills = { happy: ["#C8F7CE","#3A9E50"], content: ["#D6F5DD","#5AA867"], neutral: ["#FFF4C2","#CCA020"], sad: ["#FFD4D4","#D45A6A"] };
+  const fills = {
+    happy: ["#C8F7CE", "#3A9E50"],
+    happyTeal: ["#C2EEF5", "#1B8A9E"],
+    content: ["#D4F1F7", "#2A96A8"],
+    neutral: ["#FFF4C2", "#CCA020"],
+    sad: ["#FFD4D4", "#D45A6A"],
+  };
   const [bg, stroke] = fills[type] || fills.neutral;
   return (
     <svg width={size} height={size} viewBox={`${-r} ${-r} ${size} ${size}`}>
       <circle cx={0} cy={0} r={r * 0.92} fill={bg} stroke={stroke} strokeWidth={2.5} />
       <circle cx={-r * 0.4} cy={r * 0.15} r={r * 0.12} fill="#FFB8C8" opacity={0.6} />
       <circle cx={r * 0.4} cy={r * 0.15} r={r * 0.12} fill="#FFB8C8" opacity={0.6} />
-      {type === "happy" || type === "content" ? (<>
+      {type === "happy" || type === "happyTeal" || type === "content" ? (<>
         <path d={`M${-eyeDx - 6},${eyeY} Q${-eyeDx},${eyeY - 8} ${-eyeDx + 6},${eyeY}`} fill="none" stroke="#222" strokeWidth={2.5} strokeLinecap="round" />
         <path d={`M${eyeDx - 6},${eyeY} Q${eyeDx},${eyeY - 8} ${eyeDx + 6},${eyeY}`} fill="none" stroke="#222" strokeWidth={2.5} strokeLinecap="round" />
       </>) : (<>
@@ -168,7 +174,7 @@ const Face = ({ type, size = 48 }) => {
         <line x1={-eyeDx - 5} y1={eyeY - 10} x2={-eyeDx + 5} y2={eyeY - 7} stroke="#222" strokeWidth={2} strokeLinecap="round" />
         <line x1={eyeDx + 5} y1={eyeY - 10} x2={eyeDx - 5} y2={eyeY - 7} stroke="#222" strokeWidth={2} strokeLinecap="round" />
       </>)}
-      {type === "happy" ? (
+      {type === "happy" || type === "happyTeal" ? (
         <path d={`M${-r * 0.3},${mouthY - 2} Q0,${mouthY + 12} ${r * 0.3},${mouthY - 2}`} fill="none" stroke="#222" strokeWidth={2.5} strokeLinecap="round" />
       ) : type === "content" ? (
         <path d={`M${-r * 0.22},${mouthY} Q0,${mouthY + 6} ${r * 0.22},${mouthY}`} fill="none" stroke="#222" strokeWidth={2.5} strokeLinecap="round" />
@@ -200,6 +206,7 @@ const FaceLikertBtn = ({ option, selected, onClick, compact }) => {
 
 const LikertRow = ({ statement, value, onChange, mode }) => {
   const opts = mode === "young" ? LIKERT_3 : LIKERT_4;
+  const selected = opts.find((o) => o.label === value);
   return (
     <div style={{
       display: "flex", alignItems: "center", gap: 12, padding: "10px 14px",
@@ -207,8 +214,20 @@ const LikertRow = ({ statement, value, onChange, mode }) => {
       border: "1px solid #eee", marginBottom: 6,
     }}>
       <div style={{ flex: 1, fontSize: 14, color: "#333", fontFamily: "'Nunito', sans-serif", minWidth: 160 }}>{statement}</div>
-      <div style={{ display: "flex", gap: mode === "young" ? 6 : 4, flexShrink: 0 }}>
+      <div className="likert-btns" style={{ display: "flex", gap: mode === "young" ? 6 : 4, flexShrink: 0 }}>
         {opts.map((o) => <FaceLikertBtn key={o.label} option={o} selected={value} onClick={() => onChange(o.label)} compact={mode !== "young"} />)}
+      </div>
+      {/* Print-only answer pill */}
+      <div className="print-answer" style={{ display: "none", alignItems: "center", gap: 6, flexShrink: 0 }}>
+        {selected ? (
+          <span style={{
+            display: "inline-block", padding: "4px 14px", borderRadius: 20, fontSize: 12, fontWeight: 700,
+            background: selected.color, color: "#fff", border: `2px solid ${selected.color}`,
+            WebkitPrintColorAdjust: "exact", printColorAdjust: "exact", colorAdjust: "exact",
+          }}>{selected.label}</span>
+        ) : (
+          <span style={{ fontSize: 12, color: "#ccc", fontStyle: "italic" }}>—</span>
+        )}
       </div>
     </div>
   );
@@ -223,11 +242,14 @@ const CheckGrid = ({ items, selected, onChange }) => (
           display: "flex", alignItems: "center", gap: 10, padding: "10px 14px",
           borderRadius: 10, border: `2px solid ${ch ? "#3B7DD8" : "#e0e0e0"}`,
           background: ch ? "#EAF2FF" : "#fafafa", cursor: "pointer", textAlign: "left", transition: "all 0.15s",
+          WebkitPrintColorAdjust: "exact", printColorAdjust: "exact", colorAdjust: "exact",
         }}>
           <div style={{
             width: 22, height: 22, borderRadius: 6, border: `2px solid ${ch ? "#3B7DD8" : "#ccc"}`,
             background: ch ? "#3B7DD8" : "#fff", display: "flex", alignItems: "center",
             justifyContent: "center", flexShrink: 0, transition: "all 0.15s",
+            WebkitPrintColorAdjust: "exact", printColorAdjust: "exact", colorAdjust: "exact",
+            WebkitPrintColorAdjust: "exact", printColorAdjust: "exact",
           }}>{ch && <span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>✓</span>}</div>
           <span style={{ fontSize: 13, color: "#333", fontFamily: "'Nunito', sans-serif" }}>{item}</span>
         </button>
@@ -247,7 +269,7 @@ const Inp = ({ value, onChange, placeholder, type = "text" }) => (
 );
 
 const SH = ({ icon, title, color, subtitle }) => (
-  <div style={{ background: color, borderRadius: 14, padding: "14px 20px", marginTop: 28, marginBottom: 14, display: "flex", alignItems: "center", gap: 12 }}>
+  <div style={{ background: color, borderRadius: 14, padding: "14px 20px", marginTop: 28, marginBottom: 14, display: "flex", alignItems: "center", gap: 12, WebkitPrintColorAdjust: "exact", printColorAdjust: "exact" }}>
     <span style={{ fontSize: 26 }}>{icon}</span>
     <div>
       <div style={{ color: "#fff", fontWeight: 800, fontSize: 18, fontFamily: "'Baloo 2', cursive", letterSpacing: 0.3 }}>{title}</div>
@@ -305,7 +327,7 @@ export default function App() {
           <div style={{ fontSize: 13, color: "#888", marginBottom: 28 }}>This determines the language and response scale.</div>
           <div style={{ display: "flex", gap: 16 }}>
             {[["young", "🧒", "Ages 6–13", "#3B7DD8", "#EAF2FF", "#D6E8FF", "Simple language\n3 responses with faces\nKid-friendly questions"],
-              ["older", "🧑‍🎓", "Ages 14+", "#9B72CF", "#F0EBF8", "#E4D9F5", "Friendly language\n4 responses with faces\nMore detailed questions"]
+              ["older", "🧑‍🎓", "Ages 14+", "#1B8A9E", "#E0F5F5", "#D4F1F7", "Friendly language\n4 responses with faces\nMore detailed questions"]
             ].map(([m, ico, lbl, clr, bg1, bg2, desc]) => (
               <button key={m} onClick={() => setMode(m)} style={{
                 flex: 1, padding: "28px 20px", borderRadius: 18, border: `3px solid ${clr}`,
@@ -332,7 +354,7 @@ export default function App() {
 
   return (
     <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0}body{background:#F0F4FA}@media print{body{background:#fff!important}.no-print{display:none!important}.pc{box-shadow:none!important;margin:0!important;padding:16px!important;max-width:100%!important}button.no-print-style{border:2px solid #ccc!important;box-shadow:none!important;transform:none!important}@page{margin:.4in}}`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0}body{background:#F0F4FA}@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}body{background:#fff!important}.no-print{display:none!important}.pc{box-shadow:none!important;margin:0!important;padding:16px!important;max-width:100%!important}.likert-btns{display:none!important}.print-answer{display:inline-flex!important}@page{margin:.4in}}`}</style>
       <div style={{ maxWidth: 820, margin: "0 auto", fontFamily: "'Nunito',sans-serif" }}>
         <div className="no-print" style={{ position: "sticky", top: 0, zIndex: 100, background: "#1B3A5C", padding: "10px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", borderRadius: "0 0 16px 16px", boxShadow: "0 4px 20px #0002" }}>
           <div>
@@ -348,13 +370,13 @@ export default function App() {
 
         <div className="pc" style={{ background: "#fff", borderRadius: 20, padding: "28px 32px", margin: "16px 0", boxShadow: "0 2px 24px #0001" }}>
           <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
-            <span style={{ background: y ? "#EAF2FF" : "#F0EBF8", color: y ? "#3B7DD8" : "#9B72CF", padding: "4px 16px", borderRadius: 20, fontWeight: 700, fontSize: 12, border: `2px solid ${y ? "#3B7DD8" : "#9B72CF"}` }}>{y ? "🧒 Ages 6–13 Version" : "🧑‍🎓 Ages 14+ Version"}</span>
+            <span style={{ background: y ? "#EAF2FF" : "#E0F5F5", color: y ? "#3B7DD8" : "#1B8A9E", padding: "4px 16px", borderRadius: 20, fontWeight: 700, fontSize: 12, border: `2px solid ${y ? "#3B7DD8" : "#1B8A9E"}` }}>{y ? "🧒 Ages 6–13 Version" : "🧑‍🎓 Ages 14+ Version"}</span>
           </div>
 
           <div style={{ background: "linear-gradient(135deg,#FFF3EB,#FFF8F0)", borderRadius: 14, padding: "16px 20px", marginBottom: 16, border: "1px solid #FFE0C8" }}>
             <div style={{ fontSize: 14, color: "#555", lineHeight: 1.6 }}>
               {y ? <><strong style={{ color: "#E8A838" }}>Hi there! 👋</strong> This is all about <strong>YOU</strong> — what you like, what you're good at, and how you feel about school. There are no right or wrong answers! You can skip anything. A grown-up can help you if you need it.</> :
-                <><strong style={{ color: "#9B72CF" }}>Hey! 👋</strong> This is all about <strong>you</strong> — your strengths, how you learn, and what support works best. There are no right or wrong answers. Be honest — it helps us help you. Skip anything you don't want to answer. Someone can read the questions to you if that helps.</>}
+                <><strong style={{ color: "#1B8A9E" }}>Hey! 👋</strong> This is all about <strong>you</strong> — your strengths, how you learn, and what support works best. There are no right or wrong answers. Be honest — it helps us help you. Skip anything you don't want to answer. Someone can read the questions to you if that helps.</>}
             </div>
           </div>
 
@@ -444,7 +466,7 @@ export default function App() {
           <TA value={form.anythingElse} onChange={v => s("anythingElse", v)} rows={3} />
 
           {/* Close */}
-          <div style={{ background: y ? "linear-gradient(135deg,#EBF7EE,#D6FADC)" : "linear-gradient(135deg,#F0EBF8,#E4D9F5)", borderRadius: 14, padding: "20px 24px", marginTop: 28, textAlign: "center", border: `1px solid ${y ? "#B8E6C0" : "#D0C0E8"}` }}>
+          <div style={{ background: y ? "linear-gradient(135deg,#EBF7EE,#D6FADC)" : "linear-gradient(135deg,#E0F5F5,#D4F1F7)", borderRadius: 14, padding: "20px 24px", marginTop: 28, textAlign: "center", border: `1px solid ${y ? "#B8E6C0" : "#A8DDE6"}` }}>
             <div style={{ fontSize: 22, fontWeight: 800, color: "#1B3A5C", fontFamily: "'Baloo 2',cursive" }}>{y ? "You're all done — awesome job! 🎉" : "You're all done — nice work! 🎉"}</div>
             <div style={{ fontSize: 13, color: "#555", marginTop: 4 }}>{y ? "Everything you shared is private and will help us make sure the support you get really fits YOU." : "Everything you shared is private and will help us figure out the best way to support you."}</div>
           </div>
