@@ -1,18 +1,56 @@
-import { useState } from "react";
+import { useState, createContext, useContext } from "react";
+
+// ───────────── THEME ─────────────
+
+const themes = {
+  dark: {
+    bg: "#0a0a0a", card: "#111111", border: "#1e1e1e", inputBg: "#0a0a0a",
+    text: "#e8e8e8", textMuted: "#888", textDim: "#555", textSub: "#aaa",
+    accent: "#7eb8e0", checkColor: "#7eb8e0", checkBg: "#0c1520",
+    welcomeBg: "#111", welcomeBorder: "#1e1e1e",
+    rowBg: "#0d0d0d", rowBgSel: "#111",
+    btnBorder: "#333", btnBg: "#1a1a1a",
+    footerBg: "#111", stickyBg: "#111",
+    printBtnBg: "#fff", printBtnColor: "#0a0a0a",
+  },
+  light: {
+    bg: "#f5f5f0", card: "#ffffff", border: "#e0e0e0", inputBg: "#fafafa",
+    text: "#222222", textMuted: "#666", textDim: "#999", textSub: "#555",
+    accent: "#3B7DD8", checkColor: "#3B7DD8", checkBg: "#EAF2FF",
+    welcomeBg: "#fff8f0", welcomeBorder: "#ffe0c8",
+    rowBg: "#fafbfc", rowBgSel: "#f8fdf8",
+    btnBorder: "#e0e0e0", btnBg: "#fafafa",
+    footerBg: "#fff", stickyBg: "#fff",
+    printBtnBg: "#222", printBtnColor: "#fff",
+  },
+};
+
+const SECTION_COLORS = {
+  about:    { dark: "#7eb8e0", light: "#1B3A5C" },
+  strengths:{ dark: "#e89b2d", light: "#E8A838" },
+  reading:  { dark: "#27ae60", light: "#5AA867" },
+  feelings: { dark: "#9b59b6", light: "#9B72CF" },
+  learn:    { dark: "#7eb8e0", light: "#3B7DD8" },
+  interests:{ dark: "#e63946", light: "#E06B50" },
+  goals:    { dark: "#e89b2d", light: "#D4A843" },
+};
+
+const ThemeCtx = createContext();
+const useTheme = () => useContext(ThemeCtx);
 
 // ───────────── DATA ─────────────
 
 const LIKERT_3 = [
-  { label: "Not Really", sub: "That's not me", color: "#E8506A", bg: "#FFE0E6", face: "sad", value: 1 },
-  { label: "Sometimes", sub: "Kind of", color: "#E8A817", bg: "#FFF7D6", face: "neutral", value: 2 },
-  { label: "Yes!", sub: "That's me!", color: "#2FAB4F", bg: "#D6FADC", face: "happy", value: 3 },
+  { label: "Not Really", sub: "That's not me", color: "#e63946", selBg: "#1a0a0a", lightSelBg: "#FFE0E6", value: 1 },
+  { label: "Sometimes", sub: "Kind of", color: "#e89b2d", selBg: "#1a1408", lightSelBg: "#FFF7D6", value: 2 },
+  { label: "Yes!", sub: "That's me!", color: "#27ae60", selBg: "#0a1a10", lightSelBg: "#D6FADC", value: 3 },
 ];
 
 const LIKERT_4 = [
-  { label: "No", sub: "Not me", color: "#C25670", bg: "#FCE4EC", face: "sad", value: 1 },
-  { label: "A Little", sub: "Sometimes", color: "#D4995A", bg: "#FFF3E0", face: "neutral", value: 2 },
-  { label: "Mostly", sub: "Usually", color: "#3BA0A8", bg: "#E0F5F5", face: "content", value: 3 },
-  { label: "Yes!", sub: "Totally", color: "#2FAB4F", bg: "#D6FADC", face: "happy", value: 4 },
+  { label: "No", sub: "Not me", color: "#e63946", selBg: "#1a0a0a", lightSelBg: "#FCE4EC", value: 1 },
+  { label: "A Little", sub: "Sometimes", color: "#e89b2d", selBg: "#1a1408", lightSelBg: "#FFF3E0", value: 2 },
+  { label: "Mostly", sub: "Usually", color: "#7eb8e0", selBg: "#0c1520", lightSelBg: "#E0F5F5", value: 3 },
+  { label: "Yes!", sub: "Totally", color: "#27ae60", selBg: "#0a1a10", lightSelBg: "#D6FADC", value: 4 },
 ];
 
 const STRENGTHS_YOUNG = [
@@ -143,81 +181,43 @@ const GOALS_OLDER = [
 
 // ───────────── COMPONENTS ─────────────
 
-const Face = ({ type, size = 48 }) => {
-  const r = size / 2;
-  const eyeY = -r * 0.05;
-  const eyeDx = r * 0.28;
-  const mouthY = r * 0.32;
-  const fills = {
-    happy: ["#C8F7CE", "#3A9E50"],
-    happyTeal: ["#C2EEF5", "#1B8A9E"],
-    content: ["#D4F1F7", "#2A96A8"],
-    neutral: ["#FFF4C2", "#CCA020"],
-    sad: ["#FFD4D4", "#D45A6A"],
-  };
-  const [bg, stroke] = fills[type] || fills.neutral;
-  return (
-    <svg width={size} height={size} viewBox={`${-r} ${-r} ${size} ${size}`}>
-      <circle cx={0} cy={0} r={r * 0.92} fill={bg} stroke={stroke} strokeWidth={2.5} />
-      <circle cx={-r * 0.4} cy={r * 0.15} r={r * 0.12} fill="#FFB8C8" opacity={0.6} />
-      <circle cx={r * 0.4} cy={r * 0.15} r={r * 0.12} fill="#FFB8C8" opacity={0.6} />
-      {type === "happy" || type === "happyTeal" || type === "content" ? (<>
-        <path d={`M${-eyeDx - 6},${eyeY} Q${-eyeDx},${eyeY - 8} ${-eyeDx + 6},${eyeY}`} fill="none" stroke="#222" strokeWidth={2.5} strokeLinecap="round" />
-        <path d={`M${eyeDx - 6},${eyeY} Q${eyeDx},${eyeY - 8} ${eyeDx + 6},${eyeY}`} fill="none" stroke="#222" strokeWidth={2.5} strokeLinecap="round" />
-      </>) : (<>
-        <circle cx={-eyeDx} cy={eyeY} r={r * 0.09} fill="#222" />
-        <circle cx={-eyeDx + 2} cy={eyeY - 2} r={r * 0.035} fill="#fff" />
-        <circle cx={eyeDx} cy={eyeY} r={r * 0.09} fill="#222" />
-        <circle cx={eyeDx + 2} cy={eyeY - 2} r={r * 0.035} fill="#fff" />
-      </>)}
-      {type === "sad" && (<>
-        <line x1={-eyeDx - 5} y1={eyeY - 10} x2={-eyeDx + 5} y2={eyeY - 7} stroke="#222" strokeWidth={2} strokeLinecap="round" />
-        <line x1={eyeDx + 5} y1={eyeY - 10} x2={eyeDx - 5} y2={eyeY - 7} stroke="#222" strokeWidth={2} strokeLinecap="round" />
-      </>)}
-      {type === "happy" || type === "happyTeal" ? (
-        <path d={`M${-r * 0.3},${mouthY - 2} Q0,${mouthY + 12} ${r * 0.3},${mouthY - 2}`} fill="none" stroke="#222" strokeWidth={2.5} strokeLinecap="round" />
-      ) : type === "content" ? (
-        <path d={`M${-r * 0.22},${mouthY} Q0,${mouthY + 6} ${r * 0.22},${mouthY}`} fill="none" stroke="#222" strokeWidth={2.5} strokeLinecap="round" />
-      ) : type === "sad" ? (
-        <path d={`M${-r * 0.25},${mouthY + 5} Q0,${mouthY - 6} ${r * 0.25},${mouthY + 5}`} fill="none" stroke="#222" strokeWidth={2.5} strokeLinecap="round" />
-      ) : (
-        <line x1={-r * 0.22} y1={mouthY} x2={r * 0.22} y2={mouthY} stroke="#222" strokeWidth={2.5} strokeLinecap="round" />
-      )}
-    </svg>
-  );
-};
-
-const FaceLikertBtn = ({ option, selected, onClick, compact }) => {
+const LikertBtn = ({ option, selected, onClick, compact, isDark }) => {
   const sel = selected === option.label;
+  const t = isDark ? themes.dark : themes.light;
   return (
     <button onClick={onClick} className="no-print-style" style={{
       display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
-      padding: compact ? "6px 4px" : "8px 6px", borderRadius: 14, border: `3px solid ${sel ? option.color : "#e0e0e0"}`,
-      background: sel ? option.bg : "#fafafa", cursor: "pointer", transition: "all 0.2s",
-      flex: 1, minWidth: compact ? 68 : 80, transform: sel ? "scale(1.06)" : "scale(1)",
-      boxShadow: sel ? `0 4px 16px ${option.color}40` : "0 1px 3px #0001",
+      padding: compact ? "8px 6px" : "10px 8px", borderRadius: 12, border: `2px solid ${sel ? option.color : t.border}`,
+      background: sel ? (isDark ? option.selBg : option.lightSelBg) : t.btnBg, cursor: "pointer", transition: "all 0.2s",
+      flex: 1, minWidth: compact ? 68 : 80, transform: sel ? "scale(1.04)" : "scale(1)",
+      boxShadow: sel ? `0 4px 16px ${option.color}30` : "none",
     }}>
-      <Face type={option.face} size={sel ? (compact ? 36 : 42) : (compact ? 30 : 36)} />
-      <span style={{ fontWeight: 700, fontSize: compact ? 11 : 13, color: option.color }}>{option.label}</span>
-      <span style={{ fontSize: compact ? 9 : 10, color: "#888" }}>{option.sub}</span>
+      <span style={{
+        fontFamily: "'Space Mono', monospace", fontWeight: 700,
+        fontSize: sel ? (compact ? 20 : 24) : (compact ? 16 : 20),
+        color: sel ? option.color : t.textDim, transition: "all 0.2s",
+      }}>{option.value}</span>
+      <span style={{ fontWeight: 700, fontSize: compact ? 11 : 13, color: sel ? option.color : t.textMuted }}>{option.label}</span>
+      <span style={{ fontSize: compact ? 9 : 10, color: t.textDim }}>{option.sub}</span>
     </button>
   );
 };
 
 const LikertRow = ({ statement, value, onChange, mode }) => {
+  const { dark } = useTheme();
+  const t = dark ? themes.dark : themes.light;
   const opts = mode === "young" ? LIKERT_3 : LIKERT_4;
   const selected = opts.find((o) => o.label === value);
   return (
     <div style={{
       display: "flex", alignItems: "center", gap: 12, padding: "10px 14px",
-      borderRadius: 12, background: value ? "#f8fdf8" : "#fafbfc",
-      border: "1px solid #eee", marginBottom: 6,
+      borderRadius: 12, background: value ? t.rowBgSel : t.rowBg,
+      border: `1px solid ${t.border}`, marginBottom: 6,
     }}>
-      <div style={{ flex: 1, fontSize: 14, color: "#333", fontFamily: "'Nunito', sans-serif", minWidth: 160 }}>{statement}</div>
+      <div style={{ flex: 1, fontSize: 14, color: t.text, fontFamily: "'Outfit', sans-serif", minWidth: 160 }}>{statement}</div>
       <div className="likert-btns" style={{ display: "flex", gap: mode === "young" ? 6 : 4, flexShrink: 0 }}>
-        {opts.map((o) => <FaceLikertBtn key={o.label} option={o} selected={value} onClick={() => onChange(o.label)} compact={mode !== "young"} />)}
+        {opts.map((o) => <LikertBtn key={o.label} option={o} selected={value} onClick={() => onChange(o.label)} compact={mode !== "young"} isDark={dark} />)}
       </div>
-      {/* Print-only answer pill */}
       <div className="print-answer" style={{ display: "none", alignItems: "center", gap: 6, flexShrink: 0 }}>
         {selected ? (
           <span style={{
@@ -226,64 +226,96 @@ const LikertRow = ({ statement, value, onChange, mode }) => {
             WebkitPrintColorAdjust: "exact", printColorAdjust: "exact", colorAdjust: "exact",
           }}>{selected.label}</span>
         ) : (
-          <span style={{ fontSize: 12, color: "#ccc", fontStyle: "italic" }}>—</span>
+          <span style={{ fontSize: 12, color: t.textDim, fontStyle: "italic" }}>—</span>
         )}
       </div>
     </div>
   );
 };
 
-const CheckGrid = ({ items, selected, onChange }) => (
-  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
-    {items.map((item) => {
-      const ch = selected.includes(item);
-      return (
-        <button key={item} onClick={() => onChange(ch ? selected.filter((s) => s !== item) : [...selected, item])} style={{
-          display: "flex", alignItems: "center", gap: 10, padding: "10px 14px",
-          borderRadius: 10, border: `2px solid ${ch ? "#3B7DD8" : "#e0e0e0"}`,
-          background: ch ? "#EAF2FF" : "#fafafa", cursor: "pointer", textAlign: "left", transition: "all 0.15s",
-          WebkitPrintColorAdjust: "exact", printColorAdjust: "exact", colorAdjust: "exact",
-        }}>
-          <div style={{
-            width: 22, height: 22, borderRadius: 6, border: `2px solid ${ch ? "#3B7DD8" : "#ccc"}`,
-            background: ch ? "#3B7DD8" : "#fff", display: "flex", alignItems: "center",
-            justifyContent: "center", flexShrink: 0, transition: "all 0.15s",
+const CheckGrid = ({ items, selected, onChange }) => {
+  const { dark } = useTheme();
+  const t = dark ? themes.dark : themes.light;
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+      {items.map((item) => {
+        const ch = selected.includes(item);
+        return (
+          <button key={item} onClick={() => onChange(ch ? selected.filter((s) => s !== item) : [...selected, item])} style={{
+            display: "flex", alignItems: "center", gap: 10, padding: "10px 14px",
+            borderRadius: 10, border: `2px solid ${ch ? t.checkColor : t.border}`,
+            background: ch ? t.checkBg : t.btnBg, cursor: "pointer", textAlign: "left", transition: "all 0.15s",
             WebkitPrintColorAdjust: "exact", printColorAdjust: "exact", colorAdjust: "exact",
-            WebkitPrintColorAdjust: "exact", printColorAdjust: "exact",
-          }}>{ch && <span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>✓</span>}</div>
-          <span style={{ fontSize: 13, color: "#333", fontFamily: "'Nunito', sans-serif" }}>{item}</span>
-        </button>
-      );
-    })}
-  </div>
-);
-
-const TA = ({ value, onChange, placeholder, rows = 2 }) => (
-  <textarea value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} rows={rows}
-    style={{ width: "100%", padding: "10px 14px", borderRadius: 10, border: "2px solid #ddd", fontSize: 14, fontFamily: "'Nunito', sans-serif", resize: "vertical", background: "#fafafa", color: "#222", lineHeight: 1.5, boxSizing: "border-box" }} />
-);
-
-const Inp = ({ value, onChange, placeholder, type = "text" }) => (
-  <input type={type} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder}
-    style={{ width: "100%", padding: "10px 14px", borderRadius: 10, border: "2px solid #ddd", fontSize: 14, fontFamily: "'Nunito', sans-serif", background: "#fafafa", color: "#222", boxSizing: "border-box" }} />
-);
-
-const SH = ({ icon, title, color, subtitle }) => (
-  <div style={{ background: color, borderRadius: 14, padding: "14px 20px", marginTop: 28, marginBottom: 14, display: "flex", alignItems: "center", gap: 12, WebkitPrintColorAdjust: "exact", printColorAdjust: "exact" }}>
-    <span style={{ fontSize: 26 }}>{icon}</span>
-    <div>
-      <div style={{ color: "#fff", fontWeight: 800, fontSize: 18, fontFamily: "'Baloo 2', cursive", letterSpacing: 0.3 }}>{title}</div>
-      {subtitle && <div style={{ color: "#ffffffcc", fontSize: 12, marginTop: 2 }}>{subtitle}</div>}
+          }}>
+            <div style={{
+              width: 22, height: 22, borderRadius: 6, border: `2px solid ${ch ? t.checkColor : t.textDim}`,
+              background: ch ? t.checkColor : "transparent", display: "flex", alignItems: "center",
+              justifyContent: "center", flexShrink: 0, transition: "all 0.15s",
+              WebkitPrintColorAdjust: "exact", printColorAdjust: "exact",
+            }}>{ch && <span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>✓</span>}</div>
+            <span style={{ fontSize: 13, color: t.text, fontFamily: "'Outfit', sans-serif" }}>{item}</span>
+          </button>
+        );
+      })}
     </div>
-  </div>
-);
+  );
+};
 
-const Sub = ({ text }) => (
-  <div style={{ fontWeight: 700, fontSize: 14, color: "#1B3A5C", margin: "14px 0 6px", fontFamily: "'Baloo 2', cursive", borderBottom: "2px solid #E8F0FE", paddingBottom: 4 }}>{text}</div>
-);
+const TA = ({ value, onChange, placeholder, rows = 2 }) => {
+  const { dark } = useTheme();
+  const t = dark ? themes.dark : themes.light;
+  return (
+    <textarea value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} rows={rows}
+      style={{ width: "100%", padding: "10px 14px", borderRadius: 10, border: `2px solid ${t.border}`, fontSize: 14, fontFamily: "'Outfit', sans-serif", resize: "vertical", background: t.inputBg, color: t.text, lineHeight: 1.5, boxSizing: "border-box", outline: "none" }}
+      onFocus={(e) => (e.target.style.borderColor = t.accent)} onBlur={(e) => (e.target.style.borderColor = t.border)} />
+  );
+};
 
-const Q = ({ text }) => (
-  <div style={{ fontWeight: 700, fontSize: 14, color: "#333", margin: "12px 0 6px", fontFamily: "'Nunito', sans-serif" }}>{text}</div>
+const Inp = ({ value, onChange, placeholder, type = "text" }) => {
+  const { dark } = useTheme();
+  const t = dark ? themes.dark : themes.light;
+  return (
+    <input type={type} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder}
+      style={{ width: "100%", padding: "10px 14px", borderRadius: 10, border: `2px solid ${t.border}`, fontSize: 14, fontFamily: "'Outfit', sans-serif", background: t.inputBg, color: t.text, boxSizing: "border-box", outline: "none" }}
+      onFocus={(e) => (e.target.style.borderColor = t.accent)} onBlur={(e) => (e.target.style.borderColor = t.border)} />
+  );
+};
+
+const SH = ({ icon, title, colorKey }) => {
+  const { dark } = useTheme();
+  const color = SECTION_COLORS[colorKey]?.[dark ? "dark" : "light"] || "#7eb8e0";
+  return (
+    <div style={{ borderRadius: 14, padding: "14px 20px", marginTop: 28, marginBottom: 14, display: "flex", alignItems: "center", gap: 12, background: dark ? "#111" : color, border: dark ? `2px solid ${color}` : "none", WebkitPrintColorAdjust: "exact", printColorAdjust: "exact" }}>
+      <span style={{ fontSize: 26 }}>{icon}</span>
+      <div style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 2, textTransform: "uppercase", color: dark ? color : "#fff" }}>{title}</div>
+    </div>
+  );
+};
+
+const Sub = ({ text }) => {
+  const { dark } = useTheme();
+  const t = dark ? themes.dark : themes.light;
+  return (
+    <div style={{ fontWeight: 700, fontSize: 14, color: t.accent, margin: "14px 0 6px", fontFamily: "'Space Mono', monospace", borderBottom: `2px solid ${t.border}`, paddingBottom: 4 }}>{text}</div>
+  );
+};
+
+const Q = ({ text }) => {
+  const { dark } = useTheme();
+  return (
+    <div style={{ fontWeight: 700, fontSize: 14, color: dark ? "#e8e8e8" : "#333", margin: "12px 0 6px", fontFamily: "'Outfit', sans-serif" }}>{text}</div>
+  );
+};
+
+const ThemeToggle = ({ dark, toggle }) => (
+  <button onClick={toggle} style={{
+    padding: "6px 12px", borderRadius: 20, border: `1.5px solid ${dark ? "#333" : "#ddd"}`,
+    background: dark ? "#1a1a1a" : "#f0f0f0", color: dark ? "#e8e8e8" : "#333",
+    fontFamily: "'Space Mono', monospace", fontSize: 11, fontWeight: 700, cursor: "pointer",
+    display: "flex", alignItems: "center", gap: 6, transition: "all 0.2s",
+  }}>
+    {dark ? "☀️" : "🌙"} {dark ? "Light" : "Dark"}
+  </button>
 );
 
 // ───────────── APP ─────────────
@@ -302,10 +334,13 @@ const INIT = {
 
 export default function App() {
   const [mode, setMode] = useState(null);
+  const [dark, setDark] = useState(true);
   const [form, setForm] = useState({ ...INIT });
   const s = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const sN = (g, k, v) => setForm((f) => ({ ...f, [g]: { ...f[g], [k]: v } }));
   const y = mode === "young";
+  const t = dark ? themes.dark : themes.light;
+  const toggle = () => setDark((d) => !d);
 
   const reset = () => { if (window.confirm("Start over? This will clear all answers.")) { setForm({ ...INIT }); setMode(null); } };
   const saveJSON = () => {
@@ -314,35 +349,55 @@ export default function App() {
     a.download = `${form.name || "student"}_intake_${mode}_${form.date}.json`; a.click();
   };
 
+  const globalCSS = `
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: ${t.bg}; transition: background 0.3s; }
+    input:focus, textarea:focus { outline: none; }
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .no-print { display: none !important; }
+      .pc { box-shadow: none !important; margin: 0 !important; padding: 16px !important; max-width: 100% !important; background: #fff !important; color: #000 !important; border: none !important; }
+      .pc * { color: #333 !important; border-color: #ddd !important; }
+      .pc input, .pc textarea { background: #fff !important; color: #000 !important; border-color: #ccc !important; }
+      .likert-btns { display: none !important; }
+      .print-answer { display: inline-flex !important; }
+      @page { margin: .4in; }
+    }
+  `;
+
   if (!mode) return (
-    <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0}body{background:#F0F4FA}`}</style>
-      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "'Nunito',sans-serif", padding: 24 }}>
-        <div style={{ background: "#fff", borderRadius: 24, padding: "48px 40px", maxWidth: 560, width: "100%", boxShadow: "0 8px 40px #0001", textAlign: "center" }}>
-          <div style={{ background: "#1B3A5C", borderRadius: 14, padding: "16px 20px", marginBottom: 28 }}>
-            <div style={{ color: "#fff", fontFamily: "'Baloo 2',cursive", fontWeight: 800, fontSize: 22 }}>RTN Communication & Literacy</div>
-            <div style={{ color: "#ffffff99", fontSize: 12 }}>Student Self-Report Intake</div>
+    <ThemeCtx.Provider value={{ dark }}>
+      <style>{globalCSS}</style>
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "'Outfit',sans-serif", padding: 24 }}>
+        <div style={{ position: "fixed", top: 16, right: 16 }}><ThemeToggle dark={dark} toggle={toggle} /></div>
+        <div style={{ background: t.card, borderRadius: 20, padding: "48px 40px", maxWidth: 560, width: "100%", boxShadow: dark ? "none" : "0 8px 40px #0001", textAlign: "center", border: `1px solid ${t.border}` }}>
+          <div style={{ background: dark ? "#111" : "#1B3A5C", borderRadius: 14, padding: "16px 20px", marginBottom: 28, border: dark ? "2px solid #7eb8e0" : "none" }}>
+            <div style={{ color: dark ? "#7eb8e0" : "#fff", fontFamily: "'Space Mono',monospace", fontWeight: 700, fontSize: 13, letterSpacing: 2, textTransform: "uppercase" }}>RTN COMMUNICATION & LITERACY</div>
+            <div style={{ color: dark ? "#555" : "#ffffff99", fontSize: 12, fontFamily: "'Space Mono',monospace", marginTop: 4 }}>Student Self-Report Intake</div>
           </div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: "#333", marginBottom: 8 }}>Select the student's age group:</div>
-          <div style={{ fontSize: 13, color: "#888", marginBottom: 28 }}>This determines the language and response scale.</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: t.text, marginBottom: 8, fontFamily: "'Outfit',sans-serif" }}>Select the student's age group:</div>
+          <div style={{ fontSize: 13, color: t.textMuted, marginBottom: 28 }}>This determines the language and response scale.</div>
           <div style={{ display: "flex", gap: 16 }}>
-            {[["young", "🧒", "Ages 6–13", "#3B7DD8", "#EAF2FF", "#D6E8FF", "Simple language\n3 responses with faces\nKid-friendly questions"],
-              ["older", "🧑‍🎓", "Ages 14+", "#1B8A9E", "#E0F5F5", "#D4F1F7", "Friendly language\n4 responses with faces\nMore detailed questions"]
-            ].map(([m, ico, lbl, clr, bg1, bg2, desc]) => (
+            {[
+              ["young", "🧒", "Ages 6–13", "#7eb8e0", "Simple language\n3 responses\nKid-friendly questions"],
+              ["older", "🧑‍🎓", "Ages 14+", "#9b59b6", "Friendly language\n4 responses\nMore detailed questions"],
+            ].map(([m, ico, lbl, clr, desc]) => (
               <button key={m} onClick={() => setMode(m)} style={{
-                flex: 1, padding: "28px 20px", borderRadius: 18, border: `3px solid ${clr}`,
-                background: `linear-gradient(135deg, ${bg1}, ${bg2})`, cursor: "pointer", transition: "all 0.2s",
+                flex: 1, padding: "28px 20px", borderRadius: 20, border: `2px solid ${clr}`,
+                background: dark ? clr + "10" : clr + "15", cursor: "pointer", transition: "all 0.2s",
               }}>
                 <div style={{ fontSize: 40, marginBottom: 8 }}>{ico}</div>
-                <div style={{ fontWeight: 800, fontSize: 20, color: "#1B3A5C", fontFamily: "'Baloo 2',cursive" }}>{lbl}</div>
-                <div style={{ fontSize: 12, color: "#666", marginTop: 6, lineHeight: 1.5, whiteSpace: "pre-line" }}>{desc}</div>
+                <div style={{ fontWeight: 800, fontSize: 20, color: clr, fontFamily: "'Outfit',sans-serif" }}>{lbl}</div>
+                <div style={{ fontSize: 12, color: t.textMuted, marginTop: 6, lineHeight: 1.5, whiteSpace: "pre-line" }}>{desc}</div>
               </button>
             ))}
           </div>
-          <div style={{ marginTop: 28, fontSize: 11, color: "#bbb" }}>Rachel Norton, MS, CCC-SLP • rachelslp.org</div>
+          <div style={{ marginTop: 28, fontSize: 11, color: t.textDim, fontFamily: "'Space Mono',monospace" }}>Rachel Norton, MS, CCC-SLP • rachelslp.org</div>
         </div>
       </div>
-    </>
+    </ThemeCtx.Provider>
   );
 
   const D = {
@@ -352,36 +407,42 @@ export default function App() {
     it: y ? INTERESTS_YOUNG : INTERESTS_OLDER, go: y ? GOALS_YOUNG : GOALS_OLDER,
   };
 
+  const versionColor = y ? "#7eb8e0" : "#9b59b6";
+
   return (
-    <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap');*{box-sizing:border-box;margin:0;padding:0}body{background:#F0F4FA}@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}body{background:#fff!important}.no-print{display:none!important}.pc{box-shadow:none!important;margin:0!important;padding:16px!important;max-width:100%!important}.likert-btns{display:none!important}.print-answer{display:inline-flex!important}@page{margin:.4in}}`}</style>
-      <div style={{ maxWidth: 820, margin: "0 auto", fontFamily: "'Nunito',sans-serif" }}>
-        <div className="no-print" style={{ position: "sticky", top: 0, zIndex: 100, background: "#1B3A5C", padding: "10px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", borderRadius: "0 0 16px 16px", boxShadow: "0 4px 20px #0002" }}>
+    <ThemeCtx.Provider value={{ dark }}>
+      <style>{globalCSS}</style>
+      <div style={{ maxWidth: 820, margin: "0 auto", fontFamily: "'Outfit',sans-serif" }}>
+        {/* Top sticky bar */}
+        <div className="no-print" style={{ position: "sticky", top: 0, zIndex: 100, background: t.stickyBg, padding: "10px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", borderRadius: "0 0 16px 16px", boxShadow: dark ? "0 4px 20px #0002" : "0 4px 20px #0001", border: `1px solid ${t.border}`, borderTop: "none" }}>
           <div>
-            <div style={{ color: "#fff", fontFamily: "'Baloo 2',cursive", fontWeight: 800, fontSize: 17 }}>RTN Communication & Literacy</div>
-            <div style={{ color: "#ffffff88", fontSize: 11 }}>Student Self-Report • {y ? "Ages 6–13" : "Ages 14+"}</div>
+            <div style={{ color: t.text, fontFamily: "'Space Mono',monospace", fontWeight: 700, fontSize: 12, letterSpacing: 1, textTransform: "uppercase" }}>RTN Communication & Literacy</div>
+            <div style={{ color: t.textDim, fontSize: 11, fontFamily: "'Space Mono',monospace" }}>Student Self-Report • {y ? "Ages 6–13" : "Ages 14+"}</div>
           </div>
-          <div style={{ display: "flex", gap: 8 }}>
-            <button onClick={reset} style={{ padding: "7px 14px", borderRadius: 10, border: "2px solid #ffffff33", background: "transparent", color: "#ffffff99", fontWeight: 700, cursor: "pointer", fontSize: 12 }}>↩ Start Over</button>
-            <button onClick={saveJSON} style={{ padding: "7px 14px", borderRadius: 10, border: "2px solid #ffffff44", background: "transparent", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 12 }}>💾 Save</button>
-            <button onClick={() => window.print()} style={{ padding: "7px 14px", borderRadius: 10, border: "none", background: "#3B7DD8", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 12 }}>🖨 Print</button>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <ThemeToggle dark={dark} toggle={toggle} />
+            <button onClick={reset} style={{ padding: "7px 14px", borderRadius: 10, border: `1.5px solid ${t.border}`, background: "transparent", color: t.textMuted, fontWeight: 700, cursor: "pointer", fontSize: 12, fontFamily: "'Space Mono',monospace" }}>↩ Start Over</button>
+            <button onClick={saveJSON} style={{ padding: "7px 14px", borderRadius: 10, border: `1.5px solid ${t.border}`, background: "transparent", color: t.text, fontWeight: 700, cursor: "pointer", fontSize: 12, fontFamily: "'Space Mono',monospace" }}>💾 Save</button>
+            <button onClick={() => window.print()} style={{ padding: "7px 14px", borderRadius: 10, border: "none", background: t.accent, color: dark ? "#0a0a0a" : "#fff", fontWeight: 700, cursor: "pointer", fontSize: 12, fontFamily: "'Space Mono',monospace" }}>🖨 Print</button>
           </div>
         </div>
 
-        <div className="pc" style={{ background: "#fff", borderRadius: 20, padding: "28px 32px", margin: "16px 0", boxShadow: "0 2px 24px #0001" }}>
+        <div className="pc" style={{ background: t.card, borderRadius: 20, padding: "28px 32px", margin: "16px 0", boxShadow: dark ? "none" : "0 2px 24px #0001", border: `1px solid ${t.border}` }}>
+          {/* Version badge */}
           <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
-            <span style={{ background: y ? "#EAF2FF" : "#E0F5F5", color: y ? "#3B7DD8" : "#1B8A9E", padding: "4px 16px", borderRadius: 20, fontWeight: 700, fontSize: 12, border: `2px solid ${y ? "#3B7DD8" : "#1B8A9E"}` }}>{y ? "🧒 Ages 6–13 Version" : "🧑‍🎓 Ages 14+ Version"}</span>
+            <span style={{ background: dark ? versionColor + "15" : versionColor + "15", color: versionColor, padding: "4px 16px", borderRadius: 20, fontWeight: 700, fontSize: 12, border: `2px solid ${versionColor}`, fontFamily: "'Space Mono',monospace" }}>{y ? "Ages 6–13 Version" : "Ages 14+ Version"}</span>
           </div>
 
-          <div style={{ background: "linear-gradient(135deg,#FFF3EB,#FFF8F0)", borderRadius: 14, padding: "16px 20px", marginBottom: 16, border: "1px solid #FFE0C8" }}>
-            <div style={{ fontSize: 14, color: "#555", lineHeight: 1.6 }}>
-              {y ? <><strong style={{ color: "#E8A838" }}>Hi there! 👋</strong> This is all about <strong>YOU</strong> — what you like, what you're good at, and how you feel about school. There are no right or wrong answers! You can skip anything. A grown-up can help you if you need it.</> :
-                <><strong style={{ color: "#1B8A9E" }}>Hey! 👋</strong> This is all about <strong>you</strong> — your strengths, how you learn, and what support works best. There are no right or wrong answers. Be honest — it helps us help you. Skip anything you don't want to answer. Someone can read the questions to you if that helps.</>}
+          {/* Welcome message */}
+          <div style={{ background: dark ? "#111" : t.welcomeBg, borderRadius: 14, padding: "16px 20px", marginBottom: 16, border: `1px solid ${dark ? "#1e1e1e" : t.welcomeBorder}` }}>
+            <div style={{ fontSize: 14, color: t.textSub, lineHeight: 1.6 }}>
+              {y ? <><strong style={{ color: "#e89b2d" }}>Hi there! 👋</strong> This is all about <strong style={{ color: t.text }}>YOU</strong> — what you like, what you're good at, and how you feel about school. There are no right or wrong answers! You can skip anything. A grown-up can help you if you need it.</> :
+                <><strong style={{ color: "#9b59b6" }}>Hey! 👋</strong> This is all about <strong style={{ color: t.text }}>you</strong> — your strengths, how you learn, and what support works best. There are no right or wrong answers. Be honest — it helps us help you. Skip anything you don't want to answer. Someone can read the questions to you if that helps.</>}
             </div>
           </div>
 
           {/* S1 */}
-          <SH icon="✏️" title="SECTION 1: ABOUT ME" color="#1B3A5C" />
+          <SH icon="✏️" title="SECTION 1: ABOUT ME" colorKey="about" />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             <div><Q text="Your Name" /><Inp value={form.name} onChange={v => s("name", v)} /></div>
             <div><Q text="Name You Like to Be Called" /><Inp value={form.nickname} onChange={v => s("nickname", v)} /></div>
@@ -406,8 +467,7 @@ export default function App() {
           </div>}
 
           {/* S2 */}
-          <SH icon="⭐" title="SECTION 2: WHAT I'M GOOD AT" color="#E8A838"
-            subtitle={y ? "Everyone is good at something! Check anything that sounds like you:" : "Everyone has strengths! Check anything that sounds like you:"} />
+          <SH icon="⭐" title="SECTION 2: WHAT I'M GOOD AT" colorKey="strengths" />
           <CheckGrid items={D.str} selected={form.strengths} onChange={v => s("strengths", v)} />
           <Q text={y ? "What are you really good at? (sports, art, games, cooking — anything!)" : "What are you really good at? (hobbies, skills, talents — anything!)"} />
           <TA value={form.goodAt} onChange={v => s("goodAt", v)} placeholder="I'm really good at..." />
@@ -417,7 +477,7 @@ export default function App() {
           <TA value={form.dreams} onChange={v => s("dreams", v)} />
 
           {/* S3 */}
-          <SH icon="📖" title="SECTION 3: READING & WRITING" color="#5AA867" />
+          <SH icon="📖" title="SECTION 3: READING & WRITING" colorKey="reading" />
           <Sub text="About Reading" />
           {D.rd.map(i => <LikertRow key={i} statement={i} value={form.reading[i]} onChange={v => sN("reading", i, v)} mode={mode} />)}
           <Sub text="About Writing & Spelling" />
@@ -426,8 +486,7 @@ export default function App() {
           {D.sc.map(i => <LikertRow key={i} statement={i} value={form.schoolItems[i]} onChange={v => sN("schoolItems", i, v)} mode={mode} />)}
 
           {/* S4 */}
-          <SH icon="💭" title="SECTION 4: HOW I FEEL ABOUT LEARNING" color="#9B72CF"
-            subtitle={y ? "Being honest helps us help you!" : "Being honest helps us help you — no judgment here."} />
+          <SH icon="💭" title="SECTION 4: HOW I FEEL ABOUT LEARNING" colorKey="feelings" />
           {D.fe.map(i => <LikertRow key={i} statement={i} value={form.feelings[i]} onChange={v => sN("feelings", i, v)} mode={mode} />)}
           <Q text="What's the hardest thing about school right now?" />
           <TA value={form.hardest} onChange={v => s("hardest", v)} />
@@ -438,8 +497,7 @@ export default function App() {
           {!y && <><Q text="What do you already do that helps you with school?" /><TA value={form.copingStrategies} onChange={v => s("copingStrategies", v)} placeholder="e.g., re-reading, audiobooks, asking friends for notes, taking breaks..." /></>}
 
           {/* S5 */}
-          <SH icon="🧠" title="SECTION 5: HOW I LEARN BEST" color="#3B7DD8"
-            subtitle={y ? "Check all the things that help you learn:" : "Check everything that helps you learn:"} />
+          <SH icon="🧠" title="SECTION 5: HOW I LEARN BEST" colorKey="learn" />
           <CheckGrid items={D.lp} selected={form.learnPrefs} onChange={v => s("learnPrefs", v)} />
           <Q text={y ? "What makes a teacher or tutor really helpful?" : "What makes a teacher or tutor really helpful for you?"} />
           <TA value={form.bestTeacher} onChange={v => s("bestTeacher", v)} />
@@ -447,15 +505,13 @@ export default function App() {
           <TA value={form.stopDoing} onChange={v => s("stopDoing", v)} />
 
           {/* S6 */}
-          <SH icon="🎮" title="SECTION 6: WHAT I LIKE TO READ, WATCH & DO" color="#E06B50"
-            subtitle="Check everything you enjoy:" />
+          <SH icon="🎮" title="SECTION 6: WHAT I LIKE TO READ, WATCH & DO" colorKey="interests" />
           <CheckGrid items={D.it} selected={form.interests} onChange={v => s("interests", v)} />
           <Q text={y ? "What's the last thing you read or watched that you actually liked?" : "What's the last thing you read, watched, or listened to that you actually liked?"} />
           <TA value={form.lastLiked} onChange={v => s("lastLiked", v)} />
 
           {/* S7 */}
-          <SH icon="🌟" title="SECTION 7: WHAT I WANT" color="#D4A843"
-            subtitle="This is your chance to say what matters to you!" />
+          <SH icon="🌟" title="SECTION 7: WHAT I WANT" colorKey="goals" />
           <Q text="If you could change one thing about reading, writing, or school?" />
           <TA value={form.changeOne} onChange={v => s("changeOne", v)} />
           <Q text="What do you want to get better at?" />
@@ -466,23 +522,24 @@ export default function App() {
           <TA value={form.anythingElse} onChange={v => s("anythingElse", v)} rows={3} />
 
           {/* Close */}
-          <div style={{ background: y ? "linear-gradient(135deg,#EBF7EE,#D6FADC)" : "linear-gradient(135deg,#E0F5F5,#D4F1F7)", borderRadius: 14, padding: "20px 24px", marginTop: 28, textAlign: "center", border: `1px solid ${y ? "#B8E6C0" : "#A8DDE6"}` }}>
-            <div style={{ fontSize: 22, fontWeight: 800, color: "#1B3A5C", fontFamily: "'Baloo 2',cursive" }}>{y ? "You're all done — awesome job! 🎉" : "You're all done — nice work! 🎉"}</div>
-            <div style={{ fontSize: 13, color: "#555", marginTop: 4 }}>{y ? "Everything you shared is private and will help us make sure the support you get really fits YOU." : "Everything you shared is private and will help us figure out the best way to support you."}</div>
+          <div style={{ background: dark ? versionColor + "10" : (y ? "linear-gradient(135deg,#EBF7EE,#D6FADC)" : "linear-gradient(135deg,#E0F5F5,#D4F1F7)"), borderRadius: 14, padding: "20px 24px", marginTop: 28, textAlign: "center", border: `1px solid ${dark ? versionColor + "33" : (y ? "#B8E6C0" : "#A8DDE6")}` }}>
+            <div style={{ fontSize: 22, fontWeight: 800, color: dark ? versionColor : "#1B3A5C", fontFamily: "'Outfit',sans-serif" }}>{y ? "You're all done — awesome job! 🎉" : "You're all done — nice work! 🎉"}</div>
+            <div style={{ fontSize: 13, color: t.textMuted, marginTop: 4 }}>{y ? "Everything you shared is private and will help us make sure the support you get really fits YOU." : "Everything you shared is private and will help us figure out the best way to support you."}</div>
           </div>
           <div style={{ display: "flex", gap: 16, marginTop: 20, alignItems: "flex-end" }}>
             <div style={{ flex: 2 }}><Q text="Your Name (optional)" /><Inp value={form.signName} onChange={v => s("signName", v)} /></div>
             <div style={{ flex: 1 }}><Q text="Date" /><Inp value={form.signDate} onChange={v => s("signDate", v)} /></div>
           </div>
-          <div style={{ textAlign: "center", marginTop: 24, color: "#bbb", fontSize: 11 }}>RTN Communication & Literacy • Rachel Norton, MS, CCC-SLP • rachelslp.org<br />Strengths-Based • Neurodiversity-Affirming • Evidence-Based</div>
+          <div style={{ textAlign: "center", marginTop: 24, color: t.textDim, fontSize: 11, fontFamily: "'Space Mono',monospace" }}>RTN Communication & Literacy • Rachel Norton, MS, CCC-SLP • rachelslp.org<br />Strengths-Based • Neurodiversity-Affirming • Evidence-Based</div>
         </div>
 
-        <div className="no-print" style={{ position: "sticky", bottom: 0, background: "#fff", padding: "12px 24px", borderRadius: "16px 16px 0 0", boxShadow: "0 -4px 20px #0001", display: "flex", justifyContent: "center", gap: 12, marginTop: 8 }}>
-          <button onClick={reset} style={{ padding: "12px 24px", borderRadius: 12, border: "2px solid #ddd", background: "#fff", color: "#888", fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Nunito',sans-serif" }}>↩ Start Over</button>
-          <button onClick={saveJSON} style={{ padding: "12px 24px", borderRadius: 12, border: "2px solid #1B3A5C", background: "#fff", color: "#1B3A5C", fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Nunito',sans-serif" }}>💾 Save as File</button>
-          <button onClick={() => window.print()} style={{ padding: "12px 24px", borderRadius: 12, border: "none", background: "#3B7DD8", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Nunito',sans-serif" }}>🖨 Print / Save PDF</button>
+        {/* Bottom bar */}
+        <div className="no-print" style={{ position: "sticky", bottom: 0, background: t.footerBg, padding: "12px 24px", borderRadius: "16px 16px 0 0", boxShadow: dark ? "0 -4px 20px #0002" : "0 -4px 20px #0001", display: "flex", justifyContent: "center", gap: 12, marginTop: 8, border: `1px solid ${t.border}`, borderBottom: "none" }}>
+          <button onClick={reset} style={{ padding: "12px 24px", borderRadius: 12, border: `2px solid ${t.border}`, background: t.card, color: t.textMuted, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif" }}>↩ Start Over</button>
+          <button onClick={saveJSON} style={{ padding: "12px 24px", borderRadius: 12, border: `2px solid ${t.accent}`, background: t.card, color: t.accent, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif" }}>💾 Save as File</button>
+          <button onClick={() => window.print()} style={{ padding: "12px 24px", borderRadius: 12, border: "none", background: t.printBtnBg, color: t.printBtnColor, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif" }}>🖨 Print / Save PDF</button>
         </div>
       </div>
-    </>
+    </ThemeCtx.Provider>
   );
 }
