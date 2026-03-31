@@ -334,7 +334,7 @@ const INIT = {
 
 export default function App() {
   const [mode, setMode] = useState(null);
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(false);
   const [form, setForm] = useState({ ...INIT });
   const s = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const sN = (g, k, v) => setForm((f) => ({ ...f, [g]: { ...f[g], [k]: v } }));
