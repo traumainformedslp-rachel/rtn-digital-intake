@@ -2,26 +2,31 @@ import { useState, createContext, useContext } from "react";
 
 // ───────────── THEME ─────────────
 
+const GRADIENT = "linear-gradient(135deg, #8a6cb8, #d4718e)";
+const RAINBOW = "linear-gradient(90deg, #F9C5C5, #FDDBB4, #FFF0A8, #C2EDD0, #BEE3F8, #D8C8F8, #EED4F8)";
+
 const themes = {
   dark: {
     bg: "#0a0a0a", card: "#111111", border: "#1e1e1e", inputBg: "#0a0a0a",
     text: "#e8e8e8", textMuted: "#888", textDim: "#555", textSub: "#aaa",
-    accent: "#7eb8e0", checkColor: "#7eb8e0", checkBg: "#0c1520",
+    accent: "#b9a0dc", checkColor: "#b9a0dc", checkBg: "#1a1226",
     welcomeBg: "#111", welcomeBorder: "#1e1e1e",
     rowBg: "#0d0d0d", rowBgSel: "#111",
     btnBorder: "#333", btnBg: "#1a1a1a",
     footerBg: "#111", stickyBg: "#111",
     printBtnBg: "#fff", printBtnColor: "#0a0a0a",
+    gradient: GRADIENT, rainbow: RAINBOW,
   },
   light: {
     bg: "#f5f5f0", card: "#ffffff", border: "#e0e0e0", inputBg: "#fafafa",
     text: "#222222", textMuted: "#666", textDim: "#999", textSub: "#555",
-    accent: "#3B7DD8", checkColor: "#3B7DD8", checkBg: "#EAF2FF",
-    welcomeBg: "#fff8f0", welcomeBorder: "#ffe0c8",
-    rowBg: "#fafbfc", rowBgSel: "#f8fdf8",
+    accent: "#8a6cb8", checkColor: "#8a6cb8", checkBg: "#F3EEFA",
+    welcomeBg: "#fbf6ff", welcomeBorder: "#ebdef7",
+    rowBg: "#fafbfc", rowBgSel: "#fbf6ff",
     btnBorder: "#e0e0e0", btnBg: "#fafafa",
     footerBg: "#fff", stickyBg: "#fff",
     printBtnBg: "#222", printBtnColor: "#fff",
+    gradient: GRADIENT, rainbow: RAINBOW,
   },
 };
 
@@ -372,13 +377,14 @@ export default function App() {
       <style>{globalCSS}</style>
       <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "'Outfit',sans-serif", padding: 24 }}>
         <div style={{ position: "fixed", top: 16, right: 16 }}><ThemeToggle dark={dark} toggle={toggle} /></div>
-        <div style={{ background: t.card, borderRadius: 20, padding: "48px 40px", maxWidth: 560, width: "100%", boxShadow: dark ? "none" : "0 8px 40px #0001", textAlign: "center", border: `1px solid ${t.border}` }}>
-          <div style={{ background: dark ? "#111" : "#1B3A5C", borderRadius: 14, padding: "16px 20px", marginBottom: 28, border: dark ? "2px solid #7eb8e0" : "none" }}>
-            <div style={{ color: dark ? "#7eb8e0" : "#fff", fontFamily: "'Space Mono',monospace", fontWeight: 700, fontSize: 13, letterSpacing: 2, textTransform: "uppercase" }}>RTN COMMUNICATION & LITERACY</div>
-            <div style={{ color: dark ? "#555" : "#ffffff99", fontSize: 12, fontFamily: "'Space Mono',monospace", marginTop: 4 }}>Student Self-Report Intake</div>
+        <div style={{ background: t.card, borderRadius: 20, padding: "48px 40px", maxWidth: 560, width: "100%", boxShadow: dark ? "none" : "0 8px 40px #0001", textAlign: "center", border: `1px solid ${t.border}`, overflow: "hidden", position: "relative" }}>
+          <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: t.rainbow }} />
+          <div style={{ background: t.gradient, borderRadius: 14, padding: "18px 20px", marginBottom: 24, boxShadow: "0 4px 20px rgba(138,108,184,0.25)" }}>
+            <div style={{ color: "#fff", fontFamily: "'Space Mono',monospace", fontWeight: 700, fontSize: 13, letterSpacing: 2, textTransform: "uppercase" }}>RTN COMMUNICATION & LITERACY</div>
+            <div style={{ color: "#ffffffcc", fontSize: 12, fontFamily: "'Space Mono',monospace", marginTop: 4, letterSpacing: 0.5 }}>Student Self-Report Intake</div>
           </div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: t.text, marginBottom: 8, fontFamily: "'Outfit',sans-serif" }}>Select the student's age group:</div>
-          <div style={{ fontSize: 13, color: t.textMuted, marginBottom: 28 }}>This determines the language and response scale.</div>
+          <div style={{ fontSize: 26, fontWeight: 700, color: t.text, marginBottom: 6, fontFamily: "'Fraunces', Georgia, serif", letterSpacing: -0.3, lineHeight: 1.1 }}>Who is filling this out?</div>
+          <div style={{ fontSize: 14, fontWeight: 500, color: t.textMuted, marginBottom: 28, fontFamily: "'DM Sans', sans-serif" }}>Select the student's age group. This sets the language and response scale.</div>
           <div style={{ display: "flex", gap: 16 }}>
             {[
               ["young", "🧒", "Ages 6–13", "#7eb8e0", "Simple language\n3 responses\nKid-friendly questions"],
@@ -423,7 +429,7 @@ export default function App() {
             <ThemeToggle dark={dark} toggle={toggle} />
             <button onClick={reset} style={{ padding: "7px 14px", borderRadius: 10, border: `1.5px solid ${t.border}`, background: "transparent", color: t.textMuted, fontWeight: 700, cursor: "pointer", fontSize: 12, fontFamily: "'Space Mono',monospace" }}>↩ Start Over</button>
             <button onClick={saveJSON} style={{ padding: "7px 14px", borderRadius: 10, border: `1.5px solid ${t.border}`, background: "transparent", color: t.text, fontWeight: 700, cursor: "pointer", fontSize: 12, fontFamily: "'Space Mono',monospace" }}>💾 Save</button>
-            <button onClick={() => window.print()} style={{ padding: "7px 14px", borderRadius: 10, border: "none", background: t.accent, color: dark ? "#0a0a0a" : "#fff", fontWeight: 700, cursor: "pointer", fontSize: 12, fontFamily: "'Space Mono',monospace" }}>🖨 Print</button>
+            <button onClick={() => window.print()} style={{ padding: "7px 16px", borderRadius: 999, border: "none", background: t.gradient, color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 12, fontFamily: "'Space Mono',monospace", boxShadow: "0 3px 12px rgba(138,108,184,0.25)" }}>🖨 Print</button>
           </div>
         </div>
 
@@ -523,7 +529,7 @@ export default function App() {
 
           {/* Close */}
           <div style={{ background: dark ? versionColor + "10" : (y ? "linear-gradient(135deg,#EBF7EE,#D6FADC)" : "linear-gradient(135deg,#E0F5F5,#D4F1F7)"), borderRadius: 14, padding: "20px 24px", marginTop: 28, textAlign: "center", border: `1px solid ${dark ? versionColor + "33" : (y ? "#B8E6C0" : "#A8DDE6")}` }}>
-            <div style={{ fontSize: 22, fontWeight: 800, color: dark ? versionColor : "#1B3A5C", fontFamily: "'Outfit',sans-serif" }}>{y ? "You're all done — awesome job! 🎉" : "You're all done — nice work! 🎉"}</div>
+            <div style={{ fontSize: 26, fontWeight: 700, color: dark ? versionColor : "#1B3A5C", fontFamily: "'Fraunces', Georgia, serif", letterSpacing: -0.3 }}>{y ? "You're all done. Awesome job! 🎉" : "You're all done. Nice work! 🎉"}</div>
             <div style={{ fontSize: 13, color: t.textMuted, marginTop: 4 }}>{y ? "Everything you shared is private and will help us make sure the support you get really fits YOU." : "Everything you shared is private and will help us figure out the best way to support you."}</div>
           </div>
           <div style={{ display: "flex", gap: 16, marginTop: 20, alignItems: "flex-end" }}>
@@ -537,7 +543,7 @@ export default function App() {
         <div className="no-print" style={{ position: "sticky", bottom: 0, background: t.footerBg, padding: "12px 24px", borderRadius: "16px 16px 0 0", boxShadow: dark ? "0 -4px 20px #0002" : "0 -4px 20px #0001", display: "flex", justifyContent: "center", gap: 12, marginTop: 8, border: `1px solid ${t.border}`, borderBottom: "none" }}>
           <button onClick={reset} style={{ padding: "12px 24px", borderRadius: 12, border: `2px solid ${t.border}`, background: t.card, color: t.textMuted, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif" }}>↩ Start Over</button>
           <button onClick={saveJSON} style={{ padding: "12px 24px", borderRadius: 12, border: `2px solid ${t.accent}`, background: t.card, color: t.accent, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif" }}>💾 Save as File</button>
-          <button onClick={() => window.print()} style={{ padding: "12px 24px", borderRadius: 12, border: "none", background: t.printBtnBg, color: t.printBtnColor, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif" }}>🖨 Print / Save PDF</button>
+          <button onClick={() => window.print()} style={{ padding: "12px 28px", borderRadius: 999, border: "none", background: t.gradient, color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif", boxShadow: "0 3px 14px rgba(138,108,184,0.3)" }}>🖨 Print / Save PDF</button>
         </div>
       </div>
     </ThemeCtx.Provider>
