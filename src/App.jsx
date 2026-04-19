@@ -355,14 +355,15 @@ export default function App() {
   };
 
   const globalCSS = `
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: ${t.bg}; transition: background 0.3s; }
     input:focus, textarea:focus { outline: none; }
+    .rtn-rainbow-strip { height: 3px; background: linear-gradient(90deg, #F9C5C5, #FDDBB4, #FFF0A8, #C2EDD0, #BEE3F8, #D8C8F8, #EED4F8); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
     @media print {
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
       body { background: #fff !important; color: #000 !important; }
       .no-print { display: none !important; }
+      .rtn-rainbow-strip { display: none !important; }
       .pc { box-shadow: none !important; margin: 0 !important; padding: 16px !important; max-width: 100% !important; background: #fff !important; color: #000 !important; border: none !important; }
       .pc * { color: #333 !important; border-color: #ddd !important; }
       .pc input, .pc textarea { background: #fff !important; color: #000 !important; border-color: #ccc !important; }
@@ -375,32 +376,34 @@ export default function App() {
   if (!mode) return (
     <ThemeCtx.Provider value={{ dark }}>
       <style>{globalCSS}</style>
-      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "'Outfit',sans-serif", padding: 24 }}>
+      <div className="rtn-rainbow-strip" aria-hidden="true" />
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "'DM Sans', sans-serif", padding: 24 }}>
         <div style={{ position: "fixed", top: 16, right: 16 }}><ThemeToggle dark={dark} toggle={toggle} /></div>
-        <div style={{ background: t.card, borderRadius: 20, padding: "48px 40px", maxWidth: 560, width: "100%", boxShadow: dark ? "none" : "0 8px 40px #0001", textAlign: "center", border: `1px solid ${t.border}`, overflow: "hidden", position: "relative" }}>
-          <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: t.rainbow }} />
-          <div style={{ background: t.gradient, borderRadius: 14, padding: "18px 20px", marginBottom: 24, boxShadow: "0 4px 20px rgba(138,108,184,0.25)" }}>
-            <div style={{ color: "#fff", fontFamily: "'Space Mono',monospace", fontWeight: 700, fontSize: 13, letterSpacing: 2, textTransform: "uppercase" }}>RTN COMMUNICATION & LITERACY</div>
-            <div style={{ color: "#ffffffcc", fontSize: 12, fontFamily: "'Space Mono',monospace", marginTop: 4, letterSpacing: 0.5 }}>Student Self-Report Intake</div>
+        <div style={{ background: t.card, borderRadius: 24, padding: "40px 36px", maxWidth: 560, width: "100%", boxShadow: dark ? "none" : "0 8px 40px #0001", textAlign: "center", border: `1px solid ${t.border}` }}>
+          <div style={{ background: t.gradient, borderRadius: 14, padding: "20px 20px", marginBottom: 28, boxShadow: "0 4px 20px rgba(138,108,184,0.25)" }}>
+            <div style={{ color: "#fff", fontFamily: "'Fraunces', Georgia, serif", fontWeight: 700, fontSize: 26, letterSpacing: "-0.01em" }}>Student Self-Report</div>
+            <div style={{ color: "#ffffffdd", fontSize: 12, fontFamily: "'DM Sans', sans-serif" }}>Neuroaffirming Intake for Speech, Language &amp; Literacy</div>
+            <div style={{ color: "#ffffff99", fontSize: 10, marginTop: 2, fontFamily: "'Space Mono', monospace", letterSpacing: 1 }}>RTN COMMUNICATION &amp; LITERACY · v1</div>
           </div>
-          <div style={{ fontSize: 26, fontWeight: 700, color: t.text, marginBottom: 6, fontFamily: "'Fraunces', Georgia, serif", letterSpacing: -0.3, lineHeight: 1.1 }}>Who is filling this out?</div>
-          <div style={{ fontSize: 14, fontWeight: 500, color: t.textMuted, marginBottom: 28, fontFamily: "'DM Sans', sans-serif" }}>Select the student's age group. This sets the language and response scale.</div>
-          <div style={{ display: "flex", gap: 16 }}>
+          <div style={{ display: "flex", gap: 14 }}>
             {[
               ["young", "🧒", "Ages 6–13", "#7eb8e0", "Simple language\n3 responses\nKid-friendly questions"],
               ["older", "🧑‍🎓", "Ages 14+", "#9b59b6", "Friendly language\n4 responses\nMore detailed questions"],
             ].map(([m, ico, lbl, clr, desc]) => (
               <button key={m} onClick={() => setMode(m)} style={{
-                flex: 1, padding: "28px 20px", borderRadius: 20, border: `2px solid ${clr}`,
-                background: dark ? clr + "10" : clr + "15", cursor: "pointer", transition: "all 0.2s",
+                flex: 1, padding: "28px 20px", borderRadius: 18, border: `3px solid ${clr}`,
+                background: dark ? clr + "10" : clr + "15", cursor: "pointer", textAlign: "center", transition: "all 0.2s",
               }}>
-                <div style={{ fontSize: 40, marginBottom: 8 }}>{ico}</div>
-                <div style={{ fontWeight: 800, fontSize: 20, color: clr, fontFamily: "'Outfit',sans-serif" }}>{lbl}</div>
-                <div style={{ fontSize: 12, color: t.textMuted, marginTop: 6, lineHeight: 1.5, whiteSpace: "pre-line" }}>{desc}</div>
+                <div style={{ fontSize: 40, marginBottom: 6 }}>{ico}</div>
+                <div style={{ fontWeight: 700, fontSize: 18, color: clr, fontFamily: "'Fraunces', Georgia, serif", letterSpacing: "-0.01em" }}>{lbl}</div>
+                <div style={{ fontSize: 11, color: t.textMuted, marginTop: 6, lineHeight: 1.5, whiteSpace: "pre-line" }}>{desc}</div>
               </button>
             ))}
           </div>
-          <div style={{ marginTop: 28, fontSize: 11, color: t.textDim, fontFamily: "'Space Mono',monospace" }}>Rachel Norton, MS, CCC-SLP • rachelslp.org</div>
+          <div style={{ textAlign: "center", marginTop: 20, fontSize: 10, color: t.textDim, fontFamily: "'Space Mono', monospace", letterSpacing: 0.5 }}>
+            Strengths-Based · Neurodiversity-Affirming · Evidence-Based<br />
+            Rachel Terra Norton, MS, CCC-SLP · rachelslp.org
+          </div>
         </div>
       </div>
     </ThemeCtx.Provider>
@@ -418,7 +421,8 @@ export default function App() {
   return (
     <ThemeCtx.Provider value={{ dark }}>
       <style>{globalCSS}</style>
-      <div style={{ maxWidth: 820, margin: "0 auto", fontFamily: "'Outfit',sans-serif" }}>
+      <div className="rtn-rainbow-strip no-print" aria-hidden="true" />
+      <div style={{ maxWidth: 820, margin: "0 auto", fontFamily: "'DM Sans', sans-serif" }}>
         {/* Top sticky bar */}
         <div className="no-print" style={{ position: "sticky", top: 0, zIndex: 100, background: t.stickyBg, padding: "10px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", borderRadius: "0 0 16px 16px", boxShadow: dark ? "0 4px 20px #0002" : "0 4px 20px #0001", border: `1px solid ${t.border}`, borderTop: "none" }}>
           <div>
