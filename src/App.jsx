@@ -1,43 +1,44 @@
 import { useState, createContext, useContext } from "react";
 
-// ───────────── THEME ─────────────
+// ───────────── THEME — Editorial Calm ─────────────
 
-const GRADIENT = "linear-gradient(135deg, #8a6cb8, #d4718e)";
-const RAINBOW = "linear-gradient(90deg, #F9C5C5, #FDDBB4, #FFF0A8, #C2EDD0, #BEE3F8, #D8C8F8, #EED4F8)";
+const GRADIENT = "linear-gradient(90deg, #8dd4b0 0%, #b8a0d8 50%, #f4b5c5 100%)";
+const RAINBOW  = "linear-gradient(90deg, #8dd4b0 0%, #b8a0d8 50%, #f4b5c5 100%)";
 
 const themes = {
   dark: {
-    bg: "#0a0a0a", card: "#111111", border: "#1e1e1e", inputBg: "#0a0a0a",
-    text: "#e8e8e8", textMuted: "#888", textDim: "#555", textSub: "#aaa",
-    accent: "#b9a0dc", checkColor: "#b9a0dc", checkBg: "#1a1226",
-    welcomeBg: "#111", welcomeBorder: "#1e1e1e",
-    rowBg: "#0d0d0d", rowBgSel: "#111",
-    btnBorder: "#333", btnBg: "#1a1a1a",
-    footerBg: "#111", stickyBg: "#111",
-    printBtnBg: "#fff", printBtnColor: "#0a0a0a",
+    bg: "#1a1815", card: "#232020", border: "#34302c", inputBg: "#1a1815",
+    text: "#ece5d9", textMuted: "#82796f", textDim: "#5c544c", textSub: "#b9b0a3",
+    accent: "#c4abe2", checkColor: "#c4abe2", checkBg: "#261e30",
+    welcomeBg: "#232020", welcomeBorder: "#34302c",
+    rowBg: "#1f1d1a", rowBgSel: "#261e30",
+    btnBorder: "#34302c", btnBg: "#232020",
+    footerBg: "#232020", stickyBg: "rgba(26,24,21,0.92)",
+    printBtnBg: "#ece5d9", printBtnColor: "#1a1815",
     gradient: GRADIENT, rainbow: RAINBOW,
   },
   light: {
-    bg: "#f5f5f0", card: "#ffffff", border: "#e0e0e0", inputBg: "#fafafa",
-    text: "#222222", textMuted: "#666", textDim: "#999", textSub: "#555",
-    accent: "#8a6cb8", checkColor: "#8a6cb8", checkBg: "#F3EEFA",
-    welcomeBg: "#fbf6ff", welcomeBorder: "#ebdef7",
-    rowBg: "#fafbfc", rowBgSel: "#fbf6ff",
-    btnBorder: "#e0e0e0", btnBg: "#fafafa",
-    footerBg: "#fff", stickyBg: "#fff",
-    printBtnBg: "#222", printBtnColor: "#fff",
+    bg: "#fbf8f4", card: "#ffffff", border: "#e6dfd5", inputBg: "#faf6f1",
+    text: "#2a2724", textMuted: "#56504a", textDim: "#847d75", textSub: "#56504a",
+    accent: "#7a5ea8", checkColor: "#7a5ea8", checkBg: "#efe8f6",
+    welcomeBg: "#faf6fd", welcomeBorder: "#efe8f6",
+    rowBg: "#faf6f1", rowBgSel: "#efe8f6",
+    btnBorder: "#e6dfd5", btnBg: "#faf6f1",
+    footerBg: "#ffffff", stickyBg: "rgba(251,248,244,0.92)",
+    printBtnBg: "#2a2724", printBtnColor: "#fbf8f4",
     gradient: GRADIENT, rainbow: RAINBOW,
   },
 };
 
+// Section accents — drawn from the editorial-calm palette
 const SECTION_COLORS = {
-  about:    { dark: "#7eb8e0", light: "#1B3A5C" },
-  strengths:{ dark: "#e89b2d", light: "#E8A838" },
-  reading:  { dark: "#27ae60", light: "#5AA867" },
-  feelings: { dark: "#9b59b6", light: "#9B72CF" },
-  learn:    { dark: "#7eb8e0", light: "#3B7DD8" },
-  interests:{ dark: "#e63946", light: "#E06B50" },
-  goals:    { dark: "#e89b2d", light: "#D4A843" },
+  about:    { dark: "#a8c8e0", light: "#5a8aaa" },  // sky
+  strengths:{ dark: "#f6c89a", light: "#b87c4e" },  // peach
+  reading:  { dark: "#8dd4b0", light: "#4f9c74" },  // mint
+  feelings: { dark: "#c4abe2", light: "#7a5ea8" },  // lavender
+  learn:    { dark: "#a8c8e0", light: "#5a8aaa" },  // sky
+  interests:{ dark: "#f4b5c5", light: "#c47086" },  // pink
+  goals:    { dark: "#f5d98a", light: "#b89446" },  // yellow
 };
 
 const ThemeCtx = createContext();
@@ -45,17 +46,18 @@ const useTheme = () => useContext(ThemeCtx);
 
 // ───────────── DATA ─────────────
 
+// Likert colors — editorial calm: pink → peach → sky → mint (no → little → mostly → yes)
 const LIKERT_3 = [
-  { label: "Not Really", sub: "That's not me", color: "#e63946", selBg: "#1a0a0a", lightSelBg: "#FFE0E6", value: 1 },
-  { label: "Sometimes", sub: "Kind of", color: "#e89b2d", selBg: "#1a1408", lightSelBg: "#FFF7D6", value: 2 },
-  { label: "Yes!", sub: "That's me!", color: "#27ae60", selBg: "#0a1a10", lightSelBg: "#D6FADC", value: 3 },
+  { label: "Not Really", sub: "That's not me", color: "#c47086", selBg: "#2e1f24", lightSelBg: "#faeaee", value: 1 },
+  { label: "Sometimes",  sub: "Kind of",       color: "#b87c4e", selBg: "#2a2418", lightSelBg: "#fbeede", value: 2 },
+  { label: "Yes!",       sub: "That's me!",    color: "#4f9c74", selBg: "#1e2b22", lightSelBg: "#e8f6ed", value: 3 },
 ];
 
 const LIKERT_4 = [
-  { label: "No", sub: "Not me", color: "#e63946", selBg: "#1a0a0a", lightSelBg: "#FCE4EC", value: 1 },
-  { label: "A Little", sub: "Sometimes", color: "#e89b2d", selBg: "#1a1408", lightSelBg: "#FFF3E0", value: 2 },
-  { label: "Mostly", sub: "Usually", color: "#7eb8e0", selBg: "#0c1520", lightSelBg: "#E0F5F5", value: 3 },
-  { label: "Yes!", sub: "Totally", color: "#27ae60", selBg: "#0a1a10", lightSelBg: "#D6FADC", value: 4 },
+  { label: "No",        sub: "Not me",     color: "#c47086", selBg: "#2e1f24", lightSelBg: "#faeaee", value: 1 },
+  { label: "A Little",  sub: "Sometimes",  color: "#b87c4e", selBg: "#2a2418", lightSelBg: "#fbeede", value: 2 },
+  { label: "Mostly",    sub: "Usually",    color: "#5a8aaa", selBg: "#1c2530", lightSelBg: "#e8f0f7", value: 3 },
+  { label: "Yes!",      sub: "Totally",    color: "#4f9c74", selBg: "#1e2b22", lightSelBg: "#e8f6ed", value: 4 },
 ];
 
 const STRENGTHS_YOUNG = [
@@ -313,13 +315,21 @@ const Q = ({ text }) => {
 };
 
 const ThemeToggle = ({ dark, toggle }) => (
-  <button onClick={toggle} style={{
-    padding: "6px 12px", borderRadius: 20, border: `1.5px solid ${dark ? "#333" : "#ddd"}`,
-    background: dark ? "#1a1a1a" : "#f0f0f0", color: dark ? "#e8e8e8" : "#333",
-    fontFamily: "'Space Mono', monospace", fontSize: 11, fontWeight: 700, cursor: "pointer",
-    display: "flex", alignItems: "center", gap: 6, transition: "all 0.2s",
-  }}>
-    {dark ? "☀️" : "🌙"} {dark ? "Light" : "Dark"}
+  <button onClick={toggle} aria-label={dark ? "Switch to light mode" : "Switch to dark mode"} style={{
+    padding: "7px 14px", borderRadius: 100,
+    border: `1px solid ${dark ? "#34302c" : "#e6dfd5"}`,
+    background: dark ? "#232020" : "#ffffff",
+    color: dark ? "#82796f" : "#847d75",
+    fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 500,
+    letterSpacing: "0.06em", cursor: "pointer",
+    display: "inline-flex", alignItems: "center", gap: 6,
+    transition: "border-color 0.2s ease, color 0.2s ease",
+  }}
+  onMouseEnter={(e) => { e.currentTarget.style.color = dark ? "#ece5d9" : "#2a2724"; e.currentTarget.style.borderColor = dark ? "#82796f" : "#847d75"; }}
+  onMouseLeave={(e) => { e.currentTarget.style.color = dark ? "#82796f" : "#847d75"; e.currentTarget.style.borderColor = dark ? "#34302c" : "#e6dfd5"; }}
+  >
+    <span style={{ fontSize: 13, lineHeight: 1 }}>{dark ? "☾" : "☀"}</span>
+    {dark ? "Dark" : "Light"}
   </button>
 );
 
@@ -339,13 +349,21 @@ const INIT = {
 
 export default function App() {
   const [mode, setMode] = useState(null);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(() => {
+    try { return localStorage.getItem('rtn-theme') === 'dark'; } catch (e) { return false; }
+  });
   const [form, setForm] = useState({ ...INIT });
   const s = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const sN = (g, k, v) => setForm((f) => ({ ...f, [g]: { ...f[g], [k]: v } }));
   const y = mode === "young";
   const t = dark ? themes.dark : themes.light;
   const toggle = () => setDark((d) => !d);
+
+  // Persist theme + sync with site-wide attribute
+  if (typeof window !== 'undefined') {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    try { localStorage.setItem('rtn-theme', dark ? 'dark' : 'light'); } catch (e) {}
+  }
 
   const reset = () => { if (window.confirm("Start over? This will clear all answers.")) { setForm({ ...INIT }); setMode(null); } };
   const saveJSON = () => {
@@ -356,12 +374,40 @@ export default function App() {
 
   const globalCSS = `
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: ${t.bg}; transition: background 0.3s; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      background: ${t.bg};
+      color: ${t.text};
+      transition: background 0.3s ease, color 0.3s ease;
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      min-height: 100vh;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: '';
+      position: fixed; pointer-events: none; inset: 0;
+      background:
+        radial-gradient(circle at 10% 15%, ${dark ? '#261e30' : '#efe8f6'} 0%, transparent 40%),
+        radial-gradient(circle at 92% 78%, ${dark ? '#1e2b22' : '#e8f6ed'} 0%, transparent 44%),
+        radial-gradient(circle at 50% 50%, ${dark ? '#2e1f24' : '#faeaee'} 0%, transparent 30%);
+      opacity: ${dark ? '0.35' : '0.75'};
+      z-index: 0;
+    }
     input:focus, textarea:focus { outline: none; }
-    .rtn-rainbow-strip { height: 3px; background: linear-gradient(90deg, #F9C5C5, #FDDBB4, #FFF0A8, #C2EDD0, #BEE3F8, #D8C8F8, #EED4F8); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
+    :focus-visible { outline: 2px solid #b8a0d8 !important; outline-offset: 3px; border-radius: 2px; }
+    ::selection { background: ${dark ? '#261e30' : '#efe8f6'}; color: ${t.text}; }
+
+    .rtn-rainbow-strip {
+      height: 6px;
+      background: linear-gradient(90deg, #8dd4b0 0%, #b8a0d8 50%, #f4b5c5 100%);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    }
+
     @media print {
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
       body { background: #fff !important; color: #000 !important; }
+      body::before { display: none !important; }
       .no-print { display: none !important; }
       .rtn-rainbow-strip { display: none !important; }
       .pc { box-shadow: none !important; margin: 0 !important; padding: 16px !important; max-width: 100% !important; background: #fff !important; color: #000 !important; border: none !important; }
@@ -377,33 +423,67 @@ export default function App() {
     <ThemeCtx.Provider value={{ dark }}>
       <style>{globalCSS}</style>
       <div className="rtn-rainbow-strip" aria-hidden="true" />
-      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "'DM Sans', sans-serif", padding: 24 }}>
-        <div style={{ position: "fixed", top: 16, right: 16 }}><ThemeToggle dark={dark} toggle={toggle} /></div>
-        <div style={{ background: t.card, borderRadius: 24, padding: "40px 36px", maxWidth: 560, width: "100%", boxShadow: dark ? "none" : "0 8px 40px #0001", textAlign: "center", border: `1px solid ${t.border}` }}>
-          <div style={{ background: t.gradient, borderRadius: 14, padding: "20px 20px", marginBottom: 28, boxShadow: "0 4px 20px rgba(138,108,184,0.25)" }}>
-            <div style={{ color: "#fff", fontFamily: "'Fraunces', Georgia, serif", fontWeight: 700, fontSize: 26, letterSpacing: "-0.01em" }}>Student Self-Report</div>
-            <div style={{ color: "#ffffffdd", fontSize: 12, fontFamily: "'DM Sans', sans-serif" }}>Neuroaffirming Intake for Speech, Language &amp; Literacy</div>
-            <div style={{ color: "#ffffff99", fontSize: 10, marginTop: 2, fontFamily: "'Space Mono', monospace", letterSpacing: 1 }}>RTN COMMUNICATION &amp; LITERACY · v1</div>
-          </div>
-          <div style={{ display: "flex", gap: 14 }}>
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "'DM Sans', sans-serif", padding: 24, position: "relative", zIndex: 1 }}>
+        <div style={{ position: "fixed", top: 18, right: 22, zIndex: 100 }}><ThemeToggle dark={dark} toggle={toggle} /></div>
+
+        <div style={{ maxWidth: 600, width: "100%", textAlign: "left" }}>
+
+          {/* Editorial-calm hero (no gradient panel) */}
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: t.textDim, marginBottom: 18, paddingBottom: 10, borderBottom: `1px solid ${t.border}`, display: "inline-block" }}>
+            Neuroaffirming Intake · Speech · Language · Literacy
+          </p>
+
+          <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(34px, 5.5vw, 48px)", fontWeight: 500, letterSpacing: "-0.015em", lineHeight: 1.08, color: t.text, marginBottom: 14, position: "relative", display: "inline-block", paddingBottom: 10 }}>
+            Student Self-Report
+            <span style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, borderRadius: 2, background: "linear-gradient(90deg, #8dd4b0 0%, #b8a0d8 50%, #f4b5c5 100%)", opacity: 0.78 }} />
+          </h1>
+
+          <p style={{ fontSize: 16, color: t.textSub, lineHeight: 1.7, marginBottom: 32, maxWidth: 520 }}>
+            A strengths-based intake that helps your speech-language pathologist
+            understand who you are, how you learn, and what you want to work on
+            &mdash; in your own words.
+          </p>
+
+          {/* Mode selection cards — editorial calm card style */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12, marginBottom: 32 }}>
             {[
-              ["young", "🧒", "Ages 6–13", "#7eb8e0", "Simple language\n3 responses\nKid-friendly questions"],
-              ["older", "🧑‍🎓", "Ages 14+", "#9b59b6", "Friendly language\n4 responses\nMore detailed questions"],
-            ].map(([m, ico, lbl, clr, desc]) => (
+              ["young", "Ages 6–13", "#5a8aaa", "#a8c8e0", "#e8f0f7", "Simple language", "3 responses", "Kid-friendly questions"],
+              ["older", "Ages 14+", "#7a5ea8", "#b8a0d8", "#efe8f6", "Friendly language", "4 responses", "More detailed questions"],
+            ].map(([m, lbl, clrDeep, clrMid, clrSoft, l1, l2, l3]) => (
               <button key={m} onClick={() => setMode(m)} style={{
-                flex: 1, padding: "28px 20px", borderRadius: 18, border: `3px solid ${clr}`,
-                background: dark ? clr + "10" : clr + "15", cursor: "pointer", textAlign: "center", transition: "all 0.2s",
-              }}>
-                <div style={{ fontSize: 40, marginBottom: 6 }}>{ico}</div>
-                <div style={{ fontWeight: 700, fontSize: 18, color: clr, fontFamily: "'Fraunces', Georgia, serif", letterSpacing: "-0.01em" }}>{lbl}</div>
-                <div style={{ fontSize: 11, color: t.textMuted, marginTop: 6, lineHeight: 1.5, whiteSpace: "pre-line" }}>{desc}</div>
+                padding: "24px 22px",
+                borderRadius: 18,
+                border: `1px solid ${t.border}`,
+                background: t.card,
+                cursor: "pointer",
+                textAlign: "left",
+                transition: "transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease",
+                position: "relative",
+                fontFamily: "inherit",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = clrMid; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 2px 4px rgba(40,36,32,0.04), 0 8px 24px rgba(40,36,32,0.06)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                  <span style={{ width: 28, height: 28, borderRadius: 8, background: clrSoft, display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 14, color: clrDeep }}>{m === "young" ? "Y" : "T"}</span>
+                  <span style={{ fontFamily: "'Fraunces', Georgia, serif", fontWeight: 500, fontSize: 19, color: t.text, letterSpacing: "-0.005em" }}>{lbl}</span>
+                </div>
+                <ul style={{ listStyle: "none", margin: 0, padding: 0, color: t.textSub, fontSize: 13.5, lineHeight: 1.7 }}>
+                  <li style={{ paddingLeft: 14, position: "relative" }}><span style={{ position: "absolute", left: 0, top: 9, width: 6, height: 6, borderRadius: "50%", background: clrMid }} />{l1}</li>
+                  <li style={{ paddingLeft: 14, position: "relative" }}><span style={{ position: "absolute", left: 0, top: 9, width: 6, height: 6, borderRadius: "50%", background: clrMid }} />{l2}</li>
+                  <li style={{ paddingLeft: 14, position: "relative" }}><span style={{ position: "absolute", left: 0, top: 9, width: 6, height: 6, borderRadius: "50%", background: clrMid }} />{l3}</li>
+                </ul>
+                <div style={{ marginTop: 14, fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: clrDeep }}>Begin →</div>
               </button>
             ))}
           </div>
-          <div style={{ textAlign: "center", marginTop: 20, fontSize: 10, color: t.textDim, fontFamily: "'Space Mono', monospace", letterSpacing: 0.5 }}>
+
+          {/* Footer signature */}
+          <div style={{ paddingTop: 20, borderTop: `1px solid ${t.border}`, fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 500, letterSpacing: "0.16em", textTransform: "uppercase", color: t.textDim, lineHeight: 1.9 }}>
             Strengths-Based · Neurodiversity-Affirming · Evidence-Based<br />
             Rachel Terra Norton, MS, CCC-SLP · rachelslp.org
           </div>
+
         </div>
       </div>
     </ThemeCtx.Provider>
@@ -416,24 +496,24 @@ export default function App() {
     it: y ? INTERESTS_YOUNG : INTERESTS_OLDER, go: y ? GOALS_YOUNG : GOALS_OLDER,
   };
 
-  const versionColor = y ? "#7eb8e0" : "#9b59b6";
+  const versionColor = y ? "#5a8aaa" : "#7a5ea8"; // sky-deep / lavender-deep
 
   return (
     <ThemeCtx.Provider value={{ dark }}>
       <style>{globalCSS}</style>
       <div className="rtn-rainbow-strip no-print" aria-hidden="true" />
-      <div style={{ maxWidth: 820, margin: "0 auto", fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ maxWidth: 820, margin: "0 auto", fontFamily: "'DM Sans', sans-serif", position: "relative", zIndex: 1 }}>
         {/* Top sticky bar */}
-        <div className="no-print" style={{ position: "sticky", top: 0, zIndex: 100, background: t.stickyBg, padding: "10px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", borderRadius: "0 0 16px 16px", boxShadow: dark ? "0 4px 20px #0002" : "0 4px 20px #0001", border: `1px solid ${t.border}`, borderTop: "none" }}>
+        <div className="no-print" style={{ position: "sticky", top: 6, zIndex: 100, background: t.stickyBg, backdropFilter: "saturate(160%) blur(12px)", WebkitBackdropFilter: "saturate(160%) blur(12px)", padding: "12px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", borderRadius: "0 0 16px 16px", border: `1px solid ${t.border}`, borderTop: "none", flexWrap: "wrap", gap: 10 }}>
           <div>
-            <div style={{ color: t.text, fontFamily: "'Space Mono',monospace", fontWeight: 700, fontSize: 12, letterSpacing: 1, textTransform: "uppercase" }}>RTN Communication & Literacy</div>
-            <div style={{ color: t.textDim, fontSize: 11, fontFamily: "'Space Mono',monospace" }}>Student Self-Report • {y ? "Ages 6–13" : "Ages 14+"}</div>
+            <div style={{ color: t.text, fontFamily: "'Fraunces', serif", fontWeight: 500, fontSize: 16, letterSpacing: "-0.005em", lineHeight: 1.1 }}>Student Self-Report</div>
+            <div style={{ color: t.textDim, fontFamily: "'Space Mono',monospace", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", marginTop: 3 }}>RTN · {y ? "Ages 6–13" : "Ages 14+"}</div>
           </div>
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
             <ThemeToggle dark={dark} toggle={toggle} />
-            <button onClick={reset} style={{ padding: "7px 14px", borderRadius: 10, border: `1.5px solid ${t.border}`, background: "transparent", color: t.textMuted, fontWeight: 700, cursor: "pointer", fontSize: 12, fontFamily: "'Space Mono',monospace" }}>↩ Start Over</button>
-            <button onClick={saveJSON} style={{ padding: "7px 14px", borderRadius: 10, border: `1.5px solid ${t.border}`, background: "transparent", color: t.text, fontWeight: 700, cursor: "pointer", fontSize: 12, fontFamily: "'Space Mono',monospace" }}>💾 Save</button>
-            <button onClick={() => window.print()} style={{ padding: "7px 16px", borderRadius: 999, border: "none", background: t.gradient, color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 12, fontFamily: "'Space Mono',monospace", boxShadow: "0 3px 12px rgba(138,108,184,0.25)" }}>🖨 Print</button>
+            <button onClick={reset} style={{ padding: "7px 14px", borderRadius: 100, border: `1px solid ${t.border}`, background: "transparent", color: t.textMuted, fontWeight: 500, cursor: "pointer", fontSize: 12, fontFamily: "'DM Sans',sans-serif", letterSpacing: "0.01em", transition: "border-color 0.2s, color 0.2s" }}>Start Over</button>
+            <button onClick={saveJSON} style={{ padding: "7px 14px", borderRadius: 100, border: `1px solid ${t.border}`, background: "transparent", color: t.text, fontWeight: 500, cursor: "pointer", fontSize: 12, fontFamily: "'DM Sans',sans-serif", letterSpacing: "0.01em", transition: "border-color 0.2s" }}>Save JSON</button>
+            <button onClick={() => window.print()} style={{ padding: "7px 18px", borderRadius: 100, border: `1px solid ${t.text}`, background: t.text, color: t.bg, fontWeight: 500, cursor: "pointer", fontSize: 12, fontFamily: "'DM Sans',sans-serif", letterSpacing: "0.01em", transition: "background 0.2s, border-color 0.2s" }}>Print</button>
           </div>
         </div>
 
