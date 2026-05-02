@@ -1,31 +1,31 @@
 import { useState, createContext, useContext } from "react";
 
-// ───────────── THEME — Editorial Calm ─────────────
+// ───────────── THEME — RTN Eval Intake design system ─────────────
 
-const GRADIENT = "linear-gradient(90deg, #8dd4b0 0%, #b8a0d8 50%, #f4b5c5 100%)";
-const RAINBOW  = "linear-gradient(90deg, #8dd4b0 0%, #b8a0d8 50%, #f4b5c5 100%)";
+const GRADIENT = "linear-gradient(90deg, #0e4a4a 0%, #1a7a7a 50%, #4db8b8 100%)";
+const RAINBOW  = "linear-gradient(90deg, #0e4a4a 0%, #1a7a7a 50%, #4db8b8 100%)";
 
 const themes = {
   dark: {
-    bg: "#1a1815", card: "#232020", border: "#34302c", inputBg: "#1a1815",
-    text: "#ece5d9", textMuted: "#82796f", textDim: "#5c544c", textSub: "#b9b0a3",
-    accent: "#c4abe2", checkColor: "#c4abe2", checkBg: "#261e30",
-    welcomeBg: "#232020", welcomeBorder: "#34302c",
-    rowBg: "#1f1d1a", rowBgSel: "#261e30",
-    btnBorder: "#34302c", btnBg: "#232020",
-    footerBg: "#232020", stickyBg: "rgba(26,24,21,0.92)",
-    printBtnBg: "#ece5d9", printBtnColor: "#1a1815",
+    bg: "#0e2424", card: "#163434", border: "#1f4040", inputBg: "#0e2424",
+    text: "#e6efef", textMuted: "#8eaeae", textDim: "#5c7d7d", textSub: "#c0d4d4",
+    accent: "#4db8b8", checkColor: "#4db8b8", checkBg: "#1a4d4d",
+    welcomeBg: "#163434", welcomeBorder: "#1f4040",
+    rowBg: "#0e2424", rowBgSel: "#1a4d4d",
+    btnBorder: "#1f4040", btnBg: "#163434",
+    footerBg: "#163434", stickyBg: "rgba(14,36,36,0.92)",
+    printBtnBg: "#e6efef", printBtnColor: "#0e2424",
     gradient: GRADIENT, rainbow: RAINBOW,
   },
   light: {
-    bg: "#fbf8f4", card: "#ffffff", border: "#e6dfd5", inputBg: "#faf6f1",
-    text: "#2a2724", textMuted: "#56504a", textDim: "#847d75", textSub: "#56504a",
-    accent: "#7a5ea8", checkColor: "#7a5ea8", checkBg: "#efe8f6",
-    welcomeBg: "#faf6fd", welcomeBorder: "#efe8f6",
-    rowBg: "#faf6f1", rowBgSel: "#efe8f6",
-    btnBorder: "#e6dfd5", btnBg: "#faf6f1",
-    footerBg: "#ffffff", stickyBg: "rgba(251,248,244,0.92)",
-    printBtnBg: "#2a2724", printBtnColor: "#fbf8f4",
+    bg: "#f0f4f4", card: "#ffffff", border: "#d4dfdf", inputBg: "#f7fafa",
+    text: "#1c2d2d", textMuted: "#3d5555", textDim: "#7a9191", textSub: "#3d5555",
+    accent: "#1a7a7a", checkColor: "#1a7a7a", checkBg: "#e0f2f1",
+    welcomeBg: "#f0faf9", welcomeBorder: "#e0f2f1",
+    rowBg: "#f7fafa", rowBgSel: "#e0f2f1",
+    btnBorder: "#d4dfdf", btnBg: "#f7fafa",
+    footerBg: "#ffffff", stickyBg: "rgba(240,244,244,0.92)",
+    printBtnBg: "#0e4a4a", printBtnColor: "#f0f4f4",
     gradient: GRADIENT, rainbow: RAINBOW,
   },
 };
@@ -46,18 +46,19 @@ const useTheme = () => useContext(ThemeCtx);
 
 // ───────────── DATA ─────────────
 
-// Likert colors — editorial calm: pink → peach → sky → mint (no → little → mostly → yes)
+// Likert colors — pink → peach → sky → mint (no → little → mostly → yes)
+// `face` 1=frown · 2=slight frown · 3=neutral · 4=slight smile · 5=big smile
 const LIKERT_3 = [
-  { label: "Not Really", sub: "That's not me", color: "#c47086", selBg: "#2e1f24", lightSelBg: "#faeaee", value: 1 },
-  { label: "Sometimes",  sub: "Kind of",       color: "#b87c4e", selBg: "#2a2418", lightSelBg: "#fbeede", value: 2 },
-  { label: "Yes!",       sub: "That's me!",    color: "#4f9c74", selBg: "#1e2b22", lightSelBg: "#e8f6ed", value: 3 },
+  { label: "Not Really", sub: "That's not me", color: "#c47086", selBg: "#2e1f24", lightSelBg: "#faeaee", value: 1, face: 1 },
+  { label: "Sometimes",  sub: "Kind of",       color: "#b87c4e", selBg: "#2a2418", lightSelBg: "#fbeede", value: 2, face: 3 },
+  { label: "Yes!",       sub: "That's me!",    color: "#4f9c74", selBg: "#1e2b22", lightSelBg: "#e8f6ed", value: 3, face: 5 },
 ];
 
 const LIKERT_4 = [
-  { label: "No",        sub: "Not me",     color: "#c47086", selBg: "#2e1f24", lightSelBg: "#faeaee", value: 1 },
-  { label: "A Little",  sub: "Sometimes",  color: "#b87c4e", selBg: "#2a2418", lightSelBg: "#fbeede", value: 2 },
-  { label: "Mostly",    sub: "Usually",    color: "#5a8aaa", selBg: "#1c2530", lightSelBg: "#e8f0f7", value: 3 },
-  { label: "Yes!",      sub: "Totally",    color: "#4f9c74", selBg: "#1e2b22", lightSelBg: "#e8f6ed", value: 4 },
+  { label: "No",        sub: "Not me",     color: "#c47086", selBg: "#2e1f24", lightSelBg: "#faeaee", value: 1, face: 1 },
+  { label: "A Little",  sub: "Sometimes",  color: "#b87c4e", selBg: "#2a2418", lightSelBg: "#fbeede", value: 2, face: 2 },
+  { label: "Mostly",    sub: "Usually",    color: "#5a8aaa", selBg: "#1c2530", lightSelBg: "#e8f0f7", value: 3, face: 4 },
+  { label: "Yes!",      sub: "Totally",    color: "#4f9c74", selBg: "#1e2b22", lightSelBg: "#e8f6ed", value: 4, face: 5 },
 ];
 
 const STRENGTHS_YOUNG = [
@@ -188,6 +189,29 @@ const GOALS_OLDER = [
 
 // ───────────── COMPONENTS ─────────────
 
+// Inline SVG face icons. `face` 1..5 maps frown → big smile.
+// Stroked with currentColor so they re-tint per Likert choice.
+const Face = ({ face = 3, size = 30, color = "currentColor" }) => {
+  const mouths = {
+    1: <path d="M10.5 22 Q16 16.5 21.5 22" />,
+    2: <path d="M10.5 21 Q16 19 21.5 21" />,
+    3: <path d="M11 20.5 H21" />,
+    4: <path d="M10.5 19.5 Q16 22.5 21.5 19.5" />,
+    5: <path d="M9.5 18 Q16 25 22.5 18" />,
+  };
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true"
+      style={{ display: "block", color, transition: "color .2s, transform .2s" }}>
+      <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="11.5" cy="13.5" r="1.4" fill="currentColor" />
+      <circle cx="20.5" cy="13.5" r="1.4" fill="currentColor" />
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        {mouths[face]}
+      </g>
+    </svg>
+  );
+};
+
 const LikertBtn = ({ option, selected, onClick, compact, isDark }) => {
   const sel = selected === option.label;
   const t = isDark ? themes.dark : themes.light;
@@ -199,11 +223,8 @@ const LikertBtn = ({ option, selected, onClick, compact, isDark }) => {
       flex: 1, minWidth: compact ? 68 : 80, transform: sel ? "scale(1.04)" : "scale(1)",
       boxShadow: sel ? `0 4px 16px ${option.color}30` : "none",
     }}>
-      <span style={{
-        fontFamily: "'Space Mono', monospace", fontWeight: 700,
-        fontSize: sel ? (compact ? 20 : 24) : (compact ? 16 : 20),
-        color: sel ? option.color : t.textDim, transition: "all 0.2s",
-      }}>{option.value}</span>
+      <Face face={option.face} size={sel ? (compact ? 30 : 34) : (compact ? 26 : 30)}
+        color={sel ? option.color : t.textDim} />
       <span style={{ fontWeight: 700, fontSize: compact ? 11 : 13, color: sel ? option.color : t.textMuted }}>{option.label}</span>
       <span style={{ fontSize: compact ? 9 : 10, color: t.textDim }}>{option.sub}</span>
     </button>
@@ -221,7 +242,7 @@ const LikertRow = ({ statement, value, onChange, mode }) => {
       borderRadius: 12, background: value ? t.rowBgSel : t.rowBg,
       border: `1px solid ${t.border}`, marginBottom: 6,
     }}>
-      <div style={{ flex: 1, fontSize: 14, color: t.text, fontFamily: "'Outfit', sans-serif", minWidth: 160 }}>{statement}</div>
+      <div style={{ flex: 1, fontSize: 14, color: t.text, fontFamily: "'DM Sans', system-ui, sans-serif", minWidth: 160 }}>{statement}</div>
       <div className="likert-btns" style={{ display: "flex", gap: mode === "young" ? 6 : 4, flexShrink: 0 }}>
         {opts.map((o) => <LikertBtn key={o.label} option={o} selected={value} onClick={() => onChange(o.label)} compact={mode !== "young"} isDark={dark} />)}
       </div>
@@ -260,7 +281,7 @@ const CheckGrid = ({ items, selected, onChange }) => {
               justifyContent: "center", flexShrink: 0, transition: "all 0.15s",
               WebkitPrintColorAdjust: "exact", printColorAdjust: "exact",
             }}>{ch && <span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>✓</span>}</div>
-            <span style={{ fontSize: 13, color: t.text, fontFamily: "'Outfit', sans-serif" }}>{item}</span>
+            <span style={{ fontSize: 13, color: t.text, fontFamily: "'DM Sans', system-ui, sans-serif" }}>{item}</span>
           </button>
         );
       })}
@@ -273,7 +294,7 @@ const TA = ({ value, onChange, placeholder, rows = 2 }) => {
   const t = dark ? themes.dark : themes.light;
   return (
     <textarea value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} rows={rows}
-      style={{ width: "100%", padding: "10px 14px", borderRadius: 10, border: `2px solid ${t.border}`, fontSize: 14, fontFamily: "'Outfit', sans-serif", resize: "vertical", background: t.inputBg, color: t.text, lineHeight: 1.5, boxSizing: "border-box", outline: "none" }}
+      style={{ width: "100%", padding: "10px 14px", borderRadius: 10, border: `2px solid ${t.border}`, fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif", resize: "vertical", background: t.inputBg, color: t.text, lineHeight: 1.5, boxSizing: "border-box", outline: "none" }}
       onFocus={(e) => (e.target.style.borderColor = t.accent)} onBlur={(e) => (e.target.style.borderColor = t.border)} />
   );
 };
@@ -283,7 +304,7 @@ const Inp = ({ value, onChange, placeholder, type = "text" }) => {
   const t = dark ? themes.dark : themes.light;
   return (
     <input type={type} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder}
-      style={{ width: "100%", padding: "10px 14px", borderRadius: 10, border: `2px solid ${t.border}`, fontSize: 14, fontFamily: "'Outfit', sans-serif", background: t.inputBg, color: t.text, boxSizing: "border-box", outline: "none" }}
+      style={{ width: "100%", padding: "10px 14px", borderRadius: 10, border: `2px solid ${t.border}`, fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif", background: t.inputBg, color: t.text, boxSizing: "border-box", outline: "none" }}
       onFocus={(e) => (e.target.style.borderColor = t.accent)} onBlur={(e) => (e.target.style.borderColor = t.border)} />
   );
 };
@@ -294,7 +315,7 @@ const SH = ({ icon, title, colorKey }) => {
   return (
     <div style={{ borderRadius: 14, padding: "14px 20px", marginTop: 28, marginBottom: 14, display: "flex", alignItems: "center", gap: 12, background: dark ? "#111" : color, border: dark ? `2px solid ${color}` : "none", WebkitPrintColorAdjust: "exact", printColorAdjust: "exact" }}>
       <span style={{ fontSize: 26 }}>{icon}</span>
-      <div style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 2, textTransform: "uppercase", color: dark ? color : "#fff" }}>{title}</div>
+      <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontWeight: 700, fontSize: 13, letterSpacing: 2, textTransform: "uppercase", color: dark ? color : "#fff" }}>{title}</div>
     </div>
   );
 };
@@ -303,14 +324,14 @@ const Sub = ({ text }) => {
   const { dark } = useTheme();
   const t = dark ? themes.dark : themes.light;
   return (
-    <div style={{ fontWeight: 700, fontSize: 14, color: t.accent, margin: "14px 0 6px", fontFamily: "'Space Mono', monospace", borderBottom: `2px solid ${t.border}`, paddingBottom: 4 }}>{text}</div>
+    <div style={{ fontWeight: 700, fontSize: 14, color: t.accent, margin: "14px 0 6px", fontFamily: "'DM Sans', system-ui, sans-serif", borderBottom: `2px solid ${t.border}`, paddingBottom: 4 }}>{text}</div>
   );
 };
 
 const Q = ({ text }) => {
   const { dark } = useTheme();
   return (
-    <div style={{ fontWeight: 700, fontSize: 14, color: dark ? "#e8e8e8" : "#333", margin: "12px 0 6px", fontFamily: "'Outfit', sans-serif" }}>{text}</div>
+    <div style={{ fontWeight: 700, fontSize: 14, color: dark ? "#e8e8e8" : "#333", margin: "12px 0 6px", fontFamily: "'DM Sans', system-ui, sans-serif" }}>{text}</div>
   );
 };
 
@@ -384,23 +405,13 @@ export default function App() {
       position: relative;
       -webkit-font-smoothing: antialiased;
     }
-    body::before {
-      content: '';
-      position: fixed; pointer-events: none; inset: 0;
-      background:
-        radial-gradient(circle at 10% 15%, ${dark ? '#261e30' : '#efe8f6'} 0%, transparent 40%),
-        radial-gradient(circle at 92% 78%, ${dark ? '#1e2b22' : '#e8f6ed'} 0%, transparent 44%),
-        radial-gradient(circle at 50% 50%, ${dark ? '#2e1f24' : '#faeaee'} 0%, transparent 30%);
-      opacity: ${dark ? '0.35' : '0.75'};
-      z-index: 0;
-    }
     input:focus, textarea:focus { outline: none; }
-    :focus-visible { outline: 2px solid #b8a0d8 !important; outline-offset: 3px; border-radius: 2px; }
-    ::selection { background: ${dark ? '#261e30' : '#efe8f6'}; color: ${t.text}; }
+    :focus-visible { outline: 2px solid #1a7a7a !important; outline-offset: 3px; border-radius: 2px; }
+    ::selection { background: ${dark ? '#1a4d4d' : '#e0f2f1'}; color: ${t.text}; }
 
     .rtn-rainbow-strip {
       height: 6px;
-      background: linear-gradient(90deg, #8dd4b0 0%, #b8a0d8 50%, #f4b5c5 100%);
+      background: linear-gradient(90deg, #0e4a4a 0%, #1a7a7a 50%, #4db8b8 100%);
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
     }
 
@@ -429,13 +440,13 @@ export default function App() {
         <div style={{ maxWidth: 600, width: "100%", textAlign: "left" }}>
 
           {/* Editorial-calm hero (no gradient panel) */}
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: t.textDim, marginBottom: 18, paddingBottom: 10, borderBottom: `1px solid ${t.border}`, display: "inline-block" }}>
+          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: t.textDim, marginBottom: 18, paddingBottom: 10, borderBottom: `1px solid ${t.border}`, display: "inline-block" }}>
             Neuroaffirming Intake · Speech · Language · Literacy
           </p>
 
-          <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: "clamp(34px, 5.5vw, 48px)", fontWeight: 500, letterSpacing: "-0.015em", lineHeight: 1.08, color: t.text, marginBottom: 14, position: "relative", display: "inline-block", paddingBottom: 10 }}>
+          <h1 style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "clamp(34px, 5.5vw, 48px)", fontWeight: 500, letterSpacing: "-0.015em", lineHeight: 1.08, color: t.text, marginBottom: 14, position: "relative", display: "inline-block", paddingBottom: 10 }}>
             Student Self-Report
-            <span style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, borderRadius: 2, background: "linear-gradient(90deg, #8dd4b0 0%, #b8a0d8 50%, #f4b5c5 100%)", opacity: 0.78 }} />
+            <span style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, borderRadius: 2, background: "linear-gradient(90deg, #0e4a4a 0%, #1a7a7a 50%, #4db8b8 100%)", opacity: 0.85 }} />
           </h1>
 
           <p style={{ fontSize: 16, color: t.textSub, lineHeight: 1.7, marginBottom: 32, maxWidth: 520 }}>
@@ -465,21 +476,21 @@ export default function App() {
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-                  <span style={{ width: 28, height: 28, borderRadius: 8, background: clrSoft, display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "'Fraunces', serif", fontWeight: 600, fontSize: 14, color: clrDeep }}>{m === "young" ? "Y" : "T"}</span>
-                  <span style={{ fontFamily: "'Fraunces', Georgia, serif", fontWeight: 500, fontSize: 19, color: t.text, letterSpacing: "-0.005em" }}>{lbl}</span>
+                  <span style={{ width: 28, height: 28, borderRadius: 8, background: clrSoft, display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "'DM Sans', system-ui, sans-serif", fontWeight: 600, fontSize: 14, color: clrDeep }}>{m === "young" ? "Y" : "T"}</span>
+                  <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontWeight: 500, fontSize: 19, color: t.text, letterSpacing: "-0.005em" }}>{lbl}</span>
                 </div>
                 <ul style={{ listStyle: "none", margin: 0, padding: 0, color: t.textSub, fontSize: 13.5, lineHeight: 1.7 }}>
                   <li style={{ paddingLeft: 14, position: "relative" }}><span style={{ position: "absolute", left: 0, top: 9, width: 6, height: 6, borderRadius: "50%", background: clrMid }} />{l1}</li>
                   <li style={{ paddingLeft: 14, position: "relative" }}><span style={{ position: "absolute", left: 0, top: 9, width: 6, height: 6, borderRadius: "50%", background: clrMid }} />{l2}</li>
                   <li style={{ paddingLeft: 14, position: "relative" }}><span style={{ position: "absolute", left: 0, top: 9, width: 6, height: 6, borderRadius: "50%", background: clrMid }} />{l3}</li>
                 </ul>
-                <div style={{ marginTop: 14, fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: clrDeep }}>Begin →</div>
+                <div style={{ marginTop: 14, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: clrDeep }}>Begin →</div>
               </button>
             ))}
           </div>
 
           {/* Footer signature */}
-          <div style={{ paddingTop: 20, borderTop: `1px solid ${t.border}`, fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 500, letterSpacing: "0.16em", textTransform: "uppercase", color: t.textDim, lineHeight: 1.9 }}>
+          <div style={{ paddingTop: 20, borderTop: `1px solid ${t.border}`, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: 10, fontWeight: 500, letterSpacing: "0.16em", textTransform: "uppercase", color: t.textDim, lineHeight: 1.9 }}>
             Strengths-Based · Neurodiversity-Affirming · Evidence-Based<br />
             Rachel Terra Norton, MS, CCC-SLP · rachelslp.org
           </div>
@@ -506,8 +517,8 @@ export default function App() {
         {/* Top sticky bar */}
         <div className="no-print" style={{ position: "sticky", top: 6, zIndex: 100, background: t.stickyBg, backdropFilter: "saturate(160%) blur(12px)", WebkitBackdropFilter: "saturate(160%) blur(12px)", padding: "12px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", borderRadius: "0 0 16px 16px", border: `1px solid ${t.border}`, borderTop: "none", flexWrap: "wrap", gap: 10 }}>
           <div>
-            <div style={{ color: t.text, fontFamily: "'Fraunces', serif", fontWeight: 500, fontSize: 16, letterSpacing: "-0.005em", lineHeight: 1.1 }}>Student Self-Report</div>
-            <div style={{ color: t.textDim, fontFamily: "'Space Mono',monospace", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", marginTop: 3 }}>RTN · {y ? "Ages 6–13" : "Ages 14+"}</div>
+            <div style={{ color: t.text, fontFamily: "'DM Sans', system-ui, sans-serif", fontWeight: 500, fontSize: 16, letterSpacing: "-0.005em", lineHeight: 1.1 }}>Student Self-Report</div>
+            <div style={{ color: t.textDim, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", marginTop: 3 }}>RTN · {y ? "Ages 6–13" : "Ages 14+"}</div>
           </div>
           <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
             <ThemeToggle dark={dark} toggle={toggle} />
@@ -520,7 +531,7 @@ export default function App() {
         <div className="pc" style={{ background: t.card, borderRadius: 20, padding: "28px 32px", margin: "16px 0", boxShadow: dark ? "none" : "0 2px 24px #0001", border: `1px solid ${t.border}` }}>
           {/* Version badge */}
           <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
-            <span style={{ background: dark ? versionColor + "15" : versionColor + "15", color: versionColor, padding: "4px 16px", borderRadius: 20, fontWeight: 700, fontSize: 12, border: `2px solid ${versionColor}`, fontFamily: "'Space Mono',monospace" }}>{y ? "Ages 6–13 Version" : "Ages 14+ Version"}</span>
+            <span style={{ background: dark ? versionColor + "15" : versionColor + "15", color: versionColor, padding: "4px 16px", borderRadius: 20, fontWeight: 700, fontSize: 12, border: `2px solid ${versionColor}`, fontFamily: "'DM Sans', system-ui, sans-serif" }}>{y ? "Ages 6–13 Version" : "Ages 14+ Version"}</span>
           </div>
 
           {/* Welcome message */}
@@ -613,21 +624,21 @@ export default function App() {
 
           {/* Close */}
           <div style={{ background: dark ? versionColor + "10" : (y ? "linear-gradient(135deg,#EBF7EE,#D6FADC)" : "linear-gradient(135deg,#E0F5F5,#D4F1F7)"), borderRadius: 14, padding: "20px 24px", marginTop: 28, textAlign: "center", border: `1px solid ${dark ? versionColor + "33" : (y ? "#B8E6C0" : "#A8DDE6")}` }}>
-            <div style={{ fontSize: 26, fontWeight: 700, color: dark ? versionColor : "#1B3A5C", fontFamily: "'Fraunces', Georgia, serif", letterSpacing: -0.3 }}>{y ? "You're all done. Awesome job! 🎉" : "You're all done. Nice work! 🎉"}</div>
+            <div style={{ fontSize: 26, fontWeight: 700, color: dark ? versionColor : "#1B3A5C", fontFamily: "'DM Sans', system-ui, sans-serif", letterSpacing: -0.3 }}>{y ? "You're all done. Awesome job! 🎉" : "You're all done. Nice work! 🎉"}</div>
             <div style={{ fontSize: 13, color: t.textMuted, marginTop: 4 }}>{y ? "Everything you shared is private and will help us make sure the support you get really fits YOU." : "Everything you shared is private and will help us figure out the best way to support you."}</div>
           </div>
           <div style={{ display: "flex", gap: 16, marginTop: 20, alignItems: "flex-end" }}>
             <div style={{ flex: 2 }}><Q text="Your Name (optional)" /><Inp value={form.signName} onChange={v => s("signName", v)} /></div>
             <div style={{ flex: 1 }}><Q text="Date" /><Inp value={form.signDate} onChange={v => s("signDate", v)} /></div>
           </div>
-          <div style={{ textAlign: "center", marginTop: 24, color: t.textDim, fontSize: 11, fontFamily: "'Space Mono',monospace" }}>RTN Communication & Literacy • Rachel Norton, MS, CCC-SLP • rachelslp.org<br />Strengths-Based • Neurodiversity-Affirming • Evidence-Based</div>
+          <div style={{ textAlign: "center", marginTop: 24, color: t.textDim, fontSize: 11, fontFamily: "'DM Sans', system-ui, sans-serif" }}>RTN Communication & Literacy • Rachel Norton, MS, CCC-SLP • rachelslp.org<br />Strengths-Based • Neurodiversity-Affirming • Evidence-Based</div>
         </div>
 
         {/* Bottom bar */}
         <div className="no-print" style={{ position: "sticky", bottom: 0, background: t.footerBg, padding: "12px 24px", borderRadius: "16px 16px 0 0", boxShadow: dark ? "0 -4px 20px #0002" : "0 -4px 20px #0001", display: "flex", justifyContent: "center", gap: 12, marginTop: 8, border: `1px solid ${t.border}`, borderBottom: "none" }}>
-          <button onClick={reset} style={{ padding: "12px 24px", borderRadius: 12, border: `2px solid ${t.border}`, background: t.card, color: t.textMuted, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif" }}>↩ Start Over</button>
-          <button onClick={saveJSON} style={{ padding: "12px 24px", borderRadius: 12, border: `2px solid ${t.accent}`, background: t.card, color: t.accent, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif" }}>💾 Save as File</button>
-          <button onClick={() => window.print()} style={{ padding: "12px 28px", borderRadius: 999, border: "none", background: t.gradient, color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'Outfit',sans-serif", boxShadow: "0 3px 14px rgba(138,108,184,0.3)" }}>🖨 Print / Save PDF</button>
+          <button onClick={reset} style={{ padding: "12px 24px", borderRadius: 12, border: `2px solid ${t.border}`, background: t.card, color: t.textMuted, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif" }}>↩ Start Over</button>
+          <button onClick={saveJSON} style={{ padding: "12px 24px", borderRadius: 12, border: `2px solid ${t.accent}`, background: t.card, color: t.accent, fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif" }}>💾 Save as File</button>
+          <button onClick={() => window.print()} style={{ padding: "12px 28px", borderRadius: 999, border: "none", background: t.gradient, color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 14, fontFamily: "'DM Sans', system-ui, sans-serif", boxShadow: "0 3px 14px rgba(26,122,122,0.3)" }}>🖨 Print / Save PDF</button>
         </div>
       </div>
     </ThemeCtx.Provider>
