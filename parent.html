@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parent / Caregiver Intake Form | Rachel Terra Norton, MS, CCC-SLP</title>
+<meta name="description" content="Trauma-informed parent/caregiver intake form for speech-language pathology evaluation. Strengths-based, evidence-based, and accessible.">
+<meta name="author" content="Rachel Terra Norton, MS, CCC-SLP">
+<meta property="og:title" content="Parent/Caregiver Intake | RTN | Speech, Language & Literacy">
+<meta property="og:description" content="Trauma-informed intake form for SLP evaluation. Free and accessible.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f4f4;--surface:#ffffff;--surfaceAlt:#f7fafa;--border:#d4dfdf;--borderLight:#e6eced;
+  --text:#1c2d2d;--textMed:#3d5555;--muted:#7a9191;
+  --teal:#1a7a7a;--tealDark:#135e5e;--tealDeep:#0e4a4a;--tealLight:#e0f2f1;--tealFaint:#f0faf9;
+  --navy:#1b3a4b;--gold:#b8860b;--goldBg:#fef9ee;--goldBorder:#e0c97a;
+  --green:#2e7d5b;--greenBg:#ecf5f0;--red:#a63d3d;--redBg:#fdf0ef;
+  --radius:6px;--shadow:0 1px 4px rgba(26,122,122,.08)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14.5px;line-height:1.55}
+header{background:var(--tealDeep);padding:0 28px;display:flex;align-items:center;height:52px;gap:18px}
+.hdr-brand{display:flex;align-items:center;gap:12px}
+.hdr-logo{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:rgba(255,255,255,.9);flex-shrink:0}
+header h1{font-size:15px;font-weight:600;color:#fff;letter-spacing:.02em}
+header h1 span{font-weight:400;opacity:.6;margin-left:2px}
+.hdr-btns{margin-left:auto;display:flex;gap:8px}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 18px;border-radius:4px;border:none;cursor:pointer;transition:all .15s;white-space:nowrap;letter-spacing:.02em}
+.btn-outline{background:transparent;color:rgba(255,255,255,.85);border:1.5px solid rgba(255,255,255,.3)}
+.btn-outline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+.btn-primary{background:#fff;color:var(--tealDeep)}
+.btn-primary:hover{background:var(--tealLight)}
+.wrap{max-width:740px;margin:0 auto;padding:28px 20px 60px}
+.progress-bar{height:3px;background:var(--tealDark)}
+.progress-fill{height:100%;background:linear-gradient(90deg,#4db8b8,#7edede);transition:width .4s ease;border-radius:0 2px 2px 0}
+.callout{padding:14px 18px;border-radius:var(--radius);margin-bottom:24px;font-size:13.5px;line-height:1.55;border-left:4px solid var(--teal);background:var(--tealFaint)}
+.callout strong{font-weight:700}
+.callout-warm{padding:13px 18px;border-radius:var(--radius);margin-bottom:18px;font-size:13px;line-height:1.55;border-left:4px solid var(--gold);background:var(--goldBg);color:#5a4520}
+.sec{margin-bottom:32px}
+.section-head{margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid var(--teal)}
+.section-head h2{font-size:18px;font-weight:700;color:var(--tealDeep);letter-spacing:-.1px}
+h3.sub{font-size:14px;font-weight:700;margin:22px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--teal);color:var(--tealDeep);letter-spacing:.01em}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+.fr.thirds{grid-template-columns:1fr 1fr 1fr}
+.f{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
+.f label{font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px}
+.f input,.f textarea,.f select{font-family:inherit;font-size:13.5px;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s}
+.f input:focus,.f textarea:focus,.f select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,122,122,.1)}
+.f input::placeholder,.f textarea::placeholder{color:var(--muted);font-style:italic;font-size:12.5px}
+.f textarea{resize:vertical;min-height:56px;line-height:1.6}
+.hint{font-size:11px;color:var(--muted);font-style:italic;line-height:1.4}
+
+/* ── SINGLE-COLUMN CHECKBOXES (matching wizard .cb) ── */
+.cg{display:grid;grid-template-columns:1fr;gap:2px;margin:6px 0 14px}
+.ci{display:flex;align-items:flex-start;gap:8px;padding:7px 12px;font-size:13.5px;cursor:pointer;border-radius:var(--radius);transition:background .1s}
+.ci:hover{background:var(--tealFaint)}
+.ci input[type="checkbox"],.ci input[type="radio"]{accent-color:var(--teal);margin-top:3px;flex-shrink:0;width:16px;height:16px;cursor:pointer}
+
+/* ── RADIO PILLS ── */
+.radio-group{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.radio-pill{display:flex;align-items:center;gap:7px;padding:8px 16px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;background:var(--surface)}
+.radio-pill:hover{border-color:var(--teal);background:var(--tealFaint)}
+.radio-pill input{accent-color:var(--teal);cursor:pointer}
+.radio-pill:has(input:checked){border-color:var(--teal);background:var(--tealLight);color:var(--tealDeep);font-weight:600}
+
+/* ── SCORE TABLE (dropdown + notes — wizard pattern) ── */
+.st{width:100%;border-collapse:collapse;margin:8px 0 14px;font-size:13px}
+.st th{text-align:left;padding:8px 10px;font-size:10px;font-weight:700;color:var(--tealDeep);text-transform:uppercase;letter-spacing:.6px;border-bottom:2px solid var(--teal);background:var(--tealFaint)}
+.st td{padding:7px 10px;border-bottom:1px solid var(--borderLight);vertical-align:middle}
+.st td:first-child{font-size:13px;font-weight:600;color:var(--navy)}
+.st tr:hover td{background:var(--tealFaint)}
+.st select{padding:5px 6px;font-size:12.5px;border:1px solid var(--borderLight);border-radius:4px;cursor:pointer;background:var(--surface)}
+.st select:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 2px rgba(26,122,122,.08)}
+.st input[type="text"]{width:100%;padding:6px 8px;font-size:12.5px;border:1px solid var(--borderLight);border-radius:4px;background:var(--surface);font-family:inherit}
+.st input[type="text"]:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 2px rgba(26,122,122,.08)}
+
+/* ── MILESTONE TABLE ── */
+.mt{width:100%;border-collapse:collapse;margin:8px 0 14px;font-size:13px}
+.mt th{text-align:left;padding:8px 10px;font-size:10px;font-weight:700;color:var(--tealDeep);text-transform:uppercase;letter-spacing:.6px;border-bottom:2px solid var(--teal);background:var(--tealFaint)}
+.mt th:not(:first-child){text-align:center}
+.mt td{padding:7px 10px;border-bottom:1px solid var(--borderLight);vertical-align:middle}
+.mt td:first-child{font-size:13px}
+.mt td:not(:first-child){text-align:center}
+.mt tr:hover td{background:var(--tealFaint)}
+.mt input[type="radio"]{accent-color:var(--teal);width:16px;height:16px;cursor:pointer}
+.mt input[type="text"]{width:100%;border:none;border-bottom:1.5px solid var(--border);font-family:inherit;font-size:12px;padding:4px;background:transparent;outline:none}
+.mt input[type="text"]:focus{border-bottom-color:var(--teal)}
+
+/* ── SIGNATURE ── */
+.sig-card{background:var(--surfaceAlt);border:1px solid var(--border);border-radius:var(--radius);margin-top:32px;padding:0;overflow:hidden}
+.sig-header{background:var(--tealDeep);padding:12px 20px;display:flex;align-items:center;gap:10px}
+.sig-header h3{font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.5px}
+.sig-tabs{display:flex;margin-left:auto;gap:0}
+.sig-tab{padding:6px 16px;font-size:11px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.6);border:1.5px solid rgba(255,255,255,.2);background:transparent;letter-spacing:.3px;text-transform:uppercase;transition:all .15s}
+.sig-tab:first-child{border-radius:4px 0 0 4px}
+.sig-tab:last-child{border-radius:0 4px 4px 0}
+.sig-tab.active{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.4)}
+.sig-body{padding:20px 24px 18px}
+.sig-draw{display:block}
+.sig-type{display:none}
+.sig-canvas-wrap{border:1.5px dashed var(--border);border-radius:var(--radius);background:#fff;position:relative;margin-bottom:10px}
+.sig-canvas-wrap canvas{display:block;width:100%;height:100px;cursor:crosshair}
+.sig-clear{position:absolute;top:6px;right:8px;font-size:10px;font-weight:600;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:3px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.3px}
+.sig-clear:hover{color:var(--red);border-color:var(--red)}
+.sig-typed-input{width:100%;padding:12px 16px;font-family:'Caveat',cursive;font-size:28px;font-weight:600;color:var(--tealDeep);border:1.5px dashed var(--border);border-radius:var(--radius);background:#fff;outline:none;text-align:center;letter-spacing:1px}
+.sig-typed-input:focus{border-color:var(--teal)}
+.sig-typed-input::placeholder{font-size:16px;color:var(--muted);font-weight:400;letter-spacing:0}
+.sig-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px}
+.sig-f{display:flex;flex-direction:column;gap:3px}
+.sig-f label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.sig-f input{font-family:inherit;font-size:13px;padding:7px 10px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);outline:none}
+.sig-f input:focus{border-color:var(--teal)}
+.sig-foot{font-size:11.5px;color:var(--muted);margin-top:16px;text-align:center;padding-top:12px;border-top:1px solid var(--borderLight)}
+
+/* ── PRINT ── */
+@media print{
+  body{background:#fff;font-size:11.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  header{position:static}.hdr-btns{display:none!important}
+  .wrap{max-width:100%;padding:10px 0}
+  .section-head{border-bottom:2px solid var(--teal)!important}
+  .callout,.callout-warm,.st th,.mt th,.st tr:hover td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .f input,.f select{border:none!important;border-bottom:1px solid #aaa!important;border-radius:0!important;padding:3px 2px!important}
+  .f textarea{border:1px solid #aaa!important;border-radius:0!important}
+  .sig-card{break-inside:avoid}.sig-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sec{page-break-inside:avoid}.progress-bar{display:none}
+  @page{margin:0.55in 0.6in}
+}
+@media(max-width:600px){
+  .cg{grid-template-columns:1fr}
+  .fr,.fr.thirds{grid-template-columns:1fr}
+  .sig-fields{grid-template-columns:1fr}
+  header{padding:0 14px;height:48px}header h1{font-size:13px}
+  .wrap{padding:20px 14px 50px}
+}
+/* ── AUTOSAVE ── */
+.autosave{font-size:10px;color:rgba(255,255,255,.5);font-weight:500;letter-spacing:.3px;display:flex;align-items:center;gap:5px;margin-right:8px}
+.autosave .dot{width:6px;height:6px;border-radius:50%;background:#4db8b8;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.autosave.saving .dot{background:var(--gold)}
+.btn-clear{background:transparent;color:rgba(255,255,255,.6);border:1.5px solid rgba(255,255,255,.15);font-size:11px;padding:5px 12px}
+.btn-clear:hover{color:#fff;border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.08)}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-brand">
+    <a href="index.html" class="hdr-logo" title="Back to form selection" style="text-decoration:none">RTN</a>
+    <h1>Parent / Caregiver Intake Form <span>| Rachel Terra Norton, MS, CCC-SLP</span></h1>
+  </div>
+  <div class="hdr-btns">
+    <span class="autosave" id="autosaveBadge"><span class="dot"></span>Autosaved</span>
+    <button class="btn btn-clear" onclick="clearForm()">Clear Form</button>
+    <button class="btn btn-outline" onclick="window.print()">Print / Save PDF</button>
+    <button class="btn btn-primary" onclick="emailSummary()">Email My Answers</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+<div class="wrap">
+<div class="callout"><strong>Welcome.</strong> You know your child best. This form helps us understand how your child communicates, learns, and experiences the world so we can plan the most helpful evaluation. Answer as completely as you can. If you're unsure about something, write "unsure" or leave it blank. There are no wrong answers.</div>
+
+<!-- 1 ── ABOUT YOUR CHILD ── -->
+<div class="sec"><div class="section-head"><h2>1. About Your Child</h2></div>
+<div class="fr"><div class="f"><label>Child's Full Name</label><input name="child_name"></div><div class="f"><label>Preferred Name / Nickname</label><input name="nick"></div></div>
+<div class="fr thirds"><div class="f"><label>Date of Birth</label><input type="date" name="dob"></div><div class="f"><label>Age</label><input name="age" placeholder="e.g., 7 years, 4 months"></div><div class="f"><label>Pronouns</label><input name="pronouns" placeholder="e.g., she/her, he/him, they/them"></div></div>
+<div class="fr thirds"><div class="f"><label>Grade</label><input name="grade"></div><div class="f"><label>School</label><input name="school"></div><div class="f"><label>Teacher</label><input name="teacher"></div></div>
+<div class="fr"><div class="f"><label>Parent / Caregiver Name(s)</label><input name="parent"></div><div class="f"><label>Relationship to Child</label><input name="rel" placeholder="Mother, Father, Guardian, Foster parent"></div></div>
+<div class="fr"><div class="f"><label>Phone</label><input type="tel" name="phone"></div><div class="f"><label>Email</label><input type="email" name="email"></div></div>
+<div class="fr"><div class="f"><label>Primary Language(s) at Home</label><input name="home_lang"></div><div class="f"><label>Other Languages Child Hears or Speaks</label><input name="other_lang"></div></div>
+<div class="f"><label>Who referred your child?</label></div>
+<div class="cg"><label class="ci"><input type="checkbox" name="ref" value="Pediatrician"> Pediatrician</label><label class="ci"><input type="checkbox" name="ref" value="Teacher"> Teacher</label><label class="ci"><input type="checkbox" name="ref" value="School team"> School team (SPED)</label><label class="ci"><input type="checkbox" name="ref" value="Parent concern"> My own concern</label><label class="ci"><input type="checkbox" name="ref" value="Other therapist"> Another therapist</label><label class="ci"><input type="checkbox" name="ref" value="Other"> Other</label></div></div>
+
+<!-- 2 ── STRENGTHS ── -->
+<div class="sec"><div class="section-head"><h2>2. Your Child's Strengths</h2></div>
+<div class="callout-warm">We always start here. Understanding what your child does well helps us build on those strengths during our work together.</div>
+<div class="f"><label>What is your child good at? What do they enjoy?</label><span class="hint">Examples: drawing, sports, building, music, animals, being kind, making people laugh, video games, cooking</span><textarea name="strengths" rows="3"></textarea></div>
+<div class="f"><label>What motivates or engages your child?</label><span class="hint">What gets them excited or helps them stay focused?</span><textarea name="motivators" rows="2"></textarea></div>
+<div class="f"><label>What do you most want us to know about your child as a person?</label><textarea name="know" rows="2"></textarea></div></div>
+
+<!-- 3 ── CONCERNS ── -->
+<div class="sec"><div class="section-head"><h2>3. Your Concerns</h2></div>
+<div class="f"><label>What concerns you most about your child's communication or learning?</label><span class="hint">Tell us in your own words. There are no wrong answers.</span><textarea name="concerns" rows="4"></textarea></div>
+<div class="f"><label>When did you first notice?</label><input name="onset" placeholder="e.g., Around age 3, Since starting kindergarten"></div>
+<div class="f"><label>What would progress look like for your child?</label><span class="hint">What would be different if things improved?</span><textarea name="goals" rows="2"></textarea></div>
+<div class="f" style="margin-top:10px"><label>Check areas of concern:</label></div>
+<div class="cg">
+<label class="ci"><input type="checkbox" name="area" value="Understanding"> Understanding what is said</label>
+<label class="ci"><input type="checkbox" name="area" value="Directions"> Following directions</label>
+<label class="ci"><input type="checkbox" name="area" value="Speech sounds"> Saying words clearly</label>
+<label class="ci"><input type="checkbox" name="area" value="Sentences"> Putting sentences together</label>
+<label class="ci"><input type="checkbox" name="area" value="Word finding"> Finding the right word</label>
+<label class="ci"><input type="checkbox" name="area" value="Reading"> Reading or sounding out words</label>
+<label class="ci"><input type="checkbox" name="area" value="Spelling/writing"> Spelling or writing</label>
+<label class="ci"><input type="checkbox" name="area" value="Attention"> Paying attention / staying focused</label>
+<label class="ci"><input type="checkbox" name="area" value="Memory"> Remembering information</label>
+<label class="ci"><input type="checkbox" name="area" value="Organization"> Getting organized for school</label>
+<label class="ci"><input type="checkbox" name="area" value="Social skills"> Making friends / social skills</label>
+<label class="ci"><input type="checkbox" name="area" value="Stuttering"> Stuttering or fluency</label>
+<label class="ci"><input type="checkbox" name="area" value="Voice"> Voice (hoarse, nasal, quiet)</label>
+<label class="ci"><input type="checkbox" name="area" value="Feeding"> Eating or swallowing</label>
+<label class="ci"><input type="checkbox" name="area" value="Emotions"> Managing emotions</label>
+<label class="ci"><input type="checkbox" name="area" value="Flexibility"> Handling changes or transitions</label>
+</div></div>
+
+<!-- 4 ── DEVELOPMENTAL HISTORY ── -->
+<div class="sec"><div class="section-head"><h2>4. Developmental History</h2></div>
+<h3 class="sub">Pregnancy &amp; Birth</h3>
+<div class="f"><label>Any concerns during pregnancy, delivery, or after birth?</label><span class="hint">Examples: premature, low birth weight, NICU, complications. Write "none" if not applicable.</span><textarea name="birth" rows="2"></textarea></div>
+<h3 class="sub">Milestones</h3>
+<p style="font-size:12px;color:var(--muted);margin-bottom:8px">Check on time, late, or unsure. It's okay if you don't remember exactly.</p>
+<table class="mt"><thead><tr><th>Milestone</th><th>On Time</th><th>Late</th><th>Unsure</th><th>Approx Age</th></tr></thead><tbody>
+<tr><td>Sat without support (~6 mo)</td><td><input type="radio" name="m1" value="OT"></td><td><input type="radio" name="m1" value="L"></td><td><input type="radio" name="m1" value="U"></td><td><input type="text"></td></tr>
+<tr><td>First words (~12 mo)</td><td><input type="radio" name="m2" value="OT"></td><td><input type="radio" name="m2" value="L"></td><td><input type="radio" name="m2" value="U"></td><td><input type="text"></td></tr>
+<tr><td>Walked independently (~12 mo)</td><td><input type="radio" name="m3" value="OT"></td><td><input type="radio" name="m3" value="L"></td><td><input type="radio" name="m3" value="U"></td><td><input type="text"></td></tr>
+<tr><td>Two-word phrases (~18-24 mo)</td><td><input type="radio" name="m4" value="OT"></td><td><input type="radio" name="m4" value="L"></td><td><input type="radio" name="m4" value="U"></td><td><input type="text"></td></tr>
+<tr><td>Toilet trained (~2.5-3 yr)</td><td><input type="radio" name="m5" value="OT"></td><td><input type="radio" name="m5" value="L"></td><td><input type="radio" name="m5" value="U"></td><td><input type="text"></td></tr>
+<tr><td>Full sentences (~3 yr)</td><td><input type="radio" name="m6" value="OT"></td><td><input type="radio" name="m6" value="L"></td><td><input type="radio" name="m6" value="U"></td><td><input type="text"></td></tr>
+</tbody></table>
+<div class="f"><label>Has your child ever lost skills they previously had?</label><span class="hint">e.g., stopped talking after previously using words, lost social interest</span>
+<div class="radio-group"><label class="radio-pill"><input type="radio" name="regress" value="No"> No</label><label class="radio-pill"><input type="radio" name="regress" value="Yes"> Yes</label></div>
+<textarea name="regress_d" rows="2" placeholder="If yes, please describe..."></textarea></div></div>
+
+<!-- 5 ── MEDICAL HISTORY ── -->
+<div class="sec"><div class="section-head"><h2>5. Medical History</h2></div>
+<div class="f"><label>Has your child been diagnosed with any of the following?</label></div>
+<div class="cg">
+<label class="ci"><input type="checkbox" name="dx" value="Ear infections"> Frequent ear infections</label>
+<label class="ci"><input type="checkbox" name="dx" value="Hearing loss"> Hearing loss</label>
+<label class="ci"><input type="checkbox" name="dx" value="Vision"> Vision problems</label>
+<label class="ci"><input type="checkbox" name="dx" value="Seizures"> Seizures / epilepsy</label>
+<label class="ci"><input type="checkbox" name="dx" value="TBI"> Traumatic brain injury</label>
+<label class="ci"><input type="checkbox" name="dx" value="ASD"> Autism spectrum disorder</label>
+<label class="ci"><input type="checkbox" name="dx" value="ADHD"> ADHD</label>
+<label class="ci"><input type="checkbox" name="dx" value="Dyslexia/LD"> Learning disability / dyslexia</label>
+<label class="ci"><input type="checkbox" name="dx" value="ID"> Intellectual disability</label>
+<label class="ci"><input type="checkbox" name="dx" value="Genetic"> Genetic condition</label>
+<label class="ci"><input type="checkbox" name="dx" value="Cleft"> Cleft lip or palate</label>
+<label class="ci"><input type="checkbox" name="dx" value="CP"> Cerebral palsy</label>
+<label class="ci"><input type="checkbox" name="dx" value="Anxiety"> Anxiety or depression</label>
+<label class="ci"><input type="checkbox" name="dx" value="Feeding"> Feeding / swallowing difficulty</label>
+<label class="ci"><input type="checkbox" name="dx" value="Sensory"> Sensory processing differences</label>
+<label class="ci"><input type="checkbox" name="dx" value="None"> No diagnoses</label>
+</div>
+<div class="f"><label>Current Medications</label><input name="meds" placeholder="List all, or write 'none'"></div>
+<div class="f"><label>Allergies or dietary restrictions?</label><input name="allergy" placeholder="Write 'none' if not applicable"></div>
+<div class="fr"><div class="f"><label>Pediatrician</label><input name="peds"></div><div class="f"><label>Last Hearing Screening</label><input name="hearing" placeholder="Date & result"></div></div>
+<div class="f"><label>Last Vision Screening</label><input name="vision" placeholder="Date & result"></div>
+<div class="f"><label>Surgeries or hospitalizations?</label><textarea name="surg" rows="2" placeholder="Write 'none' if not applicable"></textarea></div></div>
+
+<!-- 6 ── FAMILY HISTORY ── -->
+<div class="sec"><div class="section-head"><h2>6. Family History</h2></div>
+<p style="font-size:13px;color:var(--muted);margin-bottom:8px">Does anyone in your family (parents, siblings, grandparents, aunts/uncles) have a history of:</p>
+<div class="cg">
+<label class="ci"><input type="checkbox" name="fhx" value="Speech delays"> Speech or language delays</label>
+<label class="ci"><input type="checkbox" name="fhx" value="Dyslexia"> Reading difficulties / dyslexia</label>
+<label class="ci"><input type="checkbox" name="fhx" value="LD"> Learning disabilities</label>
+<label class="ci"><input type="checkbox" name="fhx" value="ADHD"> ADHD</label>
+<label class="ci"><input type="checkbox" name="fhx" value="ASD"> Autism</label>
+<label class="ci"><input type="checkbox" name="fhx" value="Hearing"> Hearing loss</label>
+<label class="ci"><input type="checkbox" name="fhx" value="Stuttering"> Stuttering</label>
+<label class="ci"><input type="checkbox" name="fhx" value="MH"> Mental health conditions</label>
+</div>
+<div class="f"><label>If yes, who and what?</label><span class="hint">Example: "Mom had speech therapy as a child; uncle has dyslexia"</span><textarea name="fhx_d" rows="2"></textarea></div></div>
+
+<!-- 7 ── EDUCATION & SERVICES ── -->
+<div class="sec"><div class="section-head"><h2>7. Education &amp; Services</h2></div>
+<div class="f"><label>Current services your child receives:</label></div>
+<div class="cg">
+<label class="ci"><input type="checkbox" name="svc" value="SLP"> Speech therapy</label>
+<label class="ci"><input type="checkbox" name="svc" value="OT"> Occupational therapy</label>
+<label class="ci"><input type="checkbox" name="svc" value="PT"> Physical therapy</label>
+<label class="ci"><input type="checkbox" name="svc" value="Reading"> Reading intervention</label>
+<label class="ci"><input type="checkbox" name="svc" value="Counseling"> Counseling</label>
+<label class="ci"><input type="checkbox" name="svc" value="IEP"> Special education (IEP)</label>
+<label class="ci"><input type="checkbox" name="svc" value="504"> 504 plan</label>
+<label class="ci"><input type="checkbox" name="svc" value="ABA"> ABA</label>
+<label class="ci"><input type="checkbox" name="svc" value="None"> None currently</label>
+</div>
+<div class="f"><label>Previous speech therapy?</label><textarea name="prior_slp" rows="2" placeholder="Where? When? How long? What was worked on?"></textarea></div>
+<div class="f"><label>Previous evaluations?</label><textarea name="prior_eval" rows="2" placeholder="When, by whom? Please bring copies if available."></textarea></div></div>
+
+<!-- 8 ── COMMUNICATION AT HOME (dropdown + notes table) ── -->
+<div class="sec"><div class="section-head"><h2>8. Communication at Home</h2></div>
+<p style="font-size:13px;color:var(--muted);margin-bottom:8px">Rate your child <b>compared to other children their age</b>. Your best guess is fine.</p>
+<table class="st"><thead><tr><th style="width:42%">Skill</th><th style="width:28%">Rating</th><th>Notes</th></tr></thead><tbody id="pr-body"></tbody></table></div>
+
+<!-- 9 ── SOCIAL-EMOTIONAL WELL-BEING ── -->
+<div class="sec"><div class="section-head"><h2>9. Social-Emotional Well-Being</h2></div>
+<div class="callout-warm">Children's communication and learning are shaped by their experiences and environment. This section helps us understand your child's world so we can provide the most supportive care. Share only what feels comfortable.</div>
+<div class="f"><label>Who does your child live with?</label><textarea name="lives" rows="2" placeholder="e.g., Mom, stepdad, and younger sister"></textarea></div>
+<div class="f"><label>Check any that describe your child:</label></div>
+<div class="cg">
+<label class="ci"><input type="checkbox" name="bx" value="Shy"> Shy or withdrawn</label>
+<label class="ci"><input type="checkbox" name="bx" value="Friends"> Difficulty making friends</label>
+<label class="ci"><input type="checkbox" name="bx" value="Alone"> Prefers to play alone</label>
+<label class="ci"><input type="checkbox" name="bx" value="Frustrated"> Easily frustrated</label>
+<label class="ci"><input type="checkbox" name="bx" value="Meltdowns"> Frequent meltdowns</label>
+<label class="ci"><input type="checkbox" name="bx" value="Transitions"> Difficulty with transitions</label>
+<label class="ci"><input type="checkbox" name="bx" value="Anxious"> Anxious or worried</label>
+<label class="ci"><input type="checkbox" name="bx" value="Impulsive"> Impulsive</label>
+<label class="ci"><input type="checkbox" name="bx" value="Self-control"> Difficulty with self-control</label>
+<label class="ci"><input type="checkbox" name="bx" value="Bullied"> Bullied or teased</label>
+<label class="ci"><input type="checkbox" name="bx" value="Sensory"> Sensory sensitivities</label>
+<label class="ci"><input type="checkbox" name="bx" value="Sleep"> Sleep difficulties</label>
+</div>
+<div class="f"><label>Has your child experienced any major life changes or stressful events?</label><span class="hint">Examples: moves, family changes, school transitions, loss of a loved one, extended separations. Only share what you're comfortable with.</span><textarea name="life_events" rows="3"></textarea></div>
+<div class="f"><label>How does your child typically respond to stress or frustration?</label><span class="hint">Examples: shuts down, cries, gets angry, seeks comfort, avoids the task</span><textarea name="stress_response" rows="2"></textarea></div>
+<div class="f"><label>What helps your child calm down when upset?</label><textarea name="calming" rows="2" placeholder="e.g., quiet space, hugs, drawing, music, sensory tools"></textarea></div>
+<div class="f"><label>Describe your child's friendships and social connections:</label><textarea name="social" rows="2"></textarea></div>
+<div class="f"><label>How would you describe your child's sleep?</label><input name="sleep" placeholder="e.g., Good, trouble falling asleep, wakes at night"></div></div>
+
+<!-- 10 ── LANGUAGE EXPOSURE ── -->
+<div class="sec"><div class="section-head"><h2>10. Language Exposure <span style="font-weight:400;font-size:13px;opacity:.6">(only if multilingual)</span></h2></div>
+<p style="font-size:13px;color:var(--muted);margin-bottom:10px">Only complete if your child hears or speaks more than one language.</p>
+<div class="fr"><div class="f"><label>Languages at home</label><input name="l_home"></div><div class="f"><label>Languages at school</label><input name="l_school"></div></div>
+<div class="f"><label>Age first regularly exposed to English</label><input name="l_eng" placeholder="e.g., Birth, Age 3"></div>
+<div class="f"><label>How much English vs. other language(s) at home?</label><span class="hint">e.g., "50/50 English and Spanish" or "Mostly Haitian Creole"</span><textarea name="l_ratio" rows="2"></textarea></div>
+<div class="f"><label>Preferred language?</label><input name="l_pref"></div></div>
+
+<!-- 11 ── ANYTHING ELSE ── -->
+<div class="sec"><div class="section-head"><h2>11. Anything Else</h2></div>
+<div class="f"><label>Is there anything else you'd like us to know about your child?</label><textarea name="other" rows="5"></textarea></div></div>
+
+<!-- ── SIGNATURE ── -->
+<div class="sig-card">
+<div class="sig-header">
+  <h3>Signature</h3>
+  <div class="sig-tabs">
+    <button class="sig-tab active" onclick="sigMode('draw',this)">Draw</button>
+    <button class="sig-tab" onclick="sigMode('type',this)">Type</button>
+  </div>
+</div>
+<div class="sig-body">
+  <div class="sig-draw" id="sigDraw">
+    <div class="sig-canvas-wrap">
+      <canvas id="sigCanvas" height="100"></canvas>
+      <button class="sig-clear" onclick="clearSig()">Clear</button>
+    </div>
+  </div>
+  <div class="sig-type" id="sigType">
+    <input class="sig-typed-input" id="sigTyped" placeholder="Type your full name" oninput="this.style.fontFamily='Caveat,cursive'">
+  </div>
+  <div class="sig-fields">
+    <div class="sig-f"><label>Printed Name</label><input name="sig_print"></div>
+    <div class="sig-f"><label>Date</label><input type="date" name="sig_date"></div>
+    <div class="sig-f"><label>Relationship to Child</label><input name="sig_rel" placeholder="e.g., Mother, Father, Guardian"></div>
+  </div>
+  <p class="sig-foot">Return this form before the evaluation date. Questions? <b>rachelslp.org</b></p>
+</div>
+</div>
+</div>
+
+<script>
+// ── Rating table (dropdown + notes) ──
+const sk=['Understanding what you say','Following directions (e.g., "Get shoes and put by the door")','Telling you about their day or retelling a story','Using complete sentences','Saying words clearly so others understand','Finding the right word (vs. "that thing" or "um...")','Reading at grade level','Spelling words correctly','Writing sentences or paragraphs','Paying attention during homework','Remembering things you told them','Getting along with other kids'];
+const opts=['—','Big struggle','Some struggle','Average','Good','Strength'];
+const b=document.getElementById('pr-body');
+sk.forEach((s,i)=>{const r=document.createElement('tr');r.innerHTML=`<td>${s}</td><td><select name="r${i}">${opts.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></td><td><input type="text" name="rn${i}" placeholder="Optional notes"></td>`;b.appendChild(r)});
+
+// ── Signature canvas ──
+const canvas=document.getElementById('sigCanvas');
+const ctx=canvas.getContext('2d');
+let drawing=false;
+function resizeCanvas(){canvas.width=canvas.offsetWidth;canvas.height=100}
+window.addEventListener('resize',resizeCanvas);resizeCanvas();
+ctx.strokeStyle='#1c2d2d';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineJoin='round';
+function getPos(e){const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}}
+canvas.addEventListener('mousedown',e=>{drawing=true;ctx.beginPath();const p=getPos(e);ctx.moveTo(p.x,p.y)});
+canvas.addEventListener('mousemove',e=>{if(!drawing)return;const p=getPos(e);ctx.lineTo(p.x,p.y);ctx.stroke()});
+canvas.addEventListener('mouseup',()=>drawing=false);
+canvas.addEventListener('mouseleave',()=>drawing=false);
+canvas.addEventListener('touchstart',e=>{e.preventDefault();drawing=true;ctx.beginPath();const p=getPos(e);ctx.moveTo(p.x,p.y)},{passive:false});
+canvas.addEventListener('touchmove',e=>{e.preventDefault();if(!drawing)return;const p=getPos(e);ctx.lineTo(p.x,p.y);ctx.stroke()},{passive:false});
+canvas.addEventListener('touchend',()=>drawing=false);
+function clearSig(){ctx.clearRect(0,0,canvas.width,canvas.height)}
+function sigMode(mode,btn){
+  document.querySelectorAll('.sig-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sigDraw').style.display=mode==='draw'?'block':'none';
+  document.getElementById('sigType').style.display=mode==='type'?'block':'none';
+}
+
+// ── Progress bar ──
+function updateProgress(){
+  const inputs=document.querySelectorAll('.wrap input:not([type="date"]):not([type="radio"]):not([type="checkbox"]),.wrap textarea,.wrap select');
+  const radios=new Set();document.querySelectorAll('.wrap input[type="radio"]').forEach(r=>radios.add(r.name));
+  const checks=new Set();document.querySelectorAll('.wrap input[type="checkbox"]').forEach(c=>checks.add(c.name));
+  let filled=0,total=0;
+  inputs.forEach(el=>{total++;if(el.value.trim()&&el.value!=='—')filled++});
+  radios.forEach(name=>{total++;if(document.querySelector(`[name="${name}"]:checked`))filled++});
+  checks.forEach(name=>{total++;if(document.querySelector(`[name="${name}"]:checked`))filled++});
+  const pct=total>0?Math.round((filled/total)*100):0;
+  document.getElementById('prog').style.width=pct+'%';
+}
+document.addEventListener('input',updateProgress);
+document.addEventListener('change',updateProgress);
+
+// ── Email summary ──
+function emailSummary(){
+let L=['PARENT/CAREGIVER INTAKE FORM\nRachel Terra Norton, MS, CCC-SLP\n'];
+document.querySelectorAll('input[type="text"],input[type="email"],input[type="tel"],input[type="date"],textarea').forEach(el=>{if(el.value.trim()&&el.name){const lbl=el.closest('.f,.sig-f')?.querySelector('label')?.textContent||el.name;L.push(lbl+': '+el.value.trim())}});
+['ref','area','dx','fhx','svc','bx'].forEach(n=>{const c=[...document.querySelectorAll(`[name="${n}"]:checked`)].map(e=>e.value);if(c.length)L.push(n.toUpperCase()+': '+c.join(', '))});
+L.push('\nCOMMUNICATION RATINGS:');
+sk.forEach((s,i)=>{const v=document.querySelector(`[name="r${i}"]`);const n=document.querySelector(`[name="rn${i}"]`);if(v&&v.value!=='—')L.push('  '+s+': '+v.value+(n&&n.value?' ('+n.value+')':''))});
+const typed=document.getElementById('sigTyped')?.value;
+if(typed)L.push('\nSIGNATURE (typed): '+typed);
+const subj=encodeURIComponent('Parent Intake - '+(document.querySelector('[name="child_name"]')?.value||''));
+window.location.href='mailto:?subject='+subj+'&body='+encodeURIComponent(L.join('\n'));
+}
+
+// ── Autosave ──
+const SAVE_KEY='rtn_parent_intake_draft';
+function autoSave(){
+  try{
+    const d={};
+    document.querySelectorAll('input[type="text"],input[type="email"],input[type="tel"],input[type="date"],textarea,select').forEach(el=>{if(el.name)d[el.name]=el.value});
+    document.querySelectorAll('input[type="checkbox"]').forEach(el=>{if(!d['_cb_'+el.name])d['_cb_'+el.name]=[];if(el.checked)d['_cb_'+el.name].push(el.value)});
+    document.querySelectorAll('input[type="radio"]:checked').forEach(el=>{d['_r_'+el.name]=el.value});
+    const typed=document.getElementById('sigTyped');if(typed)d._sigTyped=typed.value;
+    localStorage.setItem(SAVE_KEY,JSON.stringify(d));
+  }catch(e){}
+  const badge=document.getElementById('autosaveBadge');
+  badge.classList.add('saving');
+  setTimeout(()=>badge.classList.remove('saving'),600);
+}
+function restoreDraft(){
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);if(!raw)return;
+    const d=JSON.parse(raw);
+    Object.keys(d).forEach(k=>{
+      if(k.startsWith('_cb_')){
+        const name=k.slice(4);const vals=d[k];
+        document.querySelectorAll(`[name="${name}"]`).forEach(el=>{if(el.type==='checkbox'&&vals.includes(el.value))el.checked=true});
+      }else if(k.startsWith('_r_')){
+        const name=k.slice(3);
+        document.querySelectorAll(`[name="${name}"]`).forEach(el=>{if(el.type==='radio'&&el.value===d[k])el.checked=true});
+      }else if(k==='_sigTyped'){
+        const el=document.getElementById('sigTyped');if(el){el.value=d[k];el.style.fontFamily='Caveat,cursive'}
+      }else{
+        const el=document.querySelector(`[name="${k}"]`);
+        if(el&&el.type!=='checkbox'&&el.type!=='radio')el.value=d[k]||'';
+      }
+    });
+    updateProgress();
+  }catch(e){}
+}
+function clearForm(){
+  if(!confirm('Clear all answers? This cannot be undone.'))return;
+  document.querySelectorAll('input[type="text"],input[type="email"],input[type="tel"],input[type="date"],textarea').forEach(el=>el.value='');
+  document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
+  document.querySelectorAll('input[type="checkbox"],input[type="radio"]').forEach(el=>el.checked=false);
+  const typed=document.getElementById('sigTyped');if(typed){typed.value='';typed.style.fontFamily=''}
+  clearSig();
+  try{localStorage.removeItem(SAVE_KEY)}catch(e){}
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+setInterval(autoSave,5000);
+document.addEventListener('change',autoSave);
+restoreDraft();
+</script>
+</body>
+</html>

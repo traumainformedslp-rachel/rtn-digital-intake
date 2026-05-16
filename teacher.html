@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Input Form | Rachel Terra Norton, MS, CCC-SLP</title>
+<meta name="description" content="Teacher/educator input form for speech-language pathology evaluation. Academic, communication, and behavioral observations.">
+<meta name="author" content="Rachel Terra Norton, MS, CCC-SLP">
+<meta property="og:title" content="Teacher Input Form | RTN | Speech, Language & Literacy">
+<meta property="og:description" content="Teacher input form for SLP evaluation. Free and accessible.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f4f4;--surface:#ffffff;--surfaceAlt:#f7fafa;--border:#d4dfdf;--borderLight:#e6eced;
+  --text:#1c2d2d;--textMed:#3d5555;--muted:#7a9191;
+  --teal:#1a7a7a;--tealDark:#135e5e;--tealDeep:#0e4a4a;--tealLight:#e0f2f1;--tealFaint:#f0faf9;
+  --navy:#1b3a4b;--gold:#b8860b;--goldBg:#fef9ee;--goldBorder:#e0c97a;
+  --green:#2e7d5b;--greenBg:#ecf5f0;--red:#a63d3d;--redBg:#fdf0ef;
+  --radius:6px;--shadow:0 1px 4px rgba(26,122,122,.08)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14.5px;line-height:1.55}
+header{background:var(--tealDeep);padding:0 28px;display:flex;align-items:center;height:52px;gap:18px}
+.hdr-brand{display:flex;align-items:center;gap:12px}
+.hdr-logo{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:rgba(255,255,255,.9);flex-shrink:0}
+header h1{font-size:15px;font-weight:600;color:#fff;letter-spacing:.02em}
+header h1 span{font-weight:400;opacity:.6;margin-left:2px}
+.hdr-btns{margin-left:auto;display:flex;gap:8px}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 18px;border-radius:4px;border:none;cursor:pointer;transition:all .15s;white-space:nowrap;letter-spacing:.02em}
+.btn-outline{background:transparent;color:rgba(255,255,255,.85);border:1.5px solid rgba(255,255,255,.3)}
+.btn-outline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+.btn-primary{background:#fff;color:var(--tealDeep)}
+.btn-primary:hover{background:var(--tealLight)}
+.wrap{max-width:740px;margin:0 auto;padding:28px 20px 60px}
+.progress-bar{height:3px;background:var(--tealDark)}
+.progress-fill{height:100%;background:linear-gradient(90deg,#4db8b8,#7edede);transition:width .4s ease;border-radius:0 2px 2px 0}
+.callout{padding:14px 18px;border-radius:var(--radius);margin-bottom:24px;font-size:13.5px;line-height:1.55;border-left:4px solid var(--teal);background:var(--tealFaint)}
+.callout strong{font-weight:700}
+.callout-warm{padding:13px 18px;border-radius:var(--radius);margin-bottom:18px;font-size:13px;line-height:1.55;border-left:4px solid var(--gold);background:var(--goldBg);color:#5a4520}
+.sec{margin-bottom:32px}
+.section-head{margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid var(--teal)}
+.section-head h2{font-size:18px;font-weight:700;color:var(--tealDeep);letter-spacing:-.1px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+.f{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
+.f label{font-size:11.5px;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px}
+.f input,.f textarea,.f select{font-family:inherit;font-size:13.5px;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s}
+.f input:focus,.f textarea:focus,.f select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,122,122,.1)}
+.f input::placeholder,.f textarea::placeholder{color:var(--muted);font-style:italic;font-size:12.5px}
+.f textarea{resize:vertical;min-height:56px;line-height:1.6}
+.hint{font-size:11px;color:var(--muted);font-style:italic;line-height:1.4}
+.cg{display:grid;grid-template-columns:1fr;gap:2px;margin:6px 0 14px}
+.ci{display:flex;align-items:flex-start;gap:8px;padding:7px 12px;font-size:13.5px;cursor:pointer;border-radius:var(--radius);transition:background .1s}
+.ci:hover{background:var(--tealFaint)}
+.ci input[type="checkbox"]{accent-color:var(--teal);margin-top:3px;flex-shrink:0;width:16px;height:16px;cursor:pointer}
+.st{width:100%;border-collapse:collapse;margin:8px 0 14px;font-size:13px}
+.st th{text-align:left;padding:8px 10px;font-size:10px;font-weight:700;color:var(--tealDeep);text-transform:uppercase;letter-spacing:.6px;border-bottom:2px solid var(--teal);background:var(--tealFaint)}
+.st td{padding:7px 10px;border-bottom:1px solid var(--borderLight);vertical-align:middle}
+.st td:first-child{font-size:13px;font-weight:600;color:var(--navy)}
+.st tr:hover td{background:var(--tealFaint)}
+.st select{padding:5px 6px;font-size:12.5px;border:1px solid var(--borderLight);border-radius:4px;cursor:pointer;background:var(--surface)}
+.st select:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 2px rgba(26,122,122,.08)}
+.st input[type="text"]{width:100%;padding:6px 8px;font-size:12.5px;border:1px solid var(--borderLight);border-radius:4px;background:var(--surface);font-family:inherit}
+.st input[type="text"]:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 2px rgba(26,122,122,.08)}
+.sig-card{background:var(--surfaceAlt);border:1px solid var(--border);border-radius:var(--radius);margin-top:32px;padding:0;overflow:hidden}
+.sig-header{background:var(--tealDeep);padding:12px 20px;display:flex;align-items:center;gap:10px}
+.sig-header h3{font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.5px}
+.sig-tabs{display:flex;margin-left:auto;gap:0}
+.sig-tab{padding:6px 16px;font-size:11px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.6);border:1.5px solid rgba(255,255,255,.2);background:transparent;letter-spacing:.3px;text-transform:uppercase;transition:all .15s}
+.sig-tab:first-child{border-radius:4px 0 0 4px}
+.sig-tab:last-child{border-radius:0 4px 4px 0}
+.sig-tab.active{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.4)}
+.sig-body{padding:20px 24px 18px}
+.sig-draw{display:block}
+.sig-type{display:none}
+.sig-canvas-wrap{border:1.5px dashed var(--border);border-radius:var(--radius);background:#fff;position:relative;margin-bottom:10px}
+.sig-canvas-wrap canvas{display:block;width:100%;height:100px;cursor:crosshair}
+.sig-clear{position:absolute;top:6px;right:8px;font-size:10px;font-weight:600;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:3px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.3px}
+.sig-clear:hover{color:var(--red);border-color:var(--red)}
+.sig-typed-input{width:100%;padding:12px 16px;font-family:'Caveat',cursive;font-size:28px;font-weight:600;color:var(--tealDeep);border:1.5px dashed var(--border);border-radius:var(--radius);background:#fff;outline:none;text-align:center;letter-spacing:1px}
+.sig-typed-input:focus{border-color:var(--teal)}
+.sig-typed-input::placeholder{font-size:16px;color:var(--muted);font-weight:400;letter-spacing:0}
+.sig-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px}
+.sig-f{display:flex;flex-direction:column;gap:3px}
+.sig-f label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.sig-f input{font-family:inherit;font-size:13px;padding:7px 10px;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);outline:none}
+.sig-f input:focus{border-color:var(--teal)}
+.sig-foot{font-size:11.5px;color:var(--muted);margin-top:16px;text-align:center;padding-top:12px;border-top:1px solid var(--borderLight)}
+@media print{
+  body{background:#fff;font-size:11.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  header{position:static}.hdr-btns{display:none!important}
+  .wrap{max-width:100%;padding:10px 0}
+  .section-head{border-bottom:2px solid var(--teal)!important}
+  .callout,.callout-warm,.st th,.st tr:hover td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .f input,.f select{border:none!important;border-bottom:1px solid #aaa!important;border-radius:0!important;padding:3px 2px!important}
+  .f textarea{border:1px solid #aaa!important;border-radius:0!important}
+  .sig-card{break-inside:avoid}.sig-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sec{page-break-inside:avoid}.progress-bar{display:none}
+  @page{margin:0.55in 0.6in}
+}
+@media(max-width:600px){.cg{grid-template-columns:1fr}.fr{grid-template-columns:1fr}.sig-fields{grid-template-columns:1fr}header{padding:0 14px;height:48px}header h1{font-size:13px}.wrap{padding:20px 14px 50px}}
+/* ── AUTOSAVE ── */
+.autosave{font-size:10px;color:rgba(255,255,255,.5);font-weight:500;letter-spacing:.3px;display:flex;align-items:center;gap:5px;margin-right:8px}
+.autosave .dot{width:6px;height:6px;border-radius:50%;background:#4db8b8;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.autosave.saving .dot{background:var(--gold)}
+.btn-clear{background:transparent;color:rgba(255,255,255,.6);border:1.5px solid rgba(255,255,255,.15);font-size:11px;padding:5px 12px}
+.btn-clear:hover{color:#fff;border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.08)}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-brand">
+    <a href="index.html" class="hdr-logo" title="Back to form selection" style="text-decoration:none">RTN</a>
+    <h1>Teacher Input Form <span>| Rachel Terra Norton, MS, CCC-SLP</span></h1>
+  </div>
+  <div class="hdr-btns">
+    <span class="autosave" id="autosaveBadge"><span class="dot"></span>Autosaved</span>
+    <button class="btn btn-clear" onclick="clearForm()">Clear Form</button>
+    <button class="btn btn-outline" onclick="window.print()">Print / Save PDF</button>
+    <button class="btn btn-primary" onclick="emailSummary()">Email My Answers</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+<div class="wrap">
+<div class="callout"><strong>Thank you for completing this form.</strong> Your daily observations are essential to understanding this student. Please complete based on what you've observed over the <b>past 4-6 weeks</b>. Your professional judgment is valued even when you're uncertain. If unsure, write "N/A" or leave blank.</div>
+
+<!-- 1 ── STUDENT INFO ── -->
+<div class="sec"><div class="section-head"><h2>1. Student Information</h2></div>
+<div class="fr"><div class="f"><label>Student Name</label><input name="student"></div><div class="f"><label>Grade / Class</label><input name="grade"></div></div>
+<div class="fr"><div class="f"><label>Teacher / Educator Name</label><input name="teacher"></div><div class="f"><label>Role</label><input name="role" placeholder="e.g., General ed, SPED, Para, Specialist"></div></div>
+<div class="fr"><div class="f"><label>School</label><input name="school"></div><div class="f"><label>Date</label><input type="date" name="date"></div></div>
+<div class="f"><label>How long have you known this student?</label><input name="duration" placeholder="e.g., 8 months, Since September"></div></div>
+
+<!-- 2 ── STRENGTHS ── -->
+<div class="sec"><div class="section-head"><h2>2. Student Strengths</h2></div>
+<div class="callout-warm">Starting with strengths helps us build an intervention plan that works with who this student already is.</div>
+<div class="f"><label>What are this student's strengths?</label><span class="hint">Academic, social, creative, personal qualities, effort, resilience...</span><textarea name="strengths" rows="3"></textarea></div>
+<div class="f"><label>What motivates or engages this student?</label><textarea name="motivate" rows="2"></textarea></div>
+<div class="f"><label>What strategies or conditions work best for this student?</label><span class="hint">Examples: "Does best with visual models," "Needs directions broken into steps," "Participates more in small groups"</span><textarea name="strategies" rows="3"></textarea></div></div>
+
+<!-- 3 ── CONCERNS ── -->
+<div class="sec"><div class="section-head"><h2>3. Your Concerns</h2></div>
+<div class="f"><label>What are your main concerns about this student's communication or learning?</label><textarea name="concerns" rows="4"></textarea></div>
+<div class="f" style="margin-top:10px"><label>Check areas where you observe difficulty:</label></div>
+<div class="cg">
+<label class="ci"><input type="checkbox" name="area" value="Understanding instructions"> Understanding spoken instructions</label>
+<label class="ci"><input type="checkbox" name="area" value="Following directions"> Following multi-step directions</label>
+<label class="ci"><input type="checkbox" name="area" value="Expressing ideas"> Expressing ideas clearly</label>
+<label class="ci"><input type="checkbox" name="area" value="Vocabulary"> Using age-appropriate vocabulary</label>
+<label class="ci"><input type="checkbox" name="area" value="Narration"> Telling/retelling stories in order</label>
+<label class="ci"><input type="checkbox" name="area" value="Reading level"> Reading at grade level</label>
+<label class="ci"><input type="checkbox" name="area" value="Decoding"> Sounding out / decoding words</label>
+<label class="ci"><input type="checkbox" name="area" value="Spelling"> Spelling</label>
+<label class="ci"><input type="checkbox" name="area" value="Writing"> Writing sentences / paragraphs</label>
+<label class="ci"><input type="checkbox" name="area" value="Speech clarity"> Speech clarity (hard to understand)</label>
+<label class="ci"><input type="checkbox" name="area" value="Stuttering"> Stuttering</label>
+<label class="ci"><input type="checkbox" name="area" value="Voice"> Voice quality concerns</label>
+<label class="ci"><input type="checkbox" name="area" value="Staying on topic"> Staying on topic in conversation</label>
+<label class="ci"><input type="checkbox" name="area" value="Figurative language"> Understanding humor / sarcasm / figurative language</label>
+<label class="ci"><input type="checkbox" name="area" value="Social"> Social interactions with peers</label>
+<label class="ci"><input type="checkbox" name="area" value="Attention"> Paying attention / focusing</label>
+<label class="ci"><input type="checkbox" name="area" value="Memory"> Remembering information</label>
+<label class="ci"><input type="checkbox" name="area" value="Organization"> Organizing schoolwork / materials</label>
+<label class="ci"><input type="checkbox" name="area" value="Task initiation"> Getting started on tasks independently</label>
+<label class="ci"><input type="checkbox" name="area" value="Turn-taking"> Taking turns in discussion</label>
+</div></div>
+
+<!-- 4 ── ACADEMIC PERFORMANCE (dropdown + notes) ── -->
+<div class="sec"><div class="section-head"><h2>4. Academic Performance</h2></div>
+<p style="font-size:13px;color:var(--muted);margin-bottom:8px">Rate this student <b>compared to grade-level expectations</b>.</p>
+<table class="st"><thead><tr><th style="width:42%">Skill</th><th style="width:28%">Rating</th><th>Notes</th></tr></thead><tbody id="acad-body"></tbody></table></div>
+
+<!-- 5 ── COMMUNICATION & SOCIAL SKILLS (dropdown + notes) ── -->
+<div class="sec"><div class="section-head"><h2>5. Communication &amp; Social Skills</h2></div>
+<p style="font-size:13px;color:var(--muted);margin-bottom:8px">Rate how often you observe each behavior.</p>
+<table class="st"><thead><tr><th style="width:42%">Behavior</th><th style="width:28%">Frequency</th><th>Notes</th></tr></thead><tbody id="comm-body"></tbody></table></div>
+
+<!-- 6 ── ATTENTION, ORGANIZATION & BEHAVIOR (dropdown + notes) ── -->
+<div class="sec"><div class="section-head"><h2>6. Attention, Organization &amp; Behavior</h2></div>
+<div class="callout-warm">What may look like "won't do" is often "can't yet do" when executive function skills are still developing. These questions help us understand where this student may need support.</div>
+<table class="st"><thead><tr><th style="width:42%">Behavior</th><th style="width:28%">Frequency</th><th>Notes</th></tr></thead><tbody id="ef-body"></tbody></table>
+<div class="f"><label>How does this student typically respond when work is difficult?</label><span class="hint">e.g., Asks for help, avoids, shuts down, gets frustrated, acts out, gives up quickly</span><textarea name="diff_response" rows="2"></textarea></div>
+<div class="f"><label>How long does it typically take this student to recover after getting upset?</label><input name="recovery" placeholder="e.g., A few minutes, most of the period, rest of the day"></div></div>
+
+<!-- 7 ── CLASSROOM CONTEXT ── -->
+<div class="sec"><div class="section-head"><h2>7. Classroom Context</h2></div>
+<div class="f"><label>What supports or accommodations are in place?</label></div>
+<div class="cg">
+<label class="ci"><input type="checkbox" name="acc" value="Preferential seating"> Preferential seating</label>
+<label class="ci"><input type="checkbox" name="acc" value="Small group"> Small group instruction</label>
+<label class="ci"><input type="checkbox" name="acc" value="Extended time"> Extended time on tests</label>
+<label class="ci"><input type="checkbox" name="acc" value="Modified assignments"> Modified assignments</label>
+<label class="ci"><input type="checkbox" name="acc" value="Visual supports"> Visual supports</label>
+<label class="ci"><input type="checkbox" name="acc" value="Check-ins"> Check-ins for understanding</label>
+<label class="ci"><input type="checkbox" name="acc" value="Behavior plan"> Behavior plan</label>
+<label class="ci"><input type="checkbox" name="acc" value="Reading intervention"> Reading intervention</label>
+<label class="ci"><input type="checkbox" name="acc" value="Aide"> 1:1 aide / paraprofessional</label>
+<label class="ci"><input type="checkbox" name="acc" value="AT"> Assistive technology</label>
+<label class="ci"><input type="checkbox" name="acc" value="Movement breaks"> Movement / sensory breaks</label>
+<label class="ci"><input type="checkbox" name="acc" value="None"> None currently</label>
+</div>
+<div class="f"><label>Special services this student receives:</label></div>
+<div class="cg">
+<label class="ci"><input type="checkbox" name="tsvc" value="SLP"> Speech-language therapy</label>
+<label class="ci"><input type="checkbox" name="tsvc" value="OT"> Occupational therapy</label>
+<label class="ci"><input type="checkbox" name="tsvc" value="Reading"> Reading specialist</label>
+<label class="ci"><input type="checkbox" name="tsvc" value="IEP"> Special education (IEP)</label>
+<label class="ci"><input type="checkbox" name="tsvc" value="504"> 504 plan</label>
+<label class="ci"><input type="checkbox" name="tsvc" value="Counseling"> Counseling</label>
+<label class="ci"><input type="checkbox" name="tsvc" value="ESL"> ESL / ELL services</label>
+<label class="ci"><input type="checkbox" name="tsvc" value="None"> None</label>
+</div></div>
+
+<!-- 8 ── ADDITIONAL ── -->
+<div class="sec"><div class="section-head"><h2>8. Anything Else</h2></div>
+<div class="f"><label>Is there anything else you'd like the evaluator to know?</label><textarea name="other" rows="4"></textarea></div>
+<div class="f"><label>Best way to contact you for follow-up?</label><input name="contact" placeholder="Email or phone"></div></div>
+
+<!-- ── SIGNATURE ── -->
+<div class="sig-card">
+<div class="sig-header">
+  <h3>Signature</h3>
+  <div class="sig-tabs">
+    <button class="sig-tab active" onclick="sigMode('draw',this)">Draw</button>
+    <button class="sig-tab" onclick="sigMode('type',this)">Type</button>
+  </div>
+</div>
+<div class="sig-body">
+  <div class="sig-draw" id="sigDraw">
+    <div class="sig-canvas-wrap">
+      <canvas id="sigCanvas" height="100"></canvas>
+      <button class="sig-clear" onclick="clearSig()">Clear</button>
+    </div>
+  </div>
+  <div class="sig-type" id="sigType">
+    <input class="sig-typed-input" id="sigTyped" placeholder="Type your full name" oninput="this.style.fontFamily='Caveat,cursive'">
+  </div>
+  <div class="sig-fields">
+    <div class="sig-f"><label>Printed Name</label><input name="sig_print"></div>
+    <div class="sig-f"><label>Date</label><input type="date" name="sig_date"></div>
+    <div class="sig-f"><label>Role / Title</label><input name="sig_role" placeholder="e.g., 3rd Grade Teacher"></div>
+  </div>
+  <p class="sig-foot">Please return to the speech-language pathologist before the evaluation. Thank you.</p>
+</div>
+</div>
+</div>
+
+<script>
+// ── Rating tables (dropdown + notes) ──
+function buildST(id,items,prefix,opts){
+  const b=document.getElementById(id);
+  items.forEach((s,i)=>{
+    const r=document.createElement('tr');
+    r.innerHTML=`<td>${s}</td><td><select name="${prefix}${i}">${opts.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></td><td><input type="text" name="${prefix}n${i}" placeholder="Optional notes"></td>`;
+    b.appendChild(r);
+  });
+}
+const acadOpts=['—','Well below','Below','On grade level','Above','Well above'];
+buildST('acad-body',['Listening comprehension','Oral expression (sharing ideas, answering questions)','Vocabulary knowledge and use','Phonological awareness (rhyming, blending, segmenting)','Word reading / decoding','Reading fluency (speed, accuracy, expression)','Reading comprehension','Written expression','Spelling','Following spoken directions','Following written directions','Participating in class discussions'],'a',acadOpts);
+
+const freqOpts=['—','Never','Rarely','Sometimes','Often','Always'];
+buildST('comm-body',['Uses complete sentences when speaking','Has difficulty finding the right word','Speech is difficult to understand','Responds appropriately to questions','Initiates conversations with peers','Maintains topic during conversation','Understands age-appropriate humor','Takes turns appropriately','Adjusts language for different situations','Understands non-literal language (idioms, sarcasm)','Makes and keeps friends','Works cooperatively in groups'],'c',freqOpts);
+
+buildST('ef-body',['Pays attention during instruction','Stays on task independently','Completes assignments on time','Keeps materials organized','Follows classroom rules and routines','Transitions smoothly between activities','Controls impulses (waits turn, raises hand)','Handles frustration appropriately','Works independently without frequent prompts','Self-monitors and corrects errors'],'e',freqOpts);
+
+// ── Signature canvas ──
+const canvas=document.getElementById('sigCanvas');
+const ctx=canvas.getContext('2d');
+let drawing=false;
+function resizeCanvas(){canvas.width=canvas.offsetWidth;canvas.height=100}
+window.addEventListener('resize',resizeCanvas);resizeCanvas();
+ctx.strokeStyle='#1c2d2d';ctx.lineWidth=2;ctx.lineCap='round';ctx.lineJoin='round';
+function getPos(e){const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}}
+canvas.addEventListener('mousedown',e=>{drawing=true;ctx.beginPath();const p=getPos(e);ctx.moveTo(p.x,p.y)});
+canvas.addEventListener('mousemove',e=>{if(!drawing)return;const p=getPos(e);ctx.lineTo(p.x,p.y);ctx.stroke()});
+canvas.addEventListener('mouseup',()=>drawing=false);
+canvas.addEventListener('mouseleave',()=>drawing=false);
+canvas.addEventListener('touchstart',e=>{e.preventDefault();drawing=true;ctx.beginPath();const p=getPos(e);ctx.moveTo(p.x,p.y)},{passive:false});
+canvas.addEventListener('touchmove',e=>{e.preventDefault();if(!drawing)return;const p=getPos(e);ctx.lineTo(p.x,p.y);ctx.stroke()},{passive:false});
+canvas.addEventListener('touchend',()=>drawing=false);
+function clearSig(){ctx.clearRect(0,0,canvas.width,canvas.height)}
+function sigMode(mode,btn){
+  document.querySelectorAll('.sig-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sigDraw').style.display=mode==='draw'?'block':'none';
+  document.getElementById('sigType').style.display=mode==='type'?'block':'none';
+}
+
+// ── Progress bar ──
+function updateProgress(){
+  const inputs=document.querySelectorAll('.wrap input:not([type="date"]):not([type="radio"]):not([type="checkbox"]),.wrap textarea,.wrap select');
+  const checks=new Set();document.querySelectorAll('.wrap input[type="checkbox"]').forEach(c=>checks.add(c.name));
+  let filled=0,total=0;
+  inputs.forEach(el=>{total++;if(el.value.trim()&&el.value!=='—')filled++});
+  checks.forEach(name=>{total++;if(document.querySelector(`[name="${name}"]:checked`))filled++});
+  const pct=total>0?Math.round((filled/total)*100):0;
+  document.getElementById('prog').style.width=pct+'%';
+}
+document.addEventListener('input',updateProgress);
+document.addEventListener('change',updateProgress);
+
+// ── Email summary ──
+function emailSummary(){
+let L=['TEACHER INPUT FORM\nRachel Terra Norton, MS, CCC-SLP\n'];
+document.querySelectorAll('input[type="text"],input[type="date"],textarea').forEach(el=>{if(el.value.trim()&&el.name){const lbl=el.closest('.f,.sig-f')?.querySelector('label')?.textContent||el.name;L.push(lbl+': '+el.value.trim())}});
+['area','acc','tsvc'].forEach(n=>{const c=[...document.querySelectorAll(`[name="${n}"]:checked`)].map(e=>e.value);if(c.length)L.push(n.toUpperCase()+': '+c.join(', '))});
+const labels={a:'ACADEMIC',c:'COMMUNICATION',e:'EXEC FUNCTION'};
+['a','c','e'].forEach(p=>{L.push('\n'+labels[p]+' RATINGS:');for(let i=0;i<15;i++){const sel=document.querySelector(`[name="${p}${i}"]`);const note=document.querySelector(`[name="${p}n${i}"]`);if(sel&&sel.value!=='—'){const td=sel.closest('tr')?.querySelector('td');L.push('  '+(td?.textContent||i)+': '+sel.value+(note&&note.value?' ('+note.value+')':''))}}});
+const typed=document.getElementById('sigTyped')?.value;
+if(typed)L.push('\nSIGNATURE (typed): '+typed);
+const subj=encodeURIComponent('Teacher Input - '+(document.querySelector('[name="student"]')?.value||''));
+window.location.href='mailto:?subject='+subj+'&body='+encodeURIComponent(L.join('\n'));
+}
+
+// ── Autosave ──
+const SAVE_KEY='rtn_teacher_input_draft';
+function autoSave(){
+  try{
+    const d={};
+    document.querySelectorAll('input[type="text"],input[type="date"],textarea,select').forEach(el=>{if(el.name)d[el.name]=el.value});
+    document.querySelectorAll('input[type="checkbox"]').forEach(el=>{if(!d['_cb_'+el.name])d['_cb_'+el.name]=[];if(el.checked)d['_cb_'+el.name].push(el.value)});
+    const typed=document.getElementById('sigTyped');if(typed)d._sigTyped=typed.value;
+    localStorage.setItem(SAVE_KEY,JSON.stringify(d));
+  }catch(e){}
+  const badge=document.getElementById('autosaveBadge');
+  badge.classList.add('saving');
+  setTimeout(()=>badge.classList.remove('saving'),600);
+}
+function restoreDraft(){
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);if(!raw)return;
+    const d=JSON.parse(raw);
+    Object.keys(d).forEach(k=>{
+      if(k.startsWith('_cb_')){
+        const name=k.slice(4);const vals=d[k];
+        document.querySelectorAll(`[name="${name}"]`).forEach(el=>{if(el.type==='checkbox'&&vals.includes(el.value))el.checked=true});
+      }else if(k==='_sigTyped'){
+        const el=document.getElementById('sigTyped');if(el){el.value=d[k];el.style.fontFamily='Caveat,cursive'}
+      }else{
+        const el=document.querySelector(`[name="${k}"]`);
+        if(el&&el.type!=='checkbox'&&el.type!=='radio')el.value=d[k]||'';
+      }
+    });
+    updateProgress();
+  }catch(e){}
+}
+function clearForm(){
+  if(!confirm('Clear all answers? This cannot be undone.'))return;
+  document.querySelectorAll('input[type="text"],input[type="date"],textarea').forEach(el=>el.value='');
+  document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
+  document.querySelectorAll('input[type="checkbox"]').forEach(el=>el.checked=false);
+  const typed=document.getElementById('sigTyped');if(typed){typed.value='';typed.style.fontFamily=''}
+  clearSig();
+  try{localStorage.removeItem(SAVE_KEY)}catch(e){}
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+setInterval(autoSave,5000);
+document.addEventListener('change',autoSave);
+restoreDraft();</script>
+</body>
+</html>
