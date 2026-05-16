@@ -2,43 +2,42 @@ import { useState, createContext, useContext } from "react";
 
 // ───────────── THEME — RTN Eval Intake design system ─────────────
 
-const GRADIENT = "linear-gradient(90deg, #0e4a4a 0%, #1a7a7a 50%, #4db8b8 100%)";
-const RAINBOW  = "linear-gradient(90deg, #0e4a4a 0%, #1a7a7a 50%, #4db8b8 100%)";
+const PLASMA = "linear-gradient(90deg,#0d0887,#46039f,#7201a8,#9c179e,#bd3786,#d8576b,#ed7953,#fb9f3a,#fdca26)";
 
 const themes = {
   dark: {
-    bg: "#0e2424", card: "#163434", border: "#1f4040", inputBg: "#0e2424",
-    text: "#e6efef", textMuted: "#8eaeae", textDim: "#5c7d7d", textSub: "#c0d4d4",
-    accent: "#4db8b8", checkColor: "#4db8b8", checkBg: "#1a4d4d",
-    welcomeBg: "#163434", welcomeBorder: "#1f4040",
-    rowBg: "#0e2424", rowBgSel: "#1a4d4d",
-    btnBorder: "#1f4040", btnBg: "#163434",
-    footerBg: "#163434", stickyBg: "rgba(14,36,36,0.92)",
-    printBtnBg: "#e6efef", printBtnColor: "#0e2424",
-    gradient: GRADIENT, rainbow: RAINBOW,
+    bg: "#0e0612", card: "#1a1028", border: "#2e2048", inputBg: "#0e0612",
+    text: "#f0e8f8", textMuted: "#b8a0d4", textDim: "#7a5ca0", textSub: "#b8a0d4",
+    accent: "#fb9f3a", checkColor: "#fb9f3a", checkBg: "#2e2048",
+    welcomeBg: "#1a1028", welcomeBorder: "#2e2048",
+    rowBg: "#0e0612", rowBgSel: "#2e2048",
+    btnBorder: "#2e2048", btnBg: "#1a1028",
+    footerBg: "#1a1028", stickyBg: "rgba(14,6,18,0.92)",
+    printBtnBg: "#f0e8f8", printBtnColor: "#0e0612",
+    gradient: PLASMA, rainbow: PLASMA,
   },
   light: {
-    bg: "#f0f4f4", card: "#ffffff", border: "#d4dfdf", inputBg: "#f7fafa",
-    text: "#1c2d2d", textMuted: "#3d5555", textDim: "#7a9191", textSub: "#3d5555",
-    accent: "#1a7a7a", checkColor: "#1a7a7a", checkBg: "#e0f2f1",
-    welcomeBg: "#f0faf9", welcomeBorder: "#e0f2f1",
-    rowBg: "#f7fafa", rowBgSel: "#e0f2f1",
-    btnBorder: "#d4dfdf", btnBg: "#f7fafa",
-    footerBg: "#ffffff", stickyBg: "rgba(240,244,244,0.92)",
-    printBtnBg: "#0e4a4a", printBtnColor: "#f0f4f4",
-    gradient: GRADIENT, rainbow: RAINBOW,
+    bg: "#faf7fd", card: "#ffffff", border: "#e0d8f0", inputBg: "#ffffff",
+    text: "#1a1a2a", textMuted: "#4a3a60", textDim: "#8a78a0", textSub: "#4a3a60",
+    accent: "#7201a8", checkColor: "#7201a8", checkBg: "rgba(114,1,168,0.08)",
+    welcomeBg: "#ffffff", welcomeBorder: "#e0d8f0",
+    rowBg: "#ffffff", rowBgSel: "rgba(114,1,168,0.08)",
+    btnBorder: "#e0d8f0", btnBg: "#ffffff",
+    footerBg: "#ffffff", stickyBg: "rgba(255,255,255,0.92)",
+    printBtnBg: "#1a1a2a", printBtnColor: "#ffffff",
+    gradient: PLASMA, rainbow: PLASMA,
   },
 };
 
-// Section accents — drawn from the editorial-calm palette
+// Section accents — drawn from the Plasma palette
 const SECTION_COLORS = {
-  about:    { dark: "#a8c8e0", light: "#5a8aaa" },  // sky
-  strengths:{ dark: "#f6c89a", light: "#b87c4e" },  // peach
-  reading:  { dark: "#8dd4b0", light: "#4f9c74" },  // mint
-  feelings: { dark: "#c4abe2", light: "#7a5ea8" },  // lavender
-  learn:    { dark: "#a8c8e0", light: "#5a8aaa" },  // sky
-  interests:{ dark: "#f4b5c5", light: "#c47086" },  // pink
-  goals:    { dark: "#f5d98a", light: "#b89446" },  // yellow
+  about:    { dark: "#fb9f3a", light: "#46039f" },  // deep purple
+  strengths:{ dark: "#fdca26", light: "#9c179e" },  // magenta
+  reading:  { dark: "#ed7953", light: "#bd3786" },  // pink
+  feelings: { dark: "#d8576b", light: "#d8576b" },  // coral
+  learn:    { dark: "#fb9f3a", light: "#ed7953" },  // orange
+  interests:{ dark: "#fdca26", light: "#fb9f3a" },  // amber
+  goals:    { dark: "#fdca26", light: "#fdca26" },  // yellow
 };
 
 const ThemeCtx = createContext();
@@ -49,16 +48,16 @@ const useTheme = () => useContext(ThemeCtx);
 // Likert colors — pink → peach → sky → mint (no → little → mostly → yes)
 // `face` 1=frown · 2=slight frown · 3=neutral · 4=slight smile · 5=big smile
 const LIKERT_3 = [
-  { label: "Not Really", sub: "That's not me", color: "#c47086", selBg: "#2e1f24", lightSelBg: "#faeaee", value: 1, face: 1 },
-  { label: "Sometimes",  sub: "Kind of",       color: "#b87c4e", selBg: "#2a2418", lightSelBg: "#fbeede", value: 2, face: 3 },
-  { label: "Yes!",       sub: "That's me!",    color: "#4f9c74", selBg: "#1e2b22", lightSelBg: "#e8f6ed", value: 3, face: 5 },
+  { label: "Not Really", sub: "That's not me", color: "#46039f", selBg: "#2e1f24", lightSelBg: "#f5eefb", value: 1, face: 1 },
+  { label: "Sometimes",  sub: "Kind of",       color: "#bd3786", selBg: "#2a1828", lightSelBg: "#fbeef5", value: 2, face: 3 },
+  { label: "Yes!",       sub: "That's me!",    color: "#fb9f3a", selBg: "#2a2418", lightSelBg: "#fff5e6", value: 3, face: 5 },
 ];
 
 const LIKERT_4 = [
-  { label: "No",        sub: "Not me",     color: "#c47086", selBg: "#2e1f24", lightSelBg: "#faeaee", value: 1, face: 1 },
-  { label: "A Little",  sub: "Sometimes",  color: "#b87c4e", selBg: "#2a2418", lightSelBg: "#fbeede", value: 2, face: 2 },
-  { label: "Mostly",    sub: "Usually",    color: "#5a8aaa", selBg: "#1c2530", lightSelBg: "#e8f0f7", value: 3, face: 4 },
-  { label: "Yes!",      sub: "Totally",    color: "#4f9c74", selBg: "#1e2b22", lightSelBg: "#e8f6ed", value: 4, face: 5 },
+  { label: "No",        sub: "Not me",     color: "#46039f", selBg: "#2e1f24", lightSelBg: "#f5eefb", value: 1, face: 1 },
+  { label: "A Little",  sub: "Sometimes",  color: "#9c179e", selBg: "#2a1828", lightSelBg: "#f8eef8", value: 2, face: 2 },
+  { label: "Mostly",    sub: "Usually",    color: "#ed7953", selBg: "#2a2018", lightSelBg: "#fef0e8", value: 3, face: 4 },
+  { label: "Yes!",      sub: "Totally",    color: "#fb9f3a", selBg: "#2a2418", lightSelBg: "#fff5e6", value: 4, face: 5 },
 ];
 
 const STRENGTHS_YOUNG = [
@@ -338,16 +337,16 @@ const Q = ({ text }) => {
 const ThemeToggle = ({ dark, toggle }) => (
   <button onClick={toggle} aria-label={dark ? "Switch to light mode" : "Switch to dark mode"} style={{
     padding: "7px 14px", borderRadius: 100,
-    border: `1px solid ${dark ? "#34302c" : "#e6dfd5"}`,
-    background: dark ? "#232020" : "#ffffff",
-    color: dark ? "#82796f" : "#847d75",
+    border: `1px solid ${dark ? "#2e2048" : "#ebebeb"}`,
+    background: dark ? "#1a1028" : "#ffffff",
+    color: dark ? "#7a5ca0" : "#9aa0a8",
     fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 500,
     letterSpacing: "0.06em", cursor: "pointer",
     display: "inline-flex", alignItems: "center", gap: 6,
     transition: "border-color 0.2s ease, color 0.2s ease",
   }}
-  onMouseEnter={(e) => { e.currentTarget.style.color = dark ? "#ece5d9" : "#2a2724"; e.currentTarget.style.borderColor = dark ? "#82796f" : "#847d75"; }}
-  onMouseLeave={(e) => { e.currentTarget.style.color = dark ? "#82796f" : "#847d75"; e.currentTarget.style.borderColor = dark ? "#34302c" : "#e6dfd5"; }}
+  onMouseEnter={(e) => { e.currentTarget.style.color = dark ? "#e0edec" : "#0f1419"; e.currentTarget.style.borderColor = dark ? "#7a5ca0" : "#9aa0a8"; }}
+  onMouseLeave={(e) => { e.currentTarget.style.color = dark ? "#7a5ca0" : "#9aa0a8"; e.currentTarget.style.borderColor = dark ? "#2e2048" : "#ebebeb"; }}
   >
     <span style={{ fontSize: 13, lineHeight: 1 }}>{dark ? "☾" : "☀"}</span>
     {dark ? "Dark" : "Light"}
@@ -406,13 +405,11 @@ export default function App() {
       -webkit-font-smoothing: antialiased;
     }
     input:focus, textarea:focus { outline: none; }
-    :focus-visible { outline: 2px solid #1a7a7a !important; outline-offset: 3px; border-radius: 2px; }
-    ::selection { background: ${dark ? '#1a4d4d' : '#e0f2f1'}; color: ${t.text}; }
+    :focus-visible { outline: 2px solid #7201a8 !important; outline-offset: 3px; border-radius: 2px; }
+    ::selection { background: ${dark ? '#2e2048' : 'rgba(114,1,168,0.15)'}; color: ${t.text}; }
 
     .rtn-rainbow-strip {
-      height: 6px;
-      background: linear-gradient(90deg, #0e4a4a 0%, #1a7a7a 50%, #4db8b8 100%);
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: none;
     }
 
     @media print {
@@ -446,7 +443,7 @@ export default function App() {
 
           <h1 style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "clamp(34px, 5.5vw, 48px)", fontWeight: 500, letterSpacing: "-0.015em", lineHeight: 1.08, color: t.text, marginBottom: 14, position: "relative", display: "inline-block", paddingBottom: 10 }}>
             Student Self-Report
-            <span style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, borderRadius: 2, background: "linear-gradient(90deg, #0e4a4a 0%, #1a7a7a 50%, #4db8b8 100%)", opacity: 0.85 }} />
+            <span style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 3, borderRadius: 2, background: "#7201a8", opacity: 0.85 }} />
           </h1>
 
           <p style={{ fontSize: 16, color: t.textSub, lineHeight: 1.7, marginBottom: 32, maxWidth: 520 }}>
@@ -458,8 +455,8 @@ export default function App() {
           {/* Mode selection cards — editorial calm card style */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12, marginBottom: 32 }}>
             {[
-              ["young", "Ages 6–13", "#5a8aaa", "#a8c8e0", "#e8f0f7", "Simple language", "3 responses", "Kid-friendly questions"],
-              ["older", "Ages 14+", "#7a5ea8", "#b8a0d8", "#efe8f6", "Friendly language", "4 responses", "More detailed questions"],
+              ["young", "Ages 6–13", "#7201a8", "#fb9f3a", "rgba(114,1,168,0.08)", "Simple language", "3 responses", "Kid-friendly questions"],
+              ["older", "Ages 14+", "#46039f", "#7201a8", "rgba(114,1,168,0.08)", "Friendly language", "4 responses", "More detailed questions"],
             ].map(([m, lbl, clrDeep, clrMid, clrSoft, l1, l2, l3]) => (
               <button key={m} onClick={() => setMode(m)} style={{
                 padding: "24px 22px",
@@ -507,7 +504,7 @@ export default function App() {
     it: y ? INTERESTS_YOUNG : INTERESTS_OLDER, go: y ? GOALS_YOUNG : GOALS_OLDER,
   };
 
-  const versionColor = y ? "#5a8aaa" : "#7a5ea8"; // sky-deep / lavender-deep
+  const versionColor = y ? "#7201a8" : "#46039f"; // teal / teal-deep
 
   return (
     <ThemeCtx.Provider value={{ dark }}>
@@ -538,7 +535,7 @@ export default function App() {
           <div style={{ background: dark ? "#111" : t.welcomeBg, borderRadius: 14, padding: "16px 20px", marginBottom: 16, border: `1px solid ${dark ? "#1e1e1e" : t.welcomeBorder}` }}>
             <div style={{ fontSize: 14, color: t.textSub, lineHeight: 1.6 }}>
               {y ? <><strong style={{ color: "#e89b2d" }}>Hi there! 👋</strong> This is all about <strong style={{ color: t.text }}>YOU</strong> — what you like, what you're good at, and how you feel about school. There are no right or wrong answers! You can skip anything. A grown-up can help you if you need it.</> :
-                <><strong style={{ color: "#9b59b6" }}>Hey! 👋</strong> This is all about <strong style={{ color: t.text }}>you</strong> — your strengths, how you learn, and what support works best. There are no right or wrong answers. Be honest — it helps us help you. Skip anything you don't want to answer. Someone can read the questions to you if that helps.</>}
+                <><strong style={{ color: "#7201a8" }}>Hey! 👋</strong> This is all about <strong style={{ color: t.text }}>you</strong> — your strengths, how you learn, and what support works best. There are no right or wrong answers. Be honest — it helps us help you. Skip anything you don't want to answer. Someone can read the questions to you if that helps.</>}
             </div>
           </div>
 
@@ -631,7 +628,7 @@ export default function App() {
             <div style={{ flex: 2 }}><Q text="Your Name (optional)" /><Inp value={form.signName} onChange={v => s("signName", v)} /></div>
             <div style={{ flex: 1 }}><Q text="Date" /><Inp value={form.signDate} onChange={v => s("signDate", v)} /></div>
           </div>
-          <div style={{ textAlign: "center", marginTop: 24, color: t.textDim, fontSize: 11, fontFamily: "'DM Sans', system-ui, sans-serif" }}>RTN Communication & Literacy • Rachel Norton, MS, CCC-SLP • rachelslp.org<br />Strengths-Based • Neurodiversity-Affirming • Evidence-Based</div>
+          <div style={{ textAlign: "center", marginTop: 24, color: t.textDim, fontSize: 11, fontFamily: "'DM Sans', system-ui, sans-serif" }}>RTN | Speech, Language & Literacy • Rachel Norton, MS, CCC-SLP • rachelslp.org<br />Strengths-Based • Neurodiversity-Affirming • Evidence-Based</div>
         </div>
 
         {/* Bottom bar */}
